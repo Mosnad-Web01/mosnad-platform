@@ -1,37 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-</head>
-<body class="bg-light">
-    <div class="container d-flex align-items-center justify-content-center" style="height: 100vh;">
-        <div class="card shadow p-4" style="width: 400px;">
-            <h2 class="text-center mb-4">Dashboard Login</h2>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            <form action="{{ route('dashboard.login') }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required autofocus>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
-            </form>
+<x-layout :navbar="false">
+    <div class="flex items-center justify-center h-screen lg:flex-row flex-col bg-gray-50">
+        <!-- Left side (form) -->
+        <div class="flex flex-1 flex-col items-center justify-center p-4">
+            <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+                <h2 class="text-start text-2xl mb-6 font-bold">أهلاً في منصة مسند للتدريب </h2>
+                <p class="mb-6 text-gray-500">تسجيل الدخول الى لوحة التحكم</p>
+              
+
+                <form action="{{ route('dashboard.login') }}" method="POST">
+                    @csrf
+                    <x-form.input
+                        name="email"
+                        label="البريد الإلكتروني"
+                        type="email"
+                        placeholder="user@example.com"
+                        icon="fa fa-user"
+                        inputClass="border-gray-300" />
+
+                    <x-form.input
+                        name="password"
+                        label="كلمة المرور"
+                        type="password"
+                        placeholder="أدخل كلمة المرور"
+                        icon="fa fa-lock"
+                        inputClass="border-gray-300" />
+                   
+                    <button type="submit" class="w-full py-2 bg-gradient text-white rounded-md mt-2">
+                        تسجيل الدخول
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right side (image) - hidden on small screens -->
+        <div class="hidden lg:flex flex-1 flex-col items-center bg-blue-100 h-full justify-center py-6">
+            <img src="{{ asset('images/mosnad-logo-login.svg') }}" alt="Mosnad Logo" class="max-w-xs mx-auto">
         </div>
     </div>
-</body>
-</html>
+</x-layout>

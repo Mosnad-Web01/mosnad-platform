@@ -1,6 +1,7 @@
 import Footer from "@/components/layout/Footer";
 import "./globals.css"; 
 import { Inter,  Readex_Pro } from 'next/font/google' // Arabic font
+import Navbar from "@/components/layout/Navbar";
 
 const readexPro = Readex_Pro({
   subsets: ['arabic'],
@@ -12,6 +13,7 @@ const readexPro = Readex_Pro({
 const inter = Inter({
   subsets: ["latin"],
   display: 'swap',
+  weight: ["400", "500", "600", "700"],
   variable: '--font-inter',
 });
 
@@ -25,6 +27,7 @@ export default function RootLayout({ children  }) {
 
     <html lang="ar" dir="rtl" className={`${inter.variable} ${readexPro.variable}`}>
       <body className="font-readex">
+        <Navbar/>
         {children}
         <Footer/>
       </body>

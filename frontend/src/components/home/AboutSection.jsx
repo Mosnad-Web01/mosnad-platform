@@ -1,11 +1,10 @@
 import Image from 'next/image';
-import React from 'react';
 
 const AboutSection = () => {
 	return (
 		<section>
 			<div className="w-full bg-pink-50">
-				<div className="max-w-screen-xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 p-8 ">
+				<div className="max-w-screen-xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 px-8 py-16">
 					{/* Text Section */}
 					<div className="lg:w-1/2 text-right flex flex-col gap-8 md:gap-12 text-black ">
 						<div className="mb-4">
@@ -47,7 +46,7 @@ const AboutSection = () => {
 						/>
 					</div>
 				</div>
-			</div>
+			</div>          
 		</section>
 	);
 };

@@ -24,6 +24,7 @@
             activeOption={activeTab}
             onOptionChange={setActiveTab}
             extraClasses="mb-6"
+            buttonStyle="px-6 lg:px-12 py-2"
           />
         </div>
 

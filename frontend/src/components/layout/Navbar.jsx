@@ -27,9 +27,11 @@ const Navbar = () => {
 	];
 
 	return (
-		<header className="bg-transparent">
-			<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-				<div className=" flex flex-row-reverse py-4 px-0 md:px-1 lg:px-2 xl:px-4 items-center justify-between md:flex-row ">
+		<header className="relative w-full  overflow-hidden bg-pink-200/50">
+			
+			<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 ">
+
+				<div className=" flex flex-row-reverse py-4 px-0 md:px-1 lg:px-2 xl:px-4 items-center justify-between md:flex-row z-50">
 					{/* Logo */}
 					<div className="md:flex md:items-center md:gap-12">
 						<a href="#" className="block text-teal-600">
@@ -77,7 +79,7 @@ const Navbar = () => {
 								</a>
 							</div>
 						</div>
-						<div className="block lg:hidden">
+						<div className="block lg:hidden z-50">
 							<button
 								onClick={() => setIsSidebarOpen(!isSidebarOpen)}
 								className="rounded  text-gray-600 transition hover:text-gray-800">

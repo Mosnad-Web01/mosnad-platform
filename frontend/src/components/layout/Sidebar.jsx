@@ -53,7 +53,7 @@ const Sidebar = ({ isOpen, onClose, navItems }) => {
 						</a>
 					</div>
 
-					{/* Welcome Section
+					{/* Welcome Section */}
 					<div className="mt-8 rounded-lg bg-gradient-to-r from-slate-800/50 to-slate-700/50 p-6 text-center">
 						<div className="inline-block rounded-full bg-teal-500/10 p-3">
 							<span className="text-2xl">✨</span>
@@ -64,7 +64,7 @@ const Sidebar = ({ isOpen, onClose, navItems }) => {
 						<p className="mt-2 text-sm text-slate-400">
 							ابدأ رحلتك معنا اليوم
 						</p>
-					</div> */}
+					</div> 
 				</div>
 			</div>
 		</div>

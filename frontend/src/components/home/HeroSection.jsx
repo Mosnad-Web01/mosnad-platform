@@ -49,13 +49,14 @@ const HeroSection = () => {
           />
         </div>
 
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-900 mb-3 md:mb-6 leading-relaxed px-2">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-900 mb-3 md:mb-6 px-2" 
+        style={{lineHeight: '1.8'}}>
           أهلاً بك في منصة مسند للتدريب والتوظيف
           <br />
           <span>نُسند، ونُستند</span>
         </h1>
 
-        <p className="text-base md:text-lg text-gray-700 mb-6 md:mb-8 leading-relaxed">
+        <p className="text-base md:text-lg text-gray-700 mb-6 md:mb-8 "style={{letterSpacing: '1px', lineHeight: '2.5'}}>
           البحث عن الشخص المناسب بالزمن المناسب، وأنت فيه.
           حرصنا على احتياجاتك ونلبيه لك بقاعدة بيانات مؤهلة
           وجاهزة للعمل تحت إشرافنا التام

@@ -21,7 +21,7 @@ const TextArea = ({
         <textarea
           placeholder={placeholder}
           rows={rows} // control height based on number of lines
-          className={`w-full px-4 py-4 rounded-lg bg-gray-50 border border-gray-100 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
+          className={`w-full px-4 py-4 rounded-lg bg-gray-50 border border-gray-100focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
             Icon ? "pl-10" : ""
           } resize-none`} // make it non-resizable
           {...props}

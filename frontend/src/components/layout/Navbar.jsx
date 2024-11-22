@@ -17,8 +17,8 @@ const Navbar = () => {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
 	const navItems = [
-		{ label: 'الرئيسية', href: '#', icon: <FaHome /> },
-		{ label: 'من نحن', href: '#', icon: <FaUsers /> },
+		{ label: 'الرئيسية', href: '/', icon: <FaHome /> },
+		{ label: 'من نحن', href: '/about', icon: <FaUsers /> },
 		{ label: 'الشباب', href: '#', icon: <FaUserPlus /> },
 		{ label: 'الشركات', href: '#', icon: <FaBriefcase /> },
 		{ label: 'قصص النجاح', href: '#', icon: <FaBookOpen /> },

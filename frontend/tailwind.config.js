@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+        readex: ['Readex Pro', 'sans-serif'],
+      },
      backgroundImage: {
         'gradient': 'linear-gradient(90deg, #7351A1 0%, #8D4BA1 8%, #9A469F 16%, #A7429D 24%, #BF3694 32%, #D52786 40%, #E12079 48%, #EB1D6B 56%, #F3215C 64%, #F5304E 72%, #F63E40 80%, #F44C32 88%, #F15A22 100%)',
       },

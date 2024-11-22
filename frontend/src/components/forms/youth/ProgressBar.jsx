@@ -41,7 +41,7 @@ const ProgressBar = ({ steps, currentStep }) => {
                   ${
                     index <= currentStep
                       ? "text-[#F03F74]"
-                      : "text-gray-900 group-hover:text-[#F03F74]"
+                      : "text-[#21255C] group-hover:text-[#F03F74]"
                   }`}
               >
                 {step}
@@ -63,7 +63,7 @@ const ProgressBar = ({ steps, currentStep }) => {
                       className={`transition-all duration-500 ${
                         index < currentStep
                           ? "stroke-[2] stroke-[#F03F74]" // Thinner stroke
-                          : "stroke-[2] stroke-gray-800" // Thinner stroke
+                          : "stroke-[2] stroke-[#21255C]" // Thinner stroke
                       }`}
                       strokeLinecap="round"
                     />

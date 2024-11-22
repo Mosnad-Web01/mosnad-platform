@@ -9,7 +9,7 @@ const SuccessPage = () => {
       </p>
       <button
         onClick={() => window.location.reload()} // Refresh the page (optional)
-        className="px-6 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600"
+        className="px-6 py-2 bg-gradient mt-12 text-white rounded-lg"
       >
         العودة إلى البداية
       </button>

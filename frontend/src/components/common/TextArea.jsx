@@ -10,8 +10,8 @@ const TextArea = ({
   ...props
 }) => {
   return (
-    <div className={`flex flex-col ${additionalClasses}`}>
-      {label && <label className="mb-2 text-sm font-medium">{label}</label>}
+    <div className={`flex flex-col mt-4 ${additionalClasses}`}>
+      {label && <label className="mb-2 text-sm font-medium text-[#21255C]">{label}</label>}
       <div className="relative">
         {Icon && (
           <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -21,7 +21,7 @@ const TextArea = ({
         <textarea
           placeholder={placeholder}
           rows={rows} // control height based on number of lines
-          className={`w-full px-4 py-4 rounded-lg bg-gray-50 border border-gray-100focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
+          className={`w-full mt-1 px-4 py-4 rounded-lg bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
             Icon ? "pl-10" : ""
           } resize-none`} // make it non-resizable
           {...props}

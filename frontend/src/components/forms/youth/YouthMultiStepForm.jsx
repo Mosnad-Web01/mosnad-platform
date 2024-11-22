@@ -31,11 +31,11 @@ const YouthMultiStepForm = () => {
 
   // Define step labels for the progress bar
   const steps = [
-    "البيانات الأساسية",
-    "المسار الوظيفي",
-    "التطلعات",
-    "الخبرات والورش",
-    "اللغات الأخرى",
+    "البيانات الشخصية",
+    "الدوافع والإهتمام",
+    "خبرة سابقة",
+    " الوعي الفني ",
+    " معلومات أضافية",
   ];
 
   // Define step components
@@ -79,7 +79,7 @@ const YouthMultiStepForm = () => {
   return (
     <div className="w-full max-w-7xl mx-auto overflow-hidden bg-gray-50 rounded-2xl mt-10 shadow-md">
       {/* Form Title */}
-      <h1 className="text-xl font-bold p-4 bg-white text-gray-800 text-center mb-6">
+      <h1 className="text-xl font-bold p-4 bg-white text-[#21255C] text-center mb-6">
         استمارة التقديم <span className="text-[#F03F74]">- للشباب</span>
       </h1>
 
@@ -87,6 +87,11 @@ const YouthMultiStepForm = () => {
       <div className="mb-6 w-full max-w-4xl mx-auto">
         <ProgressBar steps={steps} currentStep={currentStep - 1} />
       </div>
+
+      {/* Current Step Title */}
+      <p className="text-2xl font-semibold text-[#21255C] text-center mb-4">
+        {steps[currentStep - 1]}
+      </p>
 
       {/* Current Step Component */}
       <div className="w-full max-w-3xl mx-auto bg-white p-4 mb-12 rounded-2xl">

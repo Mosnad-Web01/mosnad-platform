@@ -1,5 +1,6 @@
 import React from "react";
 import Checkbox from "@/components/common/Checkbox";
+import TextArea from "@/components/common/TextArea";
 
 const Step4 = ({ formData, updateFormData, onNext, onPrevious }) => {
   const handleInputChange = (field, value) => {
@@ -8,19 +9,34 @@ const Step4 = ({ formData, updateFormData, onNext, onPrevious }) => {
 
   return (
     <div>
-      <h1 className="text-xl font-bold text-gray-700 mb-4">الخبرات والورش</h1>
       <form>
-        <Checkbox
-          label="هل حضرت ورش عمل من قبل؟"
-          checked={formData.hasWorkshops}
-          onChange={(value) => handleInputChange("hasWorkshops", value)}
+        <TextArea
+          label="صف موقفًا اضطررت فيه إلى حل مشكلة بطريقة إبداعية أو التفكير خارج الصندوق. ما هي المشكلة وكيف تعاملت معها؟"
+          placeholder="ادخل النص هنا"
+          rows={2}
+          errorMessage=""
+          additionalClasses="mb-6"
+          value={formData.motivation || ""}
+          onChange={(e) => handleInputChange("motivation", e.target.value)}
         />
-        <Checkbox
-          label="هل لديك خبرة في البرمجة؟"
-          checked={formData.hasProgrammingExperience}
-          onChange={(value) => handleInputChange("hasProgrammingExperience", value)}
+        <TextArea
+          label="اشرح الاختلافات بين website و web application؟ فيه إلى حل مشكلة بطريقة إبداعية أو التفكير خارج الصندوق. ما هي المشكلة وكيف تعاملت معها؟"
+          placeholder="ادخل النص هنا"
+          rows={2}
+          errorMessage=""
+          additionalClasses="mb-6"
+          value={formData.difference || ""}
+          onChange={(e) => handleInputChange("difference", e.target.value)}
         />
-      
+        <TextArea
+          label="تخيل أنك تقوم بإنشاء صفحة ويب لشركة محلية. ما الخطوات التي ستتخذها للتأكد من أن الصفحة سهلة الاستخدام وجذابة بصريًا؟"
+          placeholder="ادخل النص هنا"
+          rows={2}
+          errorMessage=""
+          additionalClasses="mb-6"
+          value={formData.steps || ""}
+          onChange={(e) => handleInputChange("steps", e.target.value)}
+        />
       </form>
     </div>
   );

@@ -58,7 +58,7 @@ const Navbar = () => {
 	return (
 		<header className="bg-transparent">
 			<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-				<div className="flex h-16 items-center justify-between">
+				<div className=" flex flex-row-reverse h-16 items-center justify-between md:flex-row ">
 					{/* Logo Section */}
 					<div className="md:flex md:items-center md:gap-12">
 						<a href="#" className="block text-teal-600">
@@ -90,11 +90,14 @@ const Navbar = () => {
 					{/* CTA Buttons */}
 					<div className="flex items-center gap-4">
 						<div className="sm:flex sm:gap-4">
-							<a
-								className="rounded-full bg-gradient px-6 sm:px-9 py-2 sm:py-3 text-sm font-medium text-white shadow transition hover:scale-105"
-								href="#">
-								إنشاء حساب
-							</a>
+							<div className="hidden sm:flex">
+								<a
+									className="rounded-full bg-gradient px-6 sm:px-9 py-2 sm:py-3 text-sm font-medium text-white shadow transition hover:scale-105"
+									href="#">
+									إنشاء حساب
+								</a>
+							</div>
+
 							<div className="hidden sm:flex">
 								<a
 									className="border rounded-full  bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 px-5 py-2.5 text-sm font-medium text-transparent bg-clip-text hover:bg-gradient-to-br hover:from-purple-500 hover:via-pink-600 hover:to-red-600  hover:scale-105 transition "

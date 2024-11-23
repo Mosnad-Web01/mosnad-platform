@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        'custom-all-sides': '0 10px 30px rgba(0, 0, 0, 0.2)', 
+      },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
         readex: ['Readex Pro', 'sans-serif'],

@@ -3,7 +3,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className='bg-[#EFEBF5]'>
+    <div className='mt-12'>
         <YouthMultiStepForm />
     </div>
   )

@@ -19,19 +19,16 @@ const Navbar = () => {
 	const navItems = [
 		{ label: 'الرئيسية', href: '/', icon: <FaHome /> },
 		{ label: 'من نحن', href: '/about', icon: <FaUsers /> },
-		{ label: 'الشباب', href: '#', icon: <FaUserPlus /> },
-		{ label: 'الشركات', href: '#', icon: <FaBriefcase /> },
+		{ label: 'الشباب', href: '/YouthForm', icon: <FaUserPlus /> },
+		{ label: 'الشركات', href: '/CompaniesForm', icon: <FaBriefcase /> },
 		{ label: 'قصص النجاح', href: '#', icon: <FaBookOpen /> },
-		// { label: 'بناء السيرة الذاتية', href: '#', icon: <FaBriefcase /> },
 		{ label: 'تواصل معنا', href: '#', icon: <FaEnvelope /> },
 	];
 
 	return (
-		<header className="relative w-full  overflow-hidden bg-pink-200/50">
-			
-			<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 ">
-
-				<div className=" flex flex-row-reverse py-4 px-0 md:px-1 lg:px-2 xl:px-4 items-center justify-between md:flex-row z-50">
+		<header className="top-0 w-full sticky z-50 lg:backdrop-blur-md lg:bg-pink-200/50">
+			<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+				<div className="flex flex-row-reverse py-4 px-0 md:px-1 lg:px-2 xl:px-4 items-center justify-between md:flex-row">
 					{/* Logo */}
 					<div className="md:flex md:items-center md:gap-12">
 						<a href="#" className="block text-teal-600">
@@ -40,7 +37,7 @@ const Navbar = () => {
 								alt="Mosnad Logo"
 								width={133}
 								height={58}
-								className="h-8  md:h-8 lg:h-11  w-auto"
+								className="h-8 md:h-8 lg:h-11 w-auto"
 							/>
 						</a>
 					</div>
@@ -73,7 +70,7 @@ const Navbar = () => {
 
 							<div className="hidden sm:flex">
 								<a
-									className="border rounded-full  bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 px-5 py-2.5 text-sm font-medium text-transparent bg-clip-text hover:bg-gradient-to-br hover:from-purple-500 hover:via-pink-600 hover:to-red-600  hover:scale-105 transition "
+									className="border rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 px-5 py-2.5 text-sm font-medium text-transparent bg-clip-text hover:bg-gradient-to-br hover:from-purple-500 hover:via-pink-600 hover:to-red-600 hover:scale-105 transition"
 									href="#">
 									تسجيل الدخول
 								</a>
@@ -82,7 +79,7 @@ const Navbar = () => {
 						<div className="block lg:hidden z-50">
 							<button
 								onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-								className="rounded  text-gray-600 transition hover:text-gray-800">
+								className="rounded text-gray-600 transition hover:text-gray-800">
 								<FaThList className="text-2xl cursor-pointer" />
 							</button>
 						</div>

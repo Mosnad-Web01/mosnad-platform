@@ -44,7 +44,7 @@ const HeroSection = () => {
 
 	return (
 		<section className="relative w-full overflow-hidden bg-pink-200/50">
-			<div className="max-w-screen-xl mx-auto relative h-[600px] md:h-[800px]">
+			<div className="w-full max-w-screen-2xl mx-auto relative h-[600px] md:h-[800px]">
 				{/* Background Image with Mask */}
 				<div
 					className="absolute inset-0 bg-[url('/bg2.png')] bg-cover bg-center bg-no-repeat"

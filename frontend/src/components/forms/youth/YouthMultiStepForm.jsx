@@ -77,7 +77,7 @@ const YouthMultiStepForm = () => {
   ];
 
   return (
-    <div className="w-full max-w-7xl mx-auto overflow-hidden bg-gray-50 rounded-2xl mt-10 shadow-md">
+    <div className="w-full max-w-7xl mx-auto overflow-hidden bg-gray-50 rounded-2xl shadow-md">
       {/* Form Title */}
       <h1 className="text-xl font-bold p-4 bg-white text-[#21255C] text-center mb-6">
         استمارة التقديم <span className="text-[#F03F74]">- للشباب</span>

@@ -2,7 +2,7 @@ import React from "react";
 
 const FieldContainer = ({ label, children, className = "" }) => {
   return (
-    <div>
+    <div className="mt-4">
       {label && (
         <label className={`text-sm text-[#21255C] font-medium mb-2 block`}>
           {label}

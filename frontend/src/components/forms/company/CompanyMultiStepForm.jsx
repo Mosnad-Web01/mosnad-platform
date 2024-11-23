@@ -4,12 +4,11 @@ import React, { useState } from "react";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
-import Step4 from "./Step4";
-import Step5 from "./Step5";
 import SuccessPage from "../SuccessPage";
 import ProgressBar from "../ProgressBar";
 
-const YouthMultiStepForm = () => {
+
+const CompanyMultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
@@ -31,11 +30,9 @@ const YouthMultiStepForm = () => {
 
   // Define step labels for the progress bar
   const steps = [
-    "البيانات الشخصية",
-    "الدوافع والإهتمام",
-    "خبرة سابقة",
-    " الوعي الفني ",
-    " معلومات أضافية",
+    "معلومات عن الشركة",
+    "احتياجات التدريب والتوظيف",
+    "معلومات اضافية",
   ];
 
   // Define step components
@@ -60,27 +57,14 @@ const YouthMultiStepForm = () => {
       onNext={() => setCurrentStep(4)}
       onPrevious={() => setCurrentStep(2)}
     />,
-    <Step4
-      key={4}
-      formData={formData}
-      updateFormData={updateFormData}
-      onNext={() => setCurrentStep(5)}
-      onPrevious={() => setCurrentStep(3)}
-    />,
-    <Step5
-      key={5}
-      formData={formData}
-      updateFormData={updateFormData}
-      onPrevious={() => setCurrentStep(4)}
-      onSubmit={() => setCurrentStep(6)}
-    />,
+   
   ];
 
   return (
     <div className="w-full max-w-7xl mx-auto overflow-hidden bg-gray-50 rounded-2xl shadow-md">
       {/* Form Title */}
       <h1 className="text-xl font-bold p-4 bg-white text-[#21255C] text-center mb-6">
-        استمارة التقديم <span className="text-[#F03F74]">- للشباب</span>
+        استمارة التقديم <span className="text-[#F03F74]">- للشركات</span>
       </h1>
 
       {/* Progress Bar */}
@@ -113,10 +97,10 @@ const YouthMultiStepForm = () => {
           )}
 
           {/* Show the submit button only when on Step 5 */}
-          {currentStep === 5 && (
+          {currentStep === 3 && (
             <button
               type="button"
-              onClick={() => setCurrentStep(6)} // Assuming onSubmit takes you to Step 6, where you show success
+              onClick={() => setCurrentStep(4)} // Assuming onSubmit takes you to Step 6, where you show success
               className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
             >
               إرسال
@@ -124,7 +108,7 @@ const YouthMultiStepForm = () => {
           )}
 
           {/* Next Button (Not shown on Step 5) */}
-          {currentStep < stepComponents.length && currentStep !== 5 && (
+          {currentStep < stepComponents.length && currentStep !== 3 && (
             <button
               className="px-4 py-2 bg-gradient text-white rounded-md hover:bg-pink-600"
               onClick={() => setCurrentStep((prev) => prev + 1)}
@@ -138,4 +122,4 @@ const YouthMultiStepForm = () => {
   );
 };
 
-export default YouthMultiStepForm;
+export default CompanyMultiStepForm;

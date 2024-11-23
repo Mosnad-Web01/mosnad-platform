@@ -9,7 +9,7 @@ const ToggleButtonGroup = ({ options, activeOption, onOptionChange ,containerSty
           key={index}
           className={` rounded-lg ${
             activeOption === option.value
-              ? "bg-[#F6DAE3] text-blue-950 font-bold"
+              ? "bg-[#F03F744D] text-blue-950 font-bold"
               : "bg-white text-gray-800 font-bold"
           }  ${buttonStyle}`}
           onClick={() => onOptionChange(option.value)}

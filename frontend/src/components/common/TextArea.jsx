@@ -1,9 +1,9 @@
 import React from "react";
 
-const Input = ({
+const TextArea = ({
   label,
   placeholder,
-  type = "text",
+  rows = 4,
   icon: Icon,
   errorMessage,
   additionalClasses = "",
@@ -18,12 +18,12 @@ const Input = ({
             <Icon />
           </div>
         )}
-        <input
-          type={type}
+        <textarea
           placeholder={placeholder}
+          rows={rows} // control height based on number of lines
           className={`w-full px-4 py-4 rounded-lg bg-gray-50 border border-gray-100 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
             Icon ? "pl-10" : ""
-          }`}
+          } resize-none`} // make it non-resizable
           {...props}
         />
       </div>
@@ -34,4 +34,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default TextArea;

@@ -1,4 +1,5 @@
 import AboutSection from '@/components/home/AboutSection';
+import Pricing from './prices1/page';
 import HeroSection from '@/components/home/HeroSection';
 import JobListings from '@/components/home/JobListings';
 import ServedCompaniesSection from '@/components/home/ServedCompaniesSection';
@@ -8,6 +9,7 @@ export default function Home() {
 		<>
 			<HeroSection />
 			<AboutSection />
+			<Pricing />
 			<ServedCompaniesSection />
 			<JobListings />
 		</>

@@ -23,6 +23,7 @@ const Navbar = () => {
     { label: "الشركات", href: "/CompaniesForm", icon: <FaBriefcase /> },
     { label: "قصص النجاح", href: "#", icon: <FaBookOpen /> },
     { label: "تواصل معنا", href: "#", icon: <FaEnvelope /> },
+    { label: "المستخدم", href: "/userProfile", icon: <FaThList /> },
   ];
 
   return (

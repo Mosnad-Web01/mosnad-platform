@@ -7,6 +7,8 @@ const Input = ({
   icon: Icon,
   errorMessage,
   additionalClasses = "",
+  isDisabled = false,
+  value,
   ...props
 }) => {
   return (
@@ -19,11 +21,13 @@ const Input = ({
           </div>
         )}
         <input
+          disabled={isDisabled}
           type={type} // Dynamically set type (either text or date)
           placeholder={placeholder}
           className={`w-full px-4 py-[15px] rounded-lg bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
             Icon ? "pl-10" : ""
           }`}
+          value={value}
           {...props}
         />
       </div>

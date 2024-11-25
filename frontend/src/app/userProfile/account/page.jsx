@@ -1,10 +1,5 @@
-import Header from "@/components/profile/Header";
+import { redirect } from "next/navigation";
 
-export default function AccountPage() {
-    return (
-      <div>
-
-      </div>
-    );
-  }
-  
+export default function Page() {
+  redirect("/userProfile/account/manage"); 
+}

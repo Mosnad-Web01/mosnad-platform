@@ -28,6 +28,22 @@ const Page = () => {
       applicationStatus: { text: "تم القبول", status: "accepted" },
       trainingAvailable: true,
     },
+    {
+      id: 4,
+      opportunityName: "Web Full Stack",
+      formAvailable: true,
+      date: "أغسطس 2023",
+      applicationStatus: { text: "مرحلة الاختبار", status: "rejected" },
+      trainingAvailable: false,
+    },
+    {
+      id: 5,
+      opportunityName: "UI/UX",
+      formAvailable: true,
+      date: "أغسطس 2023",
+      applicationStatus: { text: "تحت المراجعة", status: "review" },
+      trainingAvailable: false,
+    },
   ];
 
   return (

@@ -12,6 +12,11 @@ const sidebarItems = [
     icon: "/manage-account-icon.svg",
   },
   {
+    label: "السيرة الذاتية",
+    href: "/userProfile/resume",
+    icon: "/request.svg",
+  },
+  {
     label: "إكمال الحساب",
     href: "/userProfile/complete",
     icon: "/verify-icon.svg",
@@ -76,7 +81,12 @@ export default function Sidebar() {
                   pathname === item.href ? "bg-blue-500/20 rounded-full" : ""
                 }`}
               >
-                <Image src={item.icon} alt={item.label} width={16} height={16} />
+                <Image
+                  src={item.icon}
+                  alt={item.label}
+                  width={16}
+                  height={16}
+                />
               </div>
               {item.label}
             </div>

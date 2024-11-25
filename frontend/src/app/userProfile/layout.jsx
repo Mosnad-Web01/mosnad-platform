@@ -10,7 +10,7 @@ export default function UserProfileLayout({ children }) {
       <div className="flex-grow">
         {/* Header updates dynamically based on the page */}
         <Header />
-        <main className="p-4">{children}</main>
+        <main>{children}</main>
       </div>
     </div>
     </main> 

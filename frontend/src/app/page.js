@@ -1,6 +1,6 @@
-import Pricing from '../app/prices/page';
 import AboutSection from '@/components/home/AboutSection';
 import CareerPathSection from '@/components/home/CareerPathSection';
+import ClientOpinionsSection from '@/components/home/ClientOpinionsSection';
 import HeroSection from '@/components/home/HeroSection';
 import ServedCompaniesSection from '@/components/home/ServedCompaniesSection';
 import SuccessStoriesSection from '@/components/home/SuccessStoriesSection';
@@ -15,6 +15,7 @@ export default function Home() {
 			<CareerPathSection />
 			<SuccessStoriesSection />
 			<TeamMembersSection />
+			<ClientOpinionsSection />
 		</>
 	);
 }

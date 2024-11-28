@@ -1,6 +1,7 @@
 import React from "react";
 
 const Input = ({
+  name="",
   label,
   placeholder,
   type = "text",
@@ -19,6 +20,7 @@ const Input = ({
           </div>
         )}
         <input
+          name={name}
           type={type} // Dynamically set type (either text or date)
           placeholder={placeholder}
           className={`w-full px-4 py-[15px] rounded-lg bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-400 ${

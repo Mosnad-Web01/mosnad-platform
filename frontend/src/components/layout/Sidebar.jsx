@@ -1,6 +1,7 @@
 'use client';
 import { FaTimes } from 'react-icons/fa';
 import NavLink from './NavLink';
+import Link from 'next/link';
 
 const Sidebar = ({ isOpen, onClose, navItems }) => {
 	return (
@@ -41,16 +42,16 @@ const Sidebar = ({ isOpen, onClose, navItems }) => {
 
 					{/* Auth Section */}
 					<div className="space-y-4 border-t border-slate-700/50 py-6">
-						<a
+						<Link
 							className="bg-gradient block w-full rounded-lg px-6 py-3 text-center text-sm font-medium text-white shadow-md shadow-teal-500/25 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-							href="#">
+							href="/register">
 							إنشاء حساب
-						</a>
-						<a
+						</Link>
+						<Link
 							className="block w-full rounded-lg bg-gradient-to-r from-teal- to-emerald-500 px-6 py-3 text-center text-sm font-medium text-white shadow-md shadow-teal-500/25 transition-all duration-200 hover:scale-[1.02] hover:shadow-teal-500/35 active:scale-[0.98]"
-							href="#">
+							href="/login">
 							تسجيل الدخول
-						</a>
+						</Link>
 					</div>
 
 					{/* Welcome Section */}

@@ -1,9 +1,11 @@
-import React from 'react'
+import RegisterForm from '@/components/forms/RegisterForm';
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
-}
+export const metadata = {
+	title: 'Mosnad | Register',
+	description: 'Register to your account',
+};
+const Page = () => {
+	return <RegisterForm />;
+};
 
-export default page
+export default Page;

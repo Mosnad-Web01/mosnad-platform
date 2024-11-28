@@ -12,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, SoftDeletes,  HasApiTokens;
+    use HasFactory, Notifiable, SoftDeletes, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -55,5 +55,24 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function isAdmin()
+    {
+        // return $this->role && $this->role->name === 'admin';
+        return $this->role_id === 1;
+
+    }
+
+    public function isCompany()
+    {
+        // return $this->role && $this->role->name === 'company';
+        return $this->role_id === 2;
+    }
+
+    public function isStudent()
+    {
+        // return $this->role && $this->role->name === 'student';
+        return $this->role_id === 3;
     }
 }

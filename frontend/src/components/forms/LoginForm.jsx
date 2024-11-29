@@ -1,10 +1,37 @@
+// src/components/forms/LoginForm.jsx
+'use client';
+import { useState } from 'react';
 import Input from '@/components/common/Input';
 import { FiMail, FiLock, FiUser } from 'react-icons/fi';
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import Image from 'next/image';
-
 import Link from 'next/link';
+import { useForm } from '@/hooks/useForm';
+
+import useLogin from '@/hooks/auth/useLogin';
+
 const LoginForm = () => {
+	const {
+		values,
+		errors: formErrors,
+		handleChange,
+	} = useForm({
+		email: '',
+		password: '',
+	});
+
+	const {
+		login,
+		error: loginError,
+		formErrors: serverErrors,
+		isLoading,
+	} = useLogin();
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		await login(values.email, values.password);
+	};
+
 	return (
 		<div className="relative bg-pink-100 md:bg-white overflow-hidden ">
 			{/* SVG Background */}
@@ -48,22 +75,54 @@ const LoginForm = () => {
 							</h3>
 
 							{/* Form Fields */}
-							<form className="space-y-4 ">
+
+							<form
+								className="space-y-4 "
+								onSubmit={handleSubmit}
+								method="post">
+								{/* Show generic login errors */}
+								{loginError && (
+									<div
+										className="text-red-500 text-sm p-2 bg-red-50 rounded text-center"
+										dir="ltr">
+										{loginError}
+									</div>
+								)}
 								<Input
 									name="email"
 									type="email"
 									placeholder="Mosnad@Mosnad.com"
 									icon={FiMail}
+									value={values.email}
+									onChange={handleChange}
+									errorMessage={
+										serverErrors.email || formErrors.email
+									}
+									disabled={isLoading}
+									dir="ltr"
 								/>
+								{/* Password input with error */}
 								<Input
 									name="password"
 									type="password"
-									placeholder="ادخل كلمة السر"
+									placeholder="password"
 									icon={FiLock}
+									value={values.password}
+									onChange={handleChange}
+									errorMessage={
+										serverErrors.password ||
+										formErrors.password
+									}
+									disabled={isLoading}
+									dir="ltr"
 								/>
-
-								<button className="w-full bg-gradient-to-r from-pink-500 to-red-500 text-white py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
-									تسجيل الدخول
+								<button
+									type="submit"
+									disabled={isLoading}
+									className="w-full bg-gradient-to-r from-pink-500 to-red-500 text-white py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+									{isLoading
+										? '...تسجيل الدخول'
+										: 'تسجيل الدخول'}
 								</button>
 							</form>
 

@@ -10,16 +10,14 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string',
+            'password' => 'required|string|min:8',
             'role_id' => 'required|string',
             'phone_number' => 'required',
-
         ]);
 
         if ($validator->fails()) {
@@ -30,23 +28,23 @@ class AuthController extends Controller
         }
 
         $credentials = $request->only('name', 'email', 'password', 'role_id', 'phone_number');
+        $credentials['password'] = Hash::make($credentials['password']);
 
         $user = User::create($credentials);
-        $token = $user->createToken($user->name);
+        $token = $user->createToken($user->name)->plainTextToken;
 
-
-        return [
+        return response()->json([
             'user' => $user,
             'role' => $user->role->name,
-            'token' => $token->plainTextToken
-        ];
+            'token' => $token,
+        ], 201);
     }
 
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|exists:users',
-            'password' => 'required',
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|min:6',
         ]);
 
         if ($validator->fails()) {
@@ -64,21 +62,27 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken($user->name);
+        $token = $user->createToken($user->name)->plainTextToken;
 
-        return [
+        return response()->json([
             'user' => $user,
             'role' => $user->role->name,
-            'token' => $token->plainTextToken
-        ];
-
+            'token' => $token,
+        ], 200);
     }
 
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
-        return response()->json([
-            'message' => 'Logged out successfully'
-        ]);
+        try {
+            $request->user()->tokens()->delete();
+            return response()->json([
+                'message' => 'Logged out successfully',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to log out',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

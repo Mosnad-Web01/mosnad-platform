@@ -38,13 +38,18 @@ const useLogin = () => {
 				sameSite: 'strict',
 			});
 
+			Cookies.set('role', role, {
+				expires: 7,
+				secure: process.env.NODE_ENV === 'production',
+				sameSite: 'strict',
+			});
+
 			// Set axios default header
 			axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 			// Get redirect path from URL or use role-based default
 			const from = searchParams.get('from');
 			const roleRedirect = {
-				admin: APP_ROUTES.DASHBOARD.ADMIN,
 				company: APP_ROUTES.DASHBOARD.COMPANY,
 				student: APP_ROUTES.DASHBOARD.STUDENT,
 			};

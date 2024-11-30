@@ -35,6 +35,12 @@ const useRegister = () => {
 				sameSite: 'strict',
 			});
 
+			Cookies.set('role', role, {
+				expires: 7,
+				secure: process.env.NODE_ENV === 'production',
+				sameSite: 'strict',
+			});
+
 			// set axios default header
 			axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 

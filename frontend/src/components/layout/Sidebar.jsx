@@ -1,8 +1,34 @@
 'use client';
-import { FaTimes } from 'react-icons/fa';
+import { FaRegUserCircle, FaTimes, FaUserCircle } from 'react-icons/fa';
 import NavLink from './NavLink';
+import Link from 'next/link';
+import useLogout from '@/hooks/auth/useLogout';
+import { useAuth } from '@/hooks/auth/useAuth';
+import Image from 'next/image';
 
 const Sidebar = ({ isOpen, onClose, navItems }) => {
+	const { user } = useAuth();
+	const logout = useLogout();
+
+	const GradientButton = ({ href, children, primary, onClick }) => (
+		<Link
+			href={href}
+			//to close sidebar
+			onClick={(e) => {
+				if (onClick) {
+					onClick();
+				}
+			}}
+			className={`group relative overflow-hidden block w-full rounded-lg px-6 py-3.5 text-center text-sm font-medium shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] ${
+				primary
+					? 'bg-gradient-to-r from-pink-500 to-red-500 text-white shadow-pink-500/25 hover:shadow-pink-500/35'
+					: 'bg-gradient-to-r from-slate-700 to-slate-800 text-white shadow-slate-500/25 hover:shadow-slate-500/35'
+			}`}>
+			<span className="relative z-10">{children}</span>
+			<div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/10 to-transparent transition-transform duration-300 group-hover:translate-x-full" />
+		</Link>
+	);
+
 	return (
 		<div
 			className={`fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 ${
@@ -25,7 +51,7 @@ const Sidebar = ({ isOpen, onClose, navItems }) => {
 				<div className="px-6">
 					{/* Navigation Links */}
 					<nav className="mb-8">
-						<ul className="space-y-4">
+						<ul className="space-y-2">
 							{navItems.map((item, index) => (
 								<NavLink
 									key={index}
@@ -33,6 +59,7 @@ const Sidebar = ({ isOpen, onClose, navItems }) => {
 									href={item.href}
 									icon={item.icon}
 									isSidebar={true}
+									onClick={onClose}
 									className="flex items-center gap-3 rounded-lg px-4 py-3 text-slate-300 transition-all duration-200 hover:bg-slate-700/50 hover:text-white active:scale-95"
 								/>
 							))}
@@ -40,31 +67,73 @@ const Sidebar = ({ isOpen, onClose, navItems }) => {
 					</nav>
 
 					{/* Auth Section */}
-					<div className="space-y-4 border-t border-slate-700/50 py-6">
-						<a
-							className="bg-gradient block w-full rounded-lg px-6 py-3 text-center text-sm font-medium text-white shadow-md shadow-teal-500/25 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-							href="#">
-							إنشاء حساب
-						</a>
-						<a
-							className="block w-full rounded-lg bg-gradient-to-r from-teal- to-emerald-500 px-6 py-3 text-center text-sm font-medium text-white shadow-md shadow-teal-500/25 transition-all duration-200 hover:scale-[1.02] hover:shadow-teal-500/35 active:scale-[0.98]"
-							href="#">
-							تسجيل الدخول
-						</a>
-					</div>
+					{user ? (
+						<div className="space-y-4 border-t border-slate-700/50 py-6">
+							<div className="flex items-center gap-3 rounded-lg px-4 py-3 text-slate-300 transition-all duration-200 hover:bg-slate-700/50 hover:text-white active:scale-95">
+								<Link href="/profile" onClick={onClose}>
+									<div className="flex items-center gap-3">
+										<div className="relative h-8 w-8 overflow-hidden rounded-full">
+											<FaRegUserCircle className="text-2xl" />
+										</div>
+										<div className="flex flex-col">
+											<span className="text-sm font-medium">
+												{user?.name}
+											</span>
+											<span className="text-xs text-slate-400">
+												{user?.email}
+											</span>
+										</div>
+									</div>
+								</Link>
+							</div>
+							<button
+								onClick={() => {
+									logout();
+									onClose(); //to close the sidebar
+								}}
+								className="block w-full rounded-lg bg-gradient-to-r from-pink-500 to-red-500 px-6 py-3 text-center text-sm font-medium text-white shadow-md transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
+								تسجيل الخروج
+							</button>
+						</div>
+					) : (
+						<div className="space-y-4 border-t border-slate-700/50 py-6">
+							<div className="space-y-3">
+								<GradientButton
+									href="/register"
+									primary
+									onClick={onClose}>
+									إنشاء حساب جديد
+								</GradientButton>
+								<GradientButton href="/login" onClick={onClose}>
+									تسجيل الدخول
+								</GradientButton>
+							</div>
+						</div>
+					)}
 
 					{/* Welcome Section */}
-					<div className="mt-8 rounded-lg bg-gradient-to-r from-slate-800/50 to-slate-700/50 p-6 text-center">
-						<div className="inline-block rounded-full bg-teal-500/10 p-3">
-							<span className="text-2xl">✨</span>
+					{!user && (
+						<div className="mt-8 overflow-hidden rounded-xl bg-gradient-to-br from-slate-700/50 via-slate-800/50 to-slate-900/50 p-6">
+							<div className="relative">
+								<div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-pink-500/10 blur-2xl" />
+								<div className="absolute -left-6 -bottom-6 h-24 w-24 rounded-full bg-red-500/10 blur-2xl" />
+								<div className="relative space-y-4 text-center">
+									<div className="inline-flex animate-bounce items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-red-500 p-3">
+										<span className="text-2xl">✨</span>
+									</div>
+									<div>
+										<h3 className="text-lg font-semibold text-white">
+											مرحبًا بك في Mosnad!
+										</h3>
+										<p className="mt-2 text-sm text-slate-400">
+											انضم إلينا اليوم واكتشف الفرص
+											المتاحة
+										</p>
+									</div>
+								</div>
+							</div>
 						</div>
-						<h3 className="mt-3 text-lg font-semibold text-white">
-							مرحبًا بك في Mosnad!
-						</h3>
-						<p className="mt-2 text-sm text-slate-400">
-							ابدأ رحلتك معنا اليوم
-						</p>
-					</div> 
+					)}
 				</div>
 			</div>
 		</div>

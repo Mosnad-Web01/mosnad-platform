@@ -1,9 +1,12 @@
-import React from 'react'
+import RegisterPage from "@/components/auth/RegisterPage";
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
-}
 
-export default page
+export const metadata = {
+	title: 'Mosnad | Register',
+	description: 'Register to your account',
+};
+const Page = () => {
+	return <RegisterPage />;
+};
+
+export default Page;

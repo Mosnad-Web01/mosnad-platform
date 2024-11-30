@@ -1,9 +1,14 @@
-const page = () => {
-  return (
-    <div>
-        
-    </div>
-  )
-}
+// src/app/(auth)/login/page.jsx
 
-export default page
+import LoginPage from '@/components/auth/LoginPage';
+
+export const metadata = {
+	title: 'Mosnad | Login',
+	description: 'Login to your account',
+};
+
+const page = () => {
+	return <LoginPage />;
+};
+
+export default page;

@@ -1,11 +1,12 @@
-import RegisterForm from '@/components/forms/RegisterForm';
+import RegisterPage from "@/components/auth/RegisterPage";
+
 
 export const metadata = {
 	title: 'Mosnad | Register',
 	description: 'Register to your account',
 };
 const Page = () => {
-	return <RegisterForm />;
+	return <RegisterPage />;
 };
 
 export default Page;

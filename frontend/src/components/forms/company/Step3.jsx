@@ -1,12 +1,11 @@
 import React from "react";
-import RadioButton from "@/components/common/Radio";
-import FieldContainer from "@/components/common/FieldContainer";
 import TextArea from "@/components/common/TextArea";
 
 const Step3 = ({ formData, updateFormData, onNext, onPrevious }) => {
   const handleInputChange = (field, value) => {
     updateFormData(field, value);
   };
+
 
   return (
     <div className="rtl container mx-auto px-4">
@@ -17,9 +16,11 @@ const Step3 = ({ formData, updateFormData, onNext, onPrevious }) => {
           rows={4}
           errorMessage=""
           additionalClasses="mb-6"
-          value={formData.other || ""}
-          onChange={(e) => handleInputChange("other", e.target.value)}
+          value={formData.additional_notes || ""}
+          onChange={(value) => handleInputChange("additional_notes", value)} // Handle value change
         />
+
+       
       </form>
     </div>
   );

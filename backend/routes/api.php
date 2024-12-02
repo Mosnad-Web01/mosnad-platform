@@ -4,7 +4,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\AuthController;
-
+use App\Http\Controllers\api\CompanyFormController;
 
 // public routes --- Endpoint: /api/test
 Route::get('/test', function () {
@@ -61,5 +61,9 @@ Route::middleware('auth:sanctum')->group(function () {
         // list other student routes here :
 
     });
-
 });
+
+
+Route::get('/company-forms', [CompanyFormController::class, 'index']);
+Route::post('/company-forms', [CompanyFormController::class, 'store']);
+

@@ -5,142 +5,125 @@ import FieldContainer from "@/components/common/FieldContainer";
 import Checkbox from "@/components/common/Checkbox";
 
 const Step1 = ({ formData, updateFormData }) => {
-  const handleInputChange = (field, value) => {
-    updateFormData(field, value);
+  const handleInputChange = (name) => (event) => {
+    updateFormData(name, event.target.value);
+  };
+
+  const handleRadioChange = (name, value) => {
+    updateFormData(name, value); // Update formData with the selected value
+  };
+
+  const handleCheckboxChange = (skill, isChecked) => {
+    const updatedSkills = isChecked
+      ? [...formData.skills, skill] // Add the skill
+      : formData.skills.filter((s) => s !== skill); // Remove the skill
+    updateFormData("skills", updatedSkills);
   };
 
   return (
     <div className="rtl container mx-auto px-4">
       <form>
+        {/* Text Inputs */}
         <Input
           label="ادخل اسم شركتك"
+          name="name"
+          type="text"
           placeholder="أسم شركتك"
           value={formData.name || ""}
-          onChange={(value) => handleInputChange("name", value)}
+          onChange={handleInputChange("name")}
         />
 
         <Input
           label="البريد الالكتروني"
+          name="email"
+          type="email"
           placeholder="البريد الالكتروني"
           value={formData.email || ""}
-          onChange={(value) => handleInputChange("email", value)}
+          onChange={handleInputChange("email")}
         />
 
         <Input
-        label="ادخل الصناعه الخاصه بك"
-        placeholder="ادخل الصناعه الخاصه بك"
-        value={formData.industry || ""}
-        onChange={(value) => handleInputChange("industry", value)}
+          label="ادخل الصناعه الخاصه بك"
+          name="industry"
+          type="text"
+          placeholder="ادخل الصناعه الخاصه بك"
+          value={formData.industry || ""}
+          onChange={handleInputChange("industry")}
         />
-        
-        <FieldContainer label="العدد التقريبي للموظفين" className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-          <RadioButton
-            name="employees"
-            label="من 1 - 10"
-            value="1-10"
-            checked={formData.employees === "1-10"}
-            onChange={(value) => handleInputChange("employees", value)}
-          />
-          <RadioButton
-            name="employees"
-            label="من 11 - 50"
-            value="11-50"
-            checked={formData.employees === "11-50"}
-            onChange={(value) => handleInputChange("employees", value)}
-          />
-          <RadioButton
-            name="employees"
-            label="من 51 - 100"
-            value="51-100"
-            checked={formData.employees === "51-100"}
-            onChange={(value) => handleInputChange("employees", value)}
-          />
-          <RadioButton
-            name="employees"
-            label="من 101 - 500"
-            value="101-500"
-            checked={formData.employees === "101-500"}
-            onChange={(value) => handleInputChange("employees", value)}
-          />
-          
+
+        {/* Radio Buttons for Employees */}
+        <FieldContainer
+          label="العدد التقريبي للموظفين"
+          className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4"
+        >
+          {["1-10", "11-50", "51-100", "101-500"].map((range) => (
+            <RadioButton
+              key={range}
+              name="employees"
+              label={`من ${range}`}
+              value={range}
+              checked={formData.employees === range}
+              onChange={() => handleRadioChange("employees", range)}
+            />
+          ))}
         </FieldContainer>
 
-        <FieldContainer label="مرحلة البدء" className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-3">
-          <RadioButton
-            name="stage"
-            label="قبل البذور"
-            value="before"
-            checked={formData.stage === "before"}
-            onChange={(value) => handleInputChange("stage", value)}
-          />
-          <RadioButton
-            name="stage"
-            label="المرحلة المبكرة"
-            value="early"
-            checked={formData.stage === "early"}
-            onChange={(value) => handleInputChange("stage", value)}
-          />
-          <RadioButton
-            name="stage"
-            label="المرحلة المتوسطة"
-            value="middle"
-            checked={formData.stage === "middle"}
-            onChange={(value) => handleInputChange("stage", value)}
-          />
-          <RadioButton
-            name="stage"
-            label="المرحلة المتقدمة"
-            value="advanced"
-            checked={formData.stage === "advanced"}
-            onChange={(value) => handleInputChange("stage", value)}
-          />
+        {/* Radio Buttons for Stage */}
+        <FieldContainer
+          label="مرحلة البدء"
+          className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-3"
+        >
+          {[
+            { value: "before", label: "قبل البذور" },
+            { value: "early", label: "المرحلة المبكرة" },
+            { value: "middle", label: "المرحلة المتوسطة" },
+            { value: "advanced", label: "المرحلة المتقدمة" },
+          ].map(({ value, label }) => (
+            <RadioButton
+              key={value}
+              name="stage"
+              label={label}
+              value={value}
+              checked={formData.stage === value}
+              onChange={() => handleRadioChange("stage", value)}
+            />
+          ))}
         </FieldContainer>
 
-        <FieldContainer label="ما هي مهارات البرمجة الحالية ومستويات الخبرة لموظفيك؟(اختر كل ما ينطبق)" className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-          <Checkbox
-            name="skills"
-            label="مبتدئ"
-            // checked={formData.skills.includes("beginner")}
-            onChange={(value) => handleInputChange("skills", value)}
-          />
-
-          <Checkbox
-            name="skills"
-            label="متوسط"
-            // checked={formData.skills.includes("intermediate")}
-            onChange={(value) => handleInputChange("skills", value)}
-          />
-
-          <Checkbox
-            name="skills"
-            label="متقدم"
-            // checked={formData.skills.includes("advanced")}
-            onChange={(value) => handleInputChange("skills", value)}
-          />
-
-          <Checkbox
-            name="skills"
-            label="متخصص"
-            // checked={formData.skills.includes("expert")}
-            onChange={(value) => handleInputChange("skills", value)}
-          />
+        {/* Checkboxes for Skills */}
+        <FieldContainer
+          label="ما هي مهارات البرمجة الحالية ومستويات الخبرة لموظفيك؟ (اختر كل ما ينطبق)"
+          className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4"
+        >
+          {["مبتدئ", "متوسط", "متقدم", "متخصص"].map((skill) => (
+            <Checkbox
+              key={skill}
+              name="skills"
+              label={skill}
+              checked={formData.skills.includes(skill)}
+              onChange={(isChecked) => handleCheckboxChange(skill, isChecked)}
+            />
+          ))}
         </FieldContainer>
 
-        <FieldContainer label="هل لديك أي موظفين يعملون من المنزل؟" className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-2">
-          <RadioButton
-            name="home_workers"
-            label="نعم"
-            value="yes"
-            checked={formData.home_workers === "yes"}
-            onChange={(value) => handleInputChange("home_workers", value)}
-          />
-          <RadioButton
-            name="home_workers"
-            label="لا"
-            value="no"
-            checked={formData.home_workers === "no"}
-            onChange={(value) => handleInputChange("home_workers", value)}
-          />  
+        {/* Radio Buttons for Home Workers */}
+        <FieldContainer
+          label="هل لديك أي موظفين يعملون من المنزل؟"
+          className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-2"
+        >
+          {[
+            { value: "yes", label: "نعم" },
+            { value: "no", label: "لا" },
+          ].map(({ value, label }) => (
+            <RadioButton
+              key={value}
+              name="home_workers"
+              label={label}
+              value={value}
+              checked={formData.home_workers === value}
+              onChange={() => handleRadioChange("home_workers", value)}
+            />
+          ))}
         </FieldContainer>
       </form>
     </div>

@@ -13,15 +13,23 @@ const YouthMultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
+    city: "",
     address: "",
-    isITGraduate: false,
-    careerPath: "",
+    birth_date: "",
+    phone: "",
+    is_it_graduate: null, // Use null instead of 0
+    job_interest: "",
     motivation: "",
-    aspirations: "",
-    projectIdeas: "",
-    hasWorkshops: false,
-    hasProgrammingExperience: false,
-    hasOtherLanguages: false,
+    career_goals: "",
+    project_ideas: "",
+    has_workshops: null, // Use null instead of 0
+    has_coding_experience: null, // Use null instead of 0
+    knows_other_languages: null, // Use null instead of 0
+    creative_problem_solving: "",
+    website_vs_webapp: "",
+    usability_steps: "",
+    additional_info: "",
+    document: null, // Initialize as null for file
   });
 
   // Function to update form data
@@ -29,13 +37,54 @@ const YouthMultiStepForm = () => {
     setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
+  // Handle file change for document upload
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData((prev) => ({ ...prev, document: file }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async () => {
+    const url = "http://127.0.0.1:8000/api/youth-forms"; // Your API endpoint
+    const formDataToSubmit = new FormData();
+
+    // Append all form data fields
+    Object.keys(formData).forEach((key) => {
+      if (formData[key] !== null && formData[key] !== undefined) {
+        formDataToSubmit.append(key, formData[key]);
+      }
+    });
+
+    try {
+      console.log("FormData to be submitted:", formData);
+      const response = await fetch(url, {
+        method: "POST",
+        body: formDataToSubmit,
+        headers: {
+          // No need to set Content-Type here, FormData will set it automatically
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Something went wrong!");
+      }
+
+      const data = await response.json();
+      console.log("Form submitted successfully:", data);
+      setCurrentStep(6); // Navigate to Success page
+    } catch (error) {
+      console.error("Form submission failed:", error.message);
+    }
+  };
+
   // Define step labels for the progress bar
   const steps = [
     "البيانات الشخصية",
     "الدوافع والإهتمام",
     "خبرة سابقة",
-    " الوعي الفني ",
-    " معلومات أضافية",
+    "الوعي الفني",
+    "معلومات أضافية",
   ];
 
   // Define step components
@@ -72,7 +121,8 @@ const YouthMultiStepForm = () => {
       formData={formData}
       updateFormData={updateFormData}
       onPrevious={() => setCurrentStep(4)}
-      onSubmit={() => setCurrentStep(6)}
+      onSubmit={handleSubmit} // Trigger handleSubmit on final step
+      handleFileChange={handleFileChange} // File change handler
     />,
   ];
 
@@ -116,7 +166,7 @@ const YouthMultiStepForm = () => {
           {currentStep === 5 && (
             <button
               type="button"
-              onClick={() => setCurrentStep(6)} // Assuming onSubmit takes you to Step 6, where you show success
+              onClick={handleSubmit} // Submit form on Step 5
               className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
             >
               إرسال

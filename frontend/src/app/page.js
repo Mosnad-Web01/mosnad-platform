@@ -5,6 +5,7 @@ import HeroSection from '@/components/home/HeroSection';
 import ServedCompaniesSection from '@/components/home/ServedCompaniesSection';
 import SuccessStoriesSection from '@/components/home/SuccessStoriesSection';
 import TeamMembersSection from '@/components/home/TeamMembersSection';
+import { TrainingDetails }  from '@/components/training/TrainingDetails';
 
 export default function Home() {
 	return (
@@ -16,6 +17,7 @@ export default function Home() {
 			<SuccessStoriesSection />
 			<TeamMembersSection />
 			<ClientOpinionsSection />
+			<TrainingDetails />
 		</>
 	);
 }

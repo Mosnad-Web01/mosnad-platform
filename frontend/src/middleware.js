@@ -1,6 +1,4 @@
-// src/middleware.js
 import { NextResponse } from 'next/server';
-import Cookies from 'js-cookie';
 
 export function middleware(request) {
 	const token = request.cookies.get('token')?.value;
@@ -8,11 +6,17 @@ export function middleware(request) {
 
 	console.log(role);
 
+	// Handle unauthenticated users
 	if (!token) {
-		if (request.nextUrl.pathname !== '/login') {
-			return NextResponse.redirect(new URL('/login', request.url));
+		// Allow access to login and register routes
+		if (
+			request.nextUrl.pathname === '/login' ||
+			request.nextUrl.pathname === '/register'
+		) {
+			return NextResponse.next();
 		}
-		return NextResponse.next();
+		// Redirect unauthenticated users to login for all other routes
+		return NextResponse.redirect(new URL('/login', request.url));
 	}
 
 	// Role-based access control
@@ -46,6 +50,7 @@ export function middleware(request) {
 
 	return NextResponse.next();
 }
+
 export const config = {
 	matcher: ['/login', '/student', '/company', '/register'],
 };

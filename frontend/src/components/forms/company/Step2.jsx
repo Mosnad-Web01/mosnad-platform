@@ -1,102 +1,98 @@
 import React from "react";
-import Input from "@/components/common/Input";
 import Checkbox from "@/components/common/Checkbox";
 import FieldContainer from "@/components/common/FieldContainer";
 import RadioButton from "@/components/common/Radio";
-import TextArea from "@/components/common/TextArea";
 
-const Step2 = ({ formData, updateFormData, onNext, onPrevious }) => {
-  const handleInputChange = (field, value) => {
-    updateFormData(field, value);
+const Step2 = ({ formData, updateFormData, errors }) => {
+  const handleRadioChange = (name, value) => {
+    updateFormData(name, value);
+  };
+
+  const handleCheckboxChange = (remote_hiring_preference, isChecked) => {
+    const updatedPreferences = isChecked
+      ? [
+          ...(formData.remote_hiring_preferences || []),
+          remote_hiring_preference,
+        ] // Ensure it's an array
+      : (formData.remote_hiring_preferences || []).filter(
+          (pref) => pref !== remote_hiring_preference
+        ); // Ensure it's an array
+    updateFormData("remote_hiring_preferences", updatedPreferences);
   };
 
   return (
     <div>
       <form>
+        {/* Radio Buttons for Training */}
         <FieldContainer
           label="هل تقدم حاليًا أي تدريب على البرمجة أو فرص تطوير لموظفيك؟"
           className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-2"
+          error={errors.training}
         >
           <RadioButton
             name="training"
             label="نعم"
             value="yes"
             checked={formData.training === "yes"}
-            onChange={(value) => handleInputChange("training", value)}
+            onChange={() => handleRadioChange("training", "yes")}
           />
           <RadioButton
             name="training"
             label="لا"
             value="no"
             checked={formData.training === "no"}
-            onChange={(value) => handleInputChange("training", value)}
+            onChange={() => handleRadioChange("training", "no")}
           />
         </FieldContainer>
 
+        {/* Radio Buttons for Hiring */}
         <FieldContainer
-          label="هل أنت مهتم بتوظيف الأفراد؟ بمهارات البرمجة من خلال برنامجنا التدريبين؟ "
+          label="هل أنت مهتم بتوظيف الأفراد؟ بمهارات البرمجة من خلال برنامجنا التدريبين؟"
           className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-2"
+          error={errors.hiring}
         >
           <RadioButton
-            name="employees"
+            name="hiring"
             label="نعم"
             value="yes"
-            checked={formData.employees === "yes"}
-            onChange={(value) => handleInputChange("employees", value)}
+            checked={formData.hiring === "yes"}
+            onChange={() => handleRadioChange("hiring", "yes")}
           />
-
           <RadioButton
-            name="employees"
+            name="hiring"
             label="لا"
             value="no"
-            checked={formData.employees === "no"}
-            onChange={(value) => handleInputChange("employees", value)}
+            checked={formData.hiring === "no"}
+            onChange={() => handleRadioChange("hiring", "no")}
           />
         </FieldContainer>
 
+        {/* Checkboxes for Remote Hiring Preferences */}
         <FieldContainer
           label="ما هي الميزة التي يمكن أن تدعم رغبتك في التعيينات عن بعد؟ (اختر كل ما ينطبق)"
           className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-2"
+          error={errors.remote_hiring_preferences}
         >
-          <Checkbox
-            name="feature1"
-            label="مهارات تواصل وتعاون ممتازة"
-            checked={formData.feature1}
-            onChange={(value) => handleInputChange("feature1", value)}
-          />
-
-          <Checkbox
-            name="feature2"
-            label="تجربة العمل عن بعد"
-            checked={formData.feature2}
-            onChange={(value) => handleInputChange("feature2", value)}
-          />
-
-          <Checkbox
-            name="feature3"
-            label="الوعي الثقافي والقدرة على التكيف"
-            checked={formData.feature3}
-            onChange={(value) => handleInputChange("feature3", value)}
-          />
-          <Checkbox
-            name="feature4"
-            label="مهارات التطوير العامة"
-            checked={formData.feature4}
-            onChange={(value) => handleInputChange("feature4", value)}
-          />
-          <Checkbox
-            name="feature5"
-            label="التقنية المستقبلية"
-            checked={formData.feature5}
-            onChange={(value) => handleInputChange("feature5", value)}
-          />
-          <Input
-            placeholder=" أخرى اذكرها"
-            type="text"
-            name="feature6"
-            value={formData.feature6}
-            onChange={(value) => handleInputChange("feature6", value)}
-          />
+          {[
+            "مهارات تواصل وتعاون ممتازة",
+            "تجربة العمل عن بعد",
+            "الوعي الثقافي والقدرة على التكيف",
+            "مهارات التطوير العامة",
+            "التقنية المستقبلية",
+            "اخرى",
+          ].map((remote_hiring_preference) => (
+            <Checkbox
+              key={remote_hiring_preference}
+              name="remote_hiring_preferences"
+              label={remote_hiring_preference}
+              checked={(formData.remote_hiring_preferences || []).includes(
+                remote_hiring_preference
+              )} // Safely check if the value exists
+              onChange={(isChecked) =>
+                handleCheckboxChange(remote_hiring_preference, isChecked)
+              }
+            />
+          ))}
         </FieldContainer>
       </form>
     </div>

@@ -1,12 +1,11 @@
 import React from "react";
-import RadioButton from "@/components/common/Radio";
-import FieldContainer from "@/components/common/FieldContainer";
 import TextArea from "@/components/common/TextArea";
 
-const Step3 = ({ formData, updateFormData, onNext, onPrevious }) => {
+const Step3 = ({ formData, updateFormData, errors }) => {
   const handleInputChange = (field, value) => {
     updateFormData(field, value);
   };
+
 
   return (
     <div className="rtl container mx-auto px-4">
@@ -15,11 +14,13 @@ const Step3 = ({ formData, updateFormData, onNext, onPrevious }) => {
           label="هل هناك أي شيء آخر ترغب في مشاركته حول احتياجاتك أو تفضيلاتك التدريبية على البرمجة؟"
           placeholder="اكتب هنا"
           rows={4}
-          errorMessage=""
+          errorMessage={errors.additional_notes}
           additionalClasses="mb-6"
-          value={formData.other || ""}
-          onChange={(e) => handleInputChange("other", e.target.value)}
+          value={formData.additional_notes || ""}
+          onChange={(value) => handleInputChange("additional_notes", value)} // Handle value change
         />
+
+       
       </form>
     </div>
   );

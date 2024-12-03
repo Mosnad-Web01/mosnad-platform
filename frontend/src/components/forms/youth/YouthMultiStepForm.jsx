@@ -8,6 +8,8 @@ import Step4 from "./Step4";
 import Step5 from "./Step5";
 import SuccessPage from "../SuccessPage";
 import ProgressBar from "../ProgressBar";
+import { post } from "../../../lib/axios";
+
 
 const YouthMultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -126,39 +128,30 @@ const YouthMultiStepForm = () => {
     if (!validateStep(5)) {
       return; // Don't submit if validation fails
     }
-
-    const url = "http://127.0.0.1:8000/api/youth-forms"; // Your API endpoint
+  
+    const url = "/youth-forms"; // Endpoint relative to baseURL
     const formDataToSubmit = new FormData();
-
+  
     // Append all form data fields
     Object.keys(formData).forEach((key) => {
       if (formData[key] !== null && formData[key] !== undefined) {
         formDataToSubmit.append(key, formData[key]);
       }
     });
-
+  
     try {
-      console.log("FormData to be submitted:", formData);
-      const response = await fetch(url, {
-        method: "POST",
-        body: formDataToSubmit,
-        headers: {
-          // No need to set Content-Type here, FormData will set it automatically
-        },
+      console.log("Submitting form data...");
+      const response = await post(url, formDataToSubmit, {
+        "Content-Type": "multipart/form-data", // Override headers for FormData
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Something went wrong!");
-      }
-
-      const data = await response.json();
-      console.log("Form submitted successfully:", data);
+      console.log("Form submitted successfully:", response);
       setCurrentStep(6); // Navigate to Success page
     } catch (error) {
       console.error("Form submission failed:", error.message);
     }
   };
+
+
   const steps = [
     "البيانات الشخصية",
     "الدوافع والإهتمام",

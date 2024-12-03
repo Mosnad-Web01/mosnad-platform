@@ -6,6 +6,7 @@ import Step2 from "./Step2";
 import Step3 from "./Step3";
 import SuccessPage from "../SuccessPage";
 import ProgressBar from "../ProgressBar";
+import { post } from "../../../lib/axios";
 
 const CompanyMultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(0); // Start with index-based steps
@@ -33,47 +34,49 @@ const CompanyMultiStepForm = () => {
   // Simple validation function for each step
   const validateStep = (step) => {
     let tempErrors = {};
-  
+
     if (step === 1) {
       // Validate company name
       if (!formData.name) tempErrors.name = "اسم الشركة مطلوب";
-  
+
       // Validate email format
       if (!formData.email) {
         tempErrors.email = "البريد الإلكتروني مطلوب";
       } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-        tempErrors.email = "البريد الإلكتروني غير صالح. يرجى إدخال بريد إلكتروني صحيح";
+        tempErrors.email =
+          "البريد الإلكتروني غير صالح. يرجى إدخال بريد إلكتروني صحيح";
       }
-  
+
       // Validate industry selection
       if (!formData.industry) tempErrors.industry = "الرجاء اختيار الصناعة";
-  
+
       // Validate number of employees
       if (!formData.employees) {
         tempErrors.employees = "عدد الموظفين مطلوب";
       }
-  
+
       // Validate stage (must be selected)
       if (!formData.stage) tempErrors.stage = "المرحلة يجب أن تكون محددة";
-  
+
       // Validate skills selection (at least one skill should be selected)
-      if (formData.skills.length === 0) tempErrors.skills = "الرجاء تحديد المهارات";
-  
+      if (formData.skills.length === 0)
+        tempErrors.skills = "الرجاء تحديد المهارات";
+
       // Validate home workers (must be a positive number)
       if (!formData.home_workers) {
         tempErrors.home_workers = "الرجاء تحديد عدد العمال عن بُعد";
-      } 
+      }
     } else if (step === 2) {
       // Validate training (check if a radio button is selected)
       if (!formData.training) {
         tempErrors.training = "يرجى تحديد ما إذا كنت تقدم تدريبًا على البرمجة";
       }
-  
+
       // Validate hiring (check if a radio button is selected)
       if (!formData.hiring) {
         tempErrors.hiring = "يرجى تحديد ما إذا كنت مهتمًا بتوظيف الأفراد";
       }
-  
+
       // Validate remote hiring preferences (at least one checkbox should be selected)
       if ((formData.remote_hiring_preferences || []).length === 0) {
         tempErrors.remote_hiring_preferences =
@@ -85,46 +88,35 @@ const CompanyMultiStepForm = () => {
         tempErrors.additional_notes = "الرجاء إضافة ملاحظات إضافية حول شركتك";
       }
     }
-  
+
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0; // Return true if no errors
   };
-  
 
   // Handle form submission
   const handleSubmit = async () => {
-    // Validate the last step before submitting
-    if (!validateStep(3)) {
+    // Validate the final step before submitting
+    if (!validateStep(currentStep + 1)) {
       return; // Don't submit if validation fails
     }
-
-    const url = "http://127.0.0.1:8000/api/company-forms"; // Your API endpoint
+  
+    const url = "/company-forms"; // API endpoint relative to baseURL
+  
     try {
-      console.log(
-        "FormData to be submitted:",
-        JSON.stringify(formData, null, 2)
-      );
-      const response = await fetch(url, {
-        method: "POST",
+      console.log("Submitting form data...");
+      const response = await post(url, formData, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json", // JSON content type
         },
-        body: JSON.stringify(formData),
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Something went wrong!");
-      }
-
-      const data = await response.json();
-      console.log("Form submitted successfully:", data);
-      setCurrentStep(3); // Navigate to Success page
+      console.log("Form submitted successfully:", response.data);
+  
+      // Navigate to the Success page
+      setCurrentStep(stepComponents.length); // Move to the success page
     } catch (error) {
-      console.error("Form submission failed:", error.message);
+      console.error("Form submission failed:", error.response?.data || error.message);
     }
   };
-
   // Go to next step
   const goToNextStep = () => {
     if (currentStep < 2 && validateStep(currentStep + 1)) {

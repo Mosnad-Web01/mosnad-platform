@@ -1,5 +1,4 @@
 import NotificationCard from "@/components/cards/NotificationCard";
-import Header from "@/components/profile/Header";
 import React from "react";
 
 const notifications = [

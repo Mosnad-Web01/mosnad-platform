@@ -27,7 +27,6 @@ const page = () => {
             label="البريد الإلكتروني"
             type="email"
             value="yasser@gmail.com"
-            isDisabled
           />
         </form>
       </div>

@@ -72,7 +72,9 @@ const SettingAccountPage = () => {
             </tr>
             <tr className="border-b border-gray-100">
               <td className="p-4 text-gray-500">البريد الإلكتروني</td>
-              <td className="p-4 font-medium">reemmohammed@gmail.com</td>
+              <td className="p-4 font-medium break-words text-sm sm:text-base">
+                mohammed@gmail.com
+              </td>
             </tr>
           </tbody>
         </table>
@@ -81,12 +83,7 @@ const SettingAccountPage = () => {
       <div className="bg-white rounded-lg shadow mt-4">
         <div className="flex gap-3 items-center justify-between py-4 px-4 border-b border-gray-100">
           <div className="flex gap-3 items-center">
-            <Image
-              src="/location-icon.svg"
-              alt="User"
-              width={16}
-              height={16}
-            />
+            <Image src="/location-icon.svg" alt="User" width={16} height={16} />
             <h2 className="text-base font-semibold text-[#21255C]">
               معلومات التواصل
             </h2>

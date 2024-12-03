@@ -6,11 +6,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +23,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone_number',
+        'role_id',
+        'status'
     ];
 
     /**
@@ -43,6 +48,31 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'status' => 'string',
         ];
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function isAdmin()
+    {
+        // return $this->role && $this->role->name === 'admin';
+        return $this->role_id === 1;
+
+    }
+
+    public function isCompany()
+    {
+        // return $this->role && $this->role->name === 'company';
+        return $this->role_id === 2;
+    }
+
+    public function isStudent()
+    {
+        // return $this->role && $this->role->name === 'student';
+        return $this->role_id === 3;
     }
 }

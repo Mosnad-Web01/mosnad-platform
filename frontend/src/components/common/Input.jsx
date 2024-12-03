@@ -1,15 +1,16 @@
-import React from "react";
+import React from 'react';
 
 const Input = ({
-  label,
-  placeholder,
-  type = "text",
-  icon: Icon,
-  errorMessage,
-  additionalClasses = "",
-  isDisabled = false,
-  value,
-  ...props
+	name = '',
+	label,
+	value,
+	placeholder,
+	type = 'text',
+	icon: Icon,
+	errorMessage,
+	dir = 'rtl',
+	additionalClasses = '',
+	...props
 }) => {
   return (
     <div className={`mt-1 flex flex-col mb-6 ${additionalClasses}`}>
@@ -21,13 +22,11 @@ const Input = ({
           </div>
         )}
         <input
-          disabled={isDisabled}
           type={type} // Dynamically set type (either text or date)
           placeholder={placeholder}
           className={`w-full px-4 py-[15px] rounded-lg bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
             Icon ? "pl-10" : ""
           }`}
-          value={value}
           {...props}
         />
       </div>

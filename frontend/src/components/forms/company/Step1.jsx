@@ -4,7 +4,7 @@ import RadioButton from "@/components/common/Radio";
 import FieldContainer from "@/components/common/FieldContainer";
 import Checkbox from "@/components/common/Checkbox";
 
-const Step1 = ({ formData, updateFormData }) => {
+const Step1 = ({ formData, updateFormData ,errors }) => {
   const handleInputChange = (name) => (event) => {
     updateFormData(name, event.target.value);
   };
@@ -31,6 +31,7 @@ const Step1 = ({ formData, updateFormData }) => {
           placeholder="أسم شركتك"
           value={formData.name || ""}
           onChange={handleInputChange("name")}
+          errorMessage={errors.name}
         />
 
         <Input
@@ -40,6 +41,7 @@ const Step1 = ({ formData, updateFormData }) => {
           placeholder="البريد الالكتروني"
           value={formData.email || ""}
           onChange={handleInputChange("email")}
+          errorMessage={errors.email}
         />
 
         <Input
@@ -49,12 +51,14 @@ const Step1 = ({ formData, updateFormData }) => {
           placeholder="ادخل الصناعه الخاصه بك"
           value={formData.industry || ""}
           onChange={handleInputChange("industry")}
+          errorMessage={errors.industry}
         />
 
         {/* Radio Buttons for Employees */}
         <FieldContainer
           label="العدد التقريبي للموظفين"
           className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4"
+          error={errors.employees}
         >
           {["1-10", "11-50", "51-100", "101-500"].map((range) => (
             <RadioButton
@@ -72,6 +76,7 @@ const Step1 = ({ formData, updateFormData }) => {
         <FieldContainer
           label="مرحلة البدء"
           className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-3"
+          error={errors.stage}
         >
           {[
             { value: "before", label: "قبل البذور" },
@@ -94,6 +99,7 @@ const Step1 = ({ formData, updateFormData }) => {
         <FieldContainer
           label="ما هي مهارات البرمجة الحالية ومستويات الخبرة لموظفيك؟ (اختر كل ما ينطبق)"
           className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4"
+          error={errors.skills}
         >
           {["مبتدئ", "متوسط", "متقدم", "متخصص"].map((skill) => (
             <Checkbox
@@ -110,6 +116,7 @@ const Step1 = ({ formData, updateFormData }) => {
         <FieldContainer
           label="هل لديك أي موظفين يعملون من المنزل؟"
           className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-2"
+          error={errors.home_workers}
         >
           {[
             { value: "yes", label: "نعم" },

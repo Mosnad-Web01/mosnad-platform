@@ -23,42 +23,87 @@ const CompanyMultiStepForm = () => {
     additional_notes: "",
   });
 
+  const [errors, setErrors] = useState({}); // Store error messages
+
   // Update specific field in the form data
   const updateFormData = (key, value) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
-  // Step titles for ProgressBar
-  const steps = [
-    "معلومات عن الشركة",
-    "احتياجات التدريب والتوظيف",
-    "معلومات اضافية",
-  ];
-
-  // Step components
-  const stepComponents = [
-    <Step1
-      key="step1"
-      formData={formData}
-      updateFormData={updateFormData}
-    />,
-    <Step2
-      key="step2"
-      formData={formData}
-      updateFormData={updateFormData}
-    />,
-    <Step3
-      key="step3"
-      formData={formData}
-      updateFormData={updateFormData}
-    />,
-  ];
+  // Simple validation function for each step
+  const validateStep = (step) => {
+    let tempErrors = {};
+  
+    if (step === 1) {
+      // Validate company name
+      if (!formData.name) tempErrors.name = "اسم الشركة مطلوب";
+  
+      // Validate email format
+      if (!formData.email) {
+        tempErrors.email = "البريد الإلكتروني مطلوب";
+      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        tempErrors.email = "البريد الإلكتروني غير صالح. يرجى إدخال بريد إلكتروني صحيح";
+      }
+  
+      // Validate industry selection
+      if (!formData.industry) tempErrors.industry = "الرجاء اختيار الصناعة";
+  
+      // Validate number of employees
+      if (!formData.employees) {
+        tempErrors.employees = "عدد الموظفين مطلوب";
+      }
+  
+      // Validate stage (must be selected)
+      if (!formData.stage) tempErrors.stage = "المرحلة يجب أن تكون محددة";
+  
+      // Validate skills selection (at least one skill should be selected)
+      if (formData.skills.length === 0) tempErrors.skills = "الرجاء تحديد المهارات";
+  
+      // Validate home workers (must be a positive number)
+      if (!formData.home_workers) {
+        tempErrors.home_workers = "الرجاء تحديد عدد العمال عن بُعد";
+      } 
+    } else if (step === 2) {
+      // Validate training (check if a radio button is selected)
+      if (!formData.training) {
+        tempErrors.training = "يرجى تحديد ما إذا كنت تقدم تدريبًا على البرمجة";
+      }
+  
+      // Validate hiring (check if a radio button is selected)
+      if (!formData.hiring) {
+        tempErrors.hiring = "يرجى تحديد ما إذا كنت مهتمًا بتوظيف الأفراد";
+      }
+  
+      // Validate remote hiring preferences (at least one checkbox should be selected)
+      if ((formData.remote_hiring_preferences || []).length === 0) {
+        tempErrors.remote_hiring_preferences =
+          "يرجى اختيار ميزة واحدة على الأقل لدعم رغبتك في التعيينات عن بعد";
+      }
+    } else if (step === 3) {
+      // Validate additional notes
+      if (!formData.additional_notes) {
+        tempErrors.additional_notes = "الرجاء إضافة ملاحظات إضافية حول شركتك";
+      }
+    }
+  
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0; // Return true if no errors
+  };
+  
 
   // Handle form submission
   const handleSubmit = async () => {
+    // Validate the last step before submitting
+    if (!validateStep(3)) {
+      return; // Don't submit if validation fails
+    }
+
     const url = "http://127.0.0.1:8000/api/company-forms"; // Your API endpoint
     try {
-      console.log("FormData to be submitted:", JSON.stringify(formData, null, 2));
+      console.log(
+        "FormData to be submitted:",
+        JSON.stringify(formData, null, 2)
+      );
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -74,7 +119,7 @@ const CompanyMultiStepForm = () => {
 
       const data = await response.json();
       console.log("Form submitted successfully:", data);
-      setCurrentStep(stepComponents.length); // Navigate to Success page
+      setCurrentStep(3); // Navigate to Success page
     } catch (error) {
       console.error("Form submission failed:", error.message);
     }
@@ -82,7 +127,7 @@ const CompanyMultiStepForm = () => {
 
   // Go to next step
   const goToNextStep = () => {
-    if (currentStep < stepComponents.length) {
+    if (currentStep < 2 && validateStep(currentStep + 1)) {
       setCurrentStep((prev) => prev + 1);
     }
   };
@@ -93,6 +138,33 @@ const CompanyMultiStepForm = () => {
       setCurrentStep((prev) => prev - 1);
     }
   };
+
+  const steps = [
+    "معلومات عن الشركة",
+    "احتياجات التدريب والتوظيف",
+    "معلومات اضافية",
+  ];
+
+  const stepComponents = [
+    <Step1
+      key="step1"
+      formData={formData}
+      updateFormData={updateFormData}
+      errors={errors}
+    />,
+    <Step2
+      key="step2"
+      formData={formData}
+      updateFormData={updateFormData}
+      errors={errors}
+    />,
+    <Step3
+      key="step3"
+      formData={formData}
+      updateFormData={updateFormData}
+      errors={errors}
+    />,
+  ];
 
   return (
     <div className="w-full max-w-7xl mx-auto overflow-hidden bg-gray-50 rounded-2xl shadow-md">

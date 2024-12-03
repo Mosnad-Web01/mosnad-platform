@@ -3,7 +3,7 @@ import Checkbox from "@/components/common/Checkbox";
 import FieldContainer from "@/components/common/FieldContainer";
 import RadioButton from "@/components/common/Radio";
 
-const Step2 = ({ formData, updateFormData }) => {
+const Step2 = ({ formData, updateFormData, errors }) => {
   const handleRadioChange = (name, value) => {
     updateFormData(name, value);
   };
@@ -27,6 +27,7 @@ const Step2 = ({ formData, updateFormData }) => {
         <FieldContainer
           label="هل تقدم حاليًا أي تدريب على البرمجة أو فرص تطوير لموظفيك؟"
           className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-2"
+          error={errors.training}
         >
           <RadioButton
             name="training"
@@ -48,6 +49,7 @@ const Step2 = ({ formData, updateFormData }) => {
         <FieldContainer
           label="هل أنت مهتم بتوظيف الأفراد؟ بمهارات البرمجة من خلال برنامجنا التدريبين؟"
           className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-2"
+          error={errors.hiring}
         >
           <RadioButton
             name="hiring"
@@ -69,6 +71,7 @@ const Step2 = ({ formData, updateFormData }) => {
         <FieldContainer
           label="ما هي الميزة التي يمكن أن تدعم رغبتك في التعيينات عن بعد؟ (اختر كل ما ينطبق)"
           className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-2"
+          error={errors.remote_hiring_preferences}
         >
           {[
             "مهارات تواصل وتعاون ممتازة",

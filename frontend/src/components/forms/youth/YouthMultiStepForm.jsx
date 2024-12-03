@@ -89,12 +89,28 @@ const YouthMultiStepForm = () => {
         tempErrors.additional_info =
           "الرجاء كتابة معلومات إضافية عن نفسك أو سبب كونك مناسبًا.";
       }
+
       if (!formData.document) {
         tempErrors.document =
           "الرجاء إرفاق سيرتك الذاتية أو أي شهادات تعليمية ذات صلة.";
+      } else {
+        // Validate file type and size
+        const validTypes = [
+          "application/pdf",
+          "application/msword",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ];
+        const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+
+        if (!validTypes.includes(formData.document.type)) {
+          tempErrors.document = "الرجاء إرفاق ملف بصيغة PDF أو DOC أو DOCX.";
+        }
+
+        if (formData.document.size > maxSize) {
+          tempErrors.document = "حجم الملف يجب أن لا يتجاوز 2 ميجابايت.";
+        }
       }
     }
-
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };

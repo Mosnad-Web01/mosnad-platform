@@ -1,7 +1,7 @@
 import React from "react";
 import TextArea from "@/components/common/TextArea";
 
-const Step3 = ({ formData, updateFormData, onNext, onPrevious }) => {
+const Step3 = ({ formData, updateFormData, errors }) => {
   const handleInputChange = (field, value) => {
     updateFormData(field, value);
   };
@@ -14,7 +14,7 @@ const Step3 = ({ formData, updateFormData, onNext, onPrevious }) => {
           label="هل هناك أي شيء آخر ترغب في مشاركته حول احتياجاتك أو تفضيلاتك التدريبية على البرمجة؟"
           placeholder="اكتب هنا"
           rows={4}
-          errorMessage=""
+          errorMessage={errors.additional_notes}
           additionalClasses="mb-6"
           value={formData.additional_notes || ""}
           onChange={(value) => handleInputChange("additional_notes", value)} // Handle value change

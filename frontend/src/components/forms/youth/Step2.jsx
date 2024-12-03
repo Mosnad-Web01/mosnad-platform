@@ -5,7 +5,7 @@ import FieldContainer from "@/components/common/FieldContainer";
 import RadioButton from "@/components/common/Radio";
 import TextArea from "@/components/common/TextArea";
 
-const Step2 = ({ formData, updateFormData, onNext, onPrevious }) => {
+const Step2 = ({ formData, updateFormData, errors }) => {
   const handleInputChange = (name) => (event) => {
     updateFormData(name, event.target.value);
   };
@@ -19,6 +19,7 @@ const Step2 = ({ formData, updateFormData, onNext, onPrevious }) => {
         <FieldContainer
           label="ماهو المسار الوظيفي الذي تهتم به؟"
           className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-3"
+          error={errors.job_interest}
         >
           {["مطور FullStack", "مطور Flutter", "مطور laravel"].map((job) => (
             <RadioButton
@@ -31,11 +32,11 @@ const Step2 = ({ formData, updateFormData, onNext, onPrevious }) => {
             />
           ))}
           <Input
-            name="job"
+            name="job_interest"
             type="text"
             placeholder="أخرى اذكرها هنا"
-            value={formData.job || ""}
-            onChange={handleInputChange("job")}
+            value={formData.job_interest || ""}
+            onChange={handleInputChange("job_interest")}
           />
         </FieldContainer>
         <TextArea
@@ -44,6 +45,7 @@ const Step2 = ({ formData, updateFormData, onNext, onPrevious }) => {
           placeholder="اكتب وصفًا قصيرًا"
           value={formData.motivation || ""}
           onChange={(value) => updateFormData("motivation", value)}
+          errorMessage={errors.motivation}
           />
         <TextArea
           label=" ما هي اهدافك المهنية في المجال الذي اخترته؟ "
@@ -51,6 +53,8 @@ const Step2 = ({ formData, updateFormData, onNext, onPrevious }) => {
           placeholder="اكتب وصفًا قصيرًا"
           value={formData.career_goals || ""}
           onChange={(value) => updateFormData("career_goals", value)}
+          errorMessage={errors.career_goals}
+
         />
         <TextArea
           label="هل لديك أي مشاريع أو أفكار محددة ترغب في بنائها باستخدام مهاراتك المكتسبة حديثًا؟"
@@ -58,7 +62,8 @@ const Step2 = ({ formData, updateFormData, onNext, onPrevious }) => {
           placeholder="اكتب وصفًا قصيرًا"
           value={formData.project_ideas || ""}
           onChange={(value) => updateFormData("project_ideas", value)}
-        />
+          errorMessage={errors.project_ideas}
+       />
       </form>
     </div>
   );

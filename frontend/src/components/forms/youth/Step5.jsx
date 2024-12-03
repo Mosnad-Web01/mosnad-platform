@@ -2,7 +2,7 @@ import React from "react";
 import TextArea from "@/components/common/TextArea";
 import FileUpload from "@/components/common/FileUpload";
 
-const Step5 = ({ formData, updateFormData, onPrevious, onSubmit }) => {
+const Step5 = ({ formData, updateFormData, errors }) => {
   const handleInputChange = (field, value) => {
     updateFormData(field, value);
   };
@@ -21,12 +21,14 @@ const Step5 = ({ formData, updateFormData, onPrevious, onSubmit }) => {
           rows={3}
           additionalClasses="mb-6"
           value={formData.additional_info || ""}
+          errorMessage={errors.additional_info}
           onChange={(value) => handleInputChange("additional_info", value)} // Handling text area change
         />
 
         <FileUpload
           label="يرجى إرفاق سيرتك الذاتية وأي شهادات تعليمية ذات صلة بتكنولوجيا المعلومات (درجة جامعية، ورش عمل، دورات عبر الإنترنت، معسكرات تدريب، حساب Github...إلخ)؟"
           additionalClasses="mb-6"
+          errorMessage={errors.document}
           onChange={handleFileChange} // Handling file change
         />
       </form>

@@ -5,9 +5,12 @@ import FieldContainer from "@/components/common/FieldContainer";
 import RadioButton from "@/components/common/Radio";
 import TextArea from "@/components/common/TextArea";
 
-const Step2 = ({ formData, updateFormData, onNext, onPrevious }) => {
-  const handleInputChange = (field, value) => {
-    updateFormData(field, value);
+const Step2 = ({ formData, updateFormData, errors }) => {
+  const handleInputChange = (name) => (event) => {
+    updateFormData(name, event.target.value);
+  };
+  const handleRadioChange = (name, value) => {
+    updateFormData(name, value); // Update formData with the selected value
   };
 
   return (
@@ -16,71 +19,51 @@ const Step2 = ({ formData, updateFormData, onNext, onPrevious }) => {
         <FieldContainer
           label="ماهو المسار الوظيفي الذي تهتم به؟"
           className="grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-3"
+          error={errors.job_interest}
         >
-          <RadioButton
-            name="job"
-            value="Web Fullstack"
-            label="Web Fullstack"
-            checked={formData.job === "Web Fullstack"}
-            onChange={(value) => handleInputChange("job", value)}
-          />
-          <RadioButton
-            name="job"
-            value="Mobile Fullstack"
-            label="Mobile Fullstack"
-            checked={formData.job === "Mobile Fullstack"}
-            onChange={(value) => handleInputChange("job", value)}
-          />
-          <RadioButton
-            name="job"
-            value="UI/UX Designer"
-            label="UI/UX Designer"
-            checked={formData.job === "UI/UX Designer"}
-            onChange={(value) => handleInputChange("job", value)}
-          />
-
-          <RadioButton
-            name="job"
-            value="Data Scientist"
-            label="Data Scientist"
-            checked={formData.job === "Data Scientist"}
-            onChange={(value) => handleInputChange("job", value)}
-          />
-
-          <RadioButton
-            name="job"
-            value="DevOps"
-            label="DevOps"
-            checked={formData.job === "DevOps"}
-            onChange={(value) => handleInputChange("job", value)}
-          />
+          {["مطور FullStack", "مطور Flutter", "مطور laravel"].map((job) => (
+            <RadioButton
+              key={job}
+              label={job}
+              name="job_interest"
+              value={job}
+              checked={formData.job_interest === job}
+              onChange={(value) => handleRadioChange("job_interest", value)}
+            />
+          ))}
           <Input
+            name="job_interest"
+            type="text"
             placeholder="أخرى اذكرها هنا"
-            value={formData.job}
-            onChange={(value) => handleInputChange("job", value)}
+            value={formData.job_interest || ""}
+            onChange={handleInputChange("job_interest")}
           />
         </FieldContainer>
         <TextArea
           label="لماذا انت مهتم بتعلم هذه المسار؟"
           rows={2}
           placeholder="اكتب وصفًا قصيرًا"
-          value={formData.motivation}
-          onChange={(value) => handleInputChange("motivation", value)}
-        />
+          value={formData.motivation || ""}
+          onChange={(value) => updateFormData("motivation", value)}
+          errorMessage={errors.motivation}
+          />
         <TextArea
           label=" ما هي اهدافك المهنية في المجال الذي اخترته؟ "
           rows={3}
           placeholder="اكتب وصفًا قصيرًا"
-          value={formData.requirements}
-          onChange={(value) => handleInputChange("requirements", value)}
+          value={formData.career_goals || ""}
+          onChange={(value) => updateFormData("career_goals", value)}
+          errorMessage={errors.career_goals}
+
         />
         <TextArea
           label="هل لديك أي مشاريع أو أفكار محددة ترغب في بنائها باستخدام مهاراتك المكتسبة حديثًا؟"
           rows={4}
           placeholder="اكتب وصفًا قصيرًا"
-          value={formData.projectIdeas}
-          onChange={(value) => handleInputChange("projectIdeas", value)}
-        />
+          value={formData.project_ideas || ""}
+          onChange={(value) => updateFormData("project_ideas", value)}
+          errorMessage={errors.project_ideas}
+       />
       </form>
     </div>
   );

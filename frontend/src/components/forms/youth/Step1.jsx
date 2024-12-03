@@ -3,9 +3,13 @@ import Input from "@/components/common/Input";
 import RadioButton from "@/components/common/Radio";
 import FieldContainer from "@/components/common/FieldContainer";
 
-const Step1 = ({ formData, updateFormData }) => {
-  const handleInputChange = (field, value) => {
-    updateFormData(field, value);
+const Step1 = ({ formData, updateFormData, errors }) => {
+  const handleInputChange = (name) => (event) => {
+    updateFormData(name, event.target.value);
+  };
+
+  const handleRadioChange = (name, value) => {
+    updateFormData(name, value);
   };
 
   return (
@@ -13,88 +17,86 @@ const Step1 = ({ formData, updateFormData }) => {
       <form>
         <Input
           label="اسم المستخدم"
+          name="name"
+          type="text"
           placeholder="الاسم"
           value={formData.name || ""}
-          onChange={(value) => handleInputChange("name", value)}
+          onChange={handleInputChange("name")}
+          errorMessage={errors.name}
         />
-        
-        <FieldContainer label="أختر المدينة" className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-5">
-          <RadioButton
-            name="city"
-            label="صنعاء"
-            value="Sanaa"
-            checked={formData.city === "Sanaa"}
-            onChange={(value) => handleInputChange("city", value)}
-          />
-          <RadioButton
-            name="city"
-            label="عدن"
-            value="Aden"
-            checked={formData.city === "Aden"}
-            onChange={(value) => handleInputChange("city", value)}
-          />
-          <RadioButton
-            name="city"
-            label="تعز"
-            value="Taiz"
-            checked={formData.city === "Taiz"}
-            onChange={(value) => handleInputChange("city", value)}
-          />
-          <RadioButton
-            name="city"
-            label="المكلا"
-            value="AlMakla"
-            checked={formData.city === "AlMakla"}
-            onChange={(value) => handleInputChange("city", value)}
-          />
+
+        <FieldContainer
+          label="أختر المدينة"
+          className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-5"
+          error={errors.city} // Display error message if present
+        >
+          {["صنعاء", "الحديدة", "عدن", "المكلا"].map((city) => (
+            <RadioButton
+              key={city}
+              name="city"
+              label={city}
+              value={city}
+              checked={formData.city === city}
+              onChange={(value) => handleRadioChange("city", value)}
+            />
+          ))}
           <Input
+            name="city"
+            type="text"
             placeholder="أخرى أذكرها هنا"
             value={formData.city || ""}
-            onChange={(value) => handleInputChange("city", value)}
+            onChange={handleInputChange("city")}
           />
         </FieldContainer>
 
         <Input
           label="العنوان"
+          name="address"
           placeholder="أدخل عنوانك"
           value={formData.address || ""}
-          onChange={(value) => handleInputChange("address", value)}
+          onChange={handleInputChange("address")}
+          errorMessage={errors.address}
         />
-        
+
         <Input
           label="تاريخ الميلاد"
+          name="birth_date"
           placeholder="تاريخ الميلاد"
-          value={formData.birthDate || ""}
-          onChange={(value) => handleInputChange("birthDate", value)}
+          value={formData.birth_date || ""}
+          onChange={handleInputChange("birth_date")}
           type="date"
+          errorMessage={errors.birth_date}
         />
-        
+
         <Input
           label="رقم الجوال"
+          name="phone"
           placeholder="رقم الجوال"
           value={formData.phone || ""}
-          onChange={(value) => handleInputChange("phone", value)}
+          onChange={handleInputChange("phone")}
+          errorMessage={errors.phone}
         />
 
         <FieldContainer
           label="هل أنت خريج تكنولوجيا المعلومات؟"
-          className="grid grid-cols-2  gap-2 "
+          className="grid grid-cols-2 gap-2"
+          error={errors.is_it_graduate}
         >
-          <RadioButton
-            name="isITGraduate"
-            label="نعم"
-            value="yes"
-            checked={formData.isITGraduate === "yes"}
-            onChange={(value) => handleInputChange("isITGraduate", value)}
-          />
-          <RadioButton
-            name="isITGraduate"
-            label="لا"
-            value="no"
-            checked={formData.isITGraduate === "no"}
-            onChange={(value) => handleInputChange("isITGraduate", value)}
-          />
+          {[
+            { label: "نعم", value: "1" },
+            { label: "لا", value: "0" },
+          ].map((option) => (
+            <RadioButton
+              key={option.value}
+              name="is_it_graduate"
+              label={option.label}
+              value={option.value}
+              checked={formData.is_it_graduate === option.value}
+              onChange={(value) => handleRadioChange("is_it_graduate", value)}
+            />
+          ))}
         </FieldContainer>
+       
       </form>
     </div>
   );

@@ -22,11 +22,14 @@
             <x-layouts.sidebar />
 
             {{--------- Start Main Content ------------------}}
-                <div id="main-content" class="flex-1 gap-4 flex flex-col items-center transition-all duration-300 ease-in-out w-full">
-                    <main class="p-6 space-y-6 overflow-y-auto overflow-x-hidden">
-                        {{ $slot }}
-                    </main>
-                </div>
+            <div id="main-content"
+                class="flex-1 gap-4 flex flex-col items-center transition-all duration-300 ease-in-out w-full">
+                {{--------- NavBar ------------------}}
+                <x-layouts.navbar />
+                <main class="p-6 space-y-6 overflow-y-auto overflow-x-hidden">
+                    {{ $slot }}
+                </main>
+            </div>
             {{--------- Ends Content ------------------}}
 
         </div>

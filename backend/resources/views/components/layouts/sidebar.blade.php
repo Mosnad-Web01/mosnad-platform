@@ -70,7 +70,7 @@
     <!-- Logout Section -->
     <div class="flex-shrink-0 mt-auto px-2 ">
         <div class="border-t border-indigo-700 mb-4"></div>
-        <x-layouts.sidebar-link :route="route('logout')" :label="'Logout'" :icon="'logout'" />
+        <x-layouts.sidebar-link :route="route('logout')" :label="'تسجيل الخروج'" :icon="'logout'" />
     </div>
 </div>
 

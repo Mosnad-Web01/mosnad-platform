@@ -36,10 +36,7 @@
             </div>
         </div>
 
-        <!-- Pagination -->
-        <div class="my-5">
-            {{ $youthForms->links('pagination::tailwind') }}
-        </div>
+        <x-common.pagination :items="$youthForms" />
         <!-- Empty State -->
         @if($youthForms->isEmpty())
         <div class="text-center py-12">

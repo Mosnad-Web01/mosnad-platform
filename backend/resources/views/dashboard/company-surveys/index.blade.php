@@ -38,9 +38,9 @@
         </div>
 
         <!-- Pagination -->
-        <div class="my-5">
-            {{ $companyForms->links('pagination::tailwind') }}
-        </div>
+        <x-common.pagination :items="$companyForms" />
+
+
         <!-- Empty State -->
         @if($companyForms->isEmpty())
         <div class="text-center py-12">
@@ -51,6 +51,4 @@
         </div>
         @endif
     </x-common.content-container>
-
-
 </x-layout>

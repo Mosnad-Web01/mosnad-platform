@@ -16,7 +16,7 @@ const StatusBadge = ({ text, status }) => {
 
   return (
     <span
-      className={`inline-block px-4 py-1 text-xs font-semibold rounded-full  break-words ${getStatusStyles()}`}
+      className={`inline-block px-3 py-1 text-[10px] font-medium rounded-full break-words ${getStatusStyles()}`}
     >
       {text}
     </span>

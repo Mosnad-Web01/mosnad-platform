@@ -1,16 +1,17 @@
 import React from 'react';
 
 const Input = ({
-	name = '',
-	label,
-	value,
-	placeholder,
-	type = 'text',
-	icon: Icon,
-	errorMessage,
-	dir = 'rtl',
-	additionalClasses = '',
-	...props
+  name = '',
+  label,
+  value,
+  placeholder,
+  type = 'text',
+  icon: Icon,
+  errorMessage,
+  dir = 'rtl',
+  additionalClasses = '',
+  onChange,  // Ensure onChange is passed
+  ...props
 }) => {
   return (
     <div className={`mt-1 flex flex-col mb-6 ${additionalClasses}`}>
@@ -22,11 +23,13 @@ const Input = ({
           </div>
         )}
         <input
-          type={type} // Dynamically set type (either text or date)
+          type={type}
           placeholder={placeholder}
-          className={`w-full px-4 py-[15px] rounded-lg bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
-            Icon ? "pl-10" : ""
-          }`}
+          className={`w-full px-4 py-[15px] rounded-lg bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-400 ${Icon ? "pl-10" : ""}`}
+          value={value}  // Bind the value to the input field
+          onChange={onChange}  // Ensure onChange is passed and handled
+          dir={dir}
+          name={name}
           {...props}
         />
       </div>

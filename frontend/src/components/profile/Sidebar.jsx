@@ -5,36 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaChevronLeft } from "react-icons/fa";
 
-const sidebarItems = [
-  {
-    label: "إدارة الحساب",
-    href: "/userProfile/account",
-    icon: "/manage-account-icon.svg",
-  },
-  {
-    label: "السيرة الذاتية",
-    href: "/userProfile/resume",
-    icon: "/request.svg",
-  },
-  {
-    label: "إكمال الحساب",
-    href: "/userProfile/complete",
-    icon: "/verify-icon.svg",
-  },
-  {
-    label: "طلبات التقديم على الفرص",
-    href: "/userProfile/requests",
-    icon: "/request.svg",
-  },
-  { label: "ملفاتي", href: "/userProfile/files", icon: "/files.svg" },
-  {
-    label: "الإشعارات",
-    href: "/userProfile/notifications",
-    icon: "/notification.svg",
-  },
-];
-
-export default function Sidebar() {
+export default function Sidebar({ profile, menuItems }) {
   const pathname = usePathname();
 
   return (
@@ -42,31 +13,40 @@ export default function Sidebar() {
       {/* Profile Card */}
       <div className="p-4 sm:p-6 text-center">
         <div className="flex justify-center mb-4">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-blue-300 bg-gray-200 overflow-hidden">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-blue-300 overflow-hidden">
             <Image
               width={100}
               height={100}
-              src="/userImage.jpg"
+              src={profile.image}
               alt="User"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-fill"
             />
           </div>
         </div>
-        <h2 className="text-sm sm:text-lg font-bold text-[#21255C]">ريم محمد محبوب</h2>
+        <h2 className="text-sm sm:text-lg font-bold text-[#21255C]">
+          {profile.name}
+        </h2>
 
         <div className="flex gap-2 mt-1 items-center justify-center">
-          <Image src="/flag.svg" alt="Verified" width={15} height={15} />
-          <p className="text-xs sm:text-sm text-gray-500">عضو منذ سنة</p>
+          <Image src={profile.flagIcon} alt="Verified" width={15} height={15} />
+          <p className="text-xs sm:text-sm text-gray-500">
+            {profile.memberSince}
+          </p>
         </div>
         <div className="flex gap-2 items-center justify-center mt-1">
-          <Image src="/success.svg" alt="success" width={15} height={15} />
-          <p className="text-xs sm:text-md text-[#2EA154]">حساب نشط</p>
+          <Image
+            src={profile.statusIcon}
+            alt="success"
+            width={15}
+            height={15}
+          />
+          <p className="text-xs sm:text-md text-[#2EA154]">{profile.status}</p>
         </div>
       </div>
 
       {/* Navigation Links */}
       <nav className="flex-1 overflow-y-auto">
-        {sidebarItems.map((item) => (
+        {menuItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}

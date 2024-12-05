@@ -3,8 +3,8 @@ import Header from "@/components/profile/Header";
 
 export default function UserProfileLayout({ children }) {
   const profile = {
-    image: "/userImage.jpg",
-    name: "ريم محمد محبوب",
+    image: "/userImage.svg",
+    name: "مسند للتدريب والتوظيف",
     flagIcon: "/flag.svg",
     memberSince: "عضو منذ سنة",
     statusIcon: "/success.svg",
@@ -12,12 +12,10 @@ export default function UserProfileLayout({ children }) {
   };
 
   const menuItems = [
-    { label: "إدارة الحساب", href: "/userProfile/account", icon: "/manage-account-icon.svg" },
-    { label: "السيرة الذاتية", href: "/userProfile/resume", icon: "/request.svg" },
-    { label: "إكمال الحساب", href: "/userProfile/complete", icon: "/verify-icon.svg" },
-    { label: "طلبات التقديم على الفرص", href: "/userProfile/requests", icon: "/request.svg" },
-    { label: "ملفاتي", href: "/userProfile/files", icon: "/files.svg" },
-    { label: "الإشعارات", href: "/userProfile/notifications", icon: "/notification.svg" },
+    { label: "معلومات الحساب", href: "/companyProfile/account", icon: "/manage-account-icon.svg" },
+    { label: "طلبات التوظيف", href: "/companyProfile/requests", icon: "/request.svg" },
+    { label: "إدارة الموظفين", href: "/companyProfile/employees", icon: "/verify-icon.svg" },
+    { label: "الإشعارات", href: "/companyProfile/notifications", icon: "/notification.svg" },
   ];
 
   return (

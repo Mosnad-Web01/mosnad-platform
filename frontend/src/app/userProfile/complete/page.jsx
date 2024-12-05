@@ -1,7 +1,29 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import Input from '@/components/common/Input';
 
 const CompleteAccountDetails = () => {
+  const [formData, setFormData] = useState({
+    name: "ريم محمد",
+    gender: "أنثى",
+    birth_date: "1990-04-26",
+    nationality: "يمنية",
+    phone: "737622691",
+    whatsapp: "737622691",
+    email: "reemmohammed@gmail.com",
+    country: "اليمن",
+    city: "المحافظة",
+    address: "عصر - مدينة الآنسي",
+  });
+
+  const handleInputChange = (field) => (event) => {
+    setFormData({
+      ...formData,
+      [field]: event.target.value,
+    });
+  };
+
   return (
     <section className="py-6 px-4">
       {/* Personal Info Section */}
@@ -15,25 +37,29 @@ const CompleteAccountDetails = () => {
           <Input
             label="الاسم"
             placeholder="أدخل الاسم"
-            value="ريم محمد"
+            value={formData.name}
+            onChange={handleInputChange("name")}
             additionalClasses="mb-4"
           />
           <Input
             label="الجنس"
             placeholder="أدخل الجنس"
-            value="أنثى"
+            value={formData.gender}
+            onChange={handleInputChange("gender")}
             additionalClasses="mb-4"
           />
           <Input
             label="تاريخ الميلاد"
             placeholder="أدخل تاريخ الميلاد"
-            value="1990-04-26"
+            value={formData.birth_date}
+            onChange={handleInputChange("birth_date")}
             additionalClasses="mb-4"
           />
           <Input
             label="الجنسية"
             placeholder="أدخل الجنسية"
-            value="يمنية"
+            value={formData.nationality}
+            onChange={handleInputChange("nationality")}
             additionalClasses="mb-4"
           />
         </div>
@@ -50,19 +76,22 @@ const CompleteAccountDetails = () => {
           <Input
             label="رقم الهاتف"
             placeholder="أدخل رقم الهاتف"
-            value="737622691"
+            value={formData.phone}
+            onChange={handleInputChange("phone")}
             additionalClasses="mb-4"
           />
           <Input
             label="رقم الواتساب"
             placeholder="أدخل رقم الواتساب"
-            value="737622691"
+            value={formData.whatsapp}
+            onChange={handleInputChange("whatsapp")}
             additionalClasses="mb-4"
           />
           <Input
             label="البريد الإلكتروني"
             placeholder="أدخل البريد الإلكتروني"
-            value="reemmohammed@gmail.com"
+            value={formData.email}
+            onChange={handleInputChange("email")}
             additionalClasses="mb-4"
           />
         </div>
@@ -79,19 +108,22 @@ const CompleteAccountDetails = () => {
           <Input
             label="الدولة"
             placeholder="أدخل الدولة"
-            value="اليمن"
+            value={formData.country}
+            onChange={handleInputChange("country")}
             additionalClasses="mb-4"
           />
           <Input
             label="المحافظة"
             placeholder="أدخل المحافظة"
-            value="المحافظة"
+            value={formData.city}
+            onChange={handleInputChange("city")}
             additionalClasses="mb-4"
           />
           <Input
             label="العنوان"
             placeholder="أدخل العنوان"
-            value="عصر - مدينة الآنسي"
+            value={formData.address}
+            onChange={handleInputChange("address")}
             additionalClasses="mb-4"
           />
         </div>

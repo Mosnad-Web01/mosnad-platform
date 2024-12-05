@@ -1,11 +1,19 @@
+"use client";
+
 import Input from "@/components/common/Input";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
-const page = () => {
+const Page = () => {
+  const [email, setEmail] = useState("yasser@gmail.com");
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
   return (
     <section>
-      <div className="bg-white rounded-2xl py-3 shadow ">
+      <div className="bg-white rounded-2xl py-3 shadow">
         <div className="flex gap-3 items-center justify-between py-4 px-4 border-b border-gray-100">
           <div className="flex gap-3 items-center">
             <Image
@@ -26,7 +34,8 @@ const page = () => {
           <Input
             label="البريد الإلكتروني"
             type="email"
-            value="yasser@gmail.com"
+            value={email}
+            onChange={handleEmailChange} // Handle updates
           />
         </form>
       </div>
@@ -34,4 +43,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

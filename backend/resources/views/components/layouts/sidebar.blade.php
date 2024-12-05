@@ -62,8 +62,8 @@
 
         <x-layouts.sidebar-link :label="'إدارة الاستبيانات'" :icon="'poll'"
             :children="[
-                ['route' => route('surveys.index'), 'label' => 'إضافة استبيان جديد', 'icon' => 'add'],
-                ['route' => route('surveys.index'), 'label' => 'عرض الاستبيانات', 'icon' => 'list_alt'],
+                ['route' => route('youth-surveys.index'), 'label' => 'إستبانات الشباب', 'icon' => 'list_alt'],
+                ['route' => route('company-surveys.index'), 'label' => 'إستبانات الشركات', 'icon' => 'list_alt'],
             ]" />
     </nav>
 

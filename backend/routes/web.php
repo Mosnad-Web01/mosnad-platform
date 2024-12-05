@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardSessionController;
+use App\Http\Controllers\Dashboard\JobOpportunityController;
 
 // Public login routes
 Route::middleware('guest')->group(function () {
@@ -20,6 +21,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/jobs', fn() => 'jobs.index')->name('jobs.index');
     Route::get('/surveys', fn() => 'surveys.index')->name('surveys.index');
     Route::get('/users', fn() => view('dashboard.users.index'))->name('users.index');
+
+    Route::get('/job-opportunities', [JobOpportunityController::class, 'index'])->name('job-opportunities.index');
+    Route::get('/job-opportunities/create', [JobOpportunityController::class, 'create'])->name('job-opportunities.create');
+    Route::post('/job-opportunities', [JobOpportunityController::class, 'store'])->name('job-opportunities.store');
+    Route::get('/job-opportunities/{jobOpportunity}/edit', [JobOpportunityController::class, 'edit'])->name('job-opportunities.edit');
+    Route::put('/job-opportunities/{jobOpportunity}', [JobOpportunityController::class, 'update'])->name('job-opportunities.update');
+    Route::delete('/job-opportunities/{jobOpportunity}', [JobOpportunityController::class, 'destroy'])->name('job-opportunities.destroy');
+
 });
 
 

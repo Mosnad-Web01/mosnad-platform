@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/youth-surveys', [YouthFormController::class, 'index'])->name('youth-surveys.index');
     Route::get('youth-surveys/{id}', [YouthFormController::class, 'show'])->name('youth-surveys.show');
     Route::get('/company-surveys', [CompanyFormController::class, 'index'])->name('company-surveys.index');
+    Route::get('/company-surveys/{id}', [CompanyFormController::class, 'show'])->name('company-surveys.show');
     Route::get('/users', fn() => view('dashboard.users.index'))->name('users.index');
 });
 

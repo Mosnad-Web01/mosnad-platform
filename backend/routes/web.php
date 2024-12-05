@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/bootcamps', fn() => 'bootcamps.index')->name('bootcamps.index');
     Route::get('/jobs', fn() => 'jobs.index')->name('jobs.index');
     Route::get('/youth-surveys', [YouthFormController::class, 'index'])->name('youth-surveys.index');
+    Route::get('youth-surveys/{id}', [YouthFormController::class, 'show'])->name('youth-surveys.show');
     Route::get('/company-surveys', [CompanyFormController::class, 'index'])->name('company-surveys.index');
     Route::get('/users', fn() => view('dashboard.users.index'))->name('users.index');
 });

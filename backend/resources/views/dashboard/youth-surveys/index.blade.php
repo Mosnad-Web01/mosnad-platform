@@ -19,8 +19,12 @@
                         @foreach ($youthForms as $form)
                         <tr class="transition-colors hover:bg-gray-50">
                             <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $form->id }}</td>
-                            <td class="px-4 sm:px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">{{ $form->name }}</td>
-                         
+                            <td class="px-4 sm:px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                <!-- Link to the detailed page -->
+                                <a href="{{ route('youth-surveys.show', $form->id) }}" class="text-blue-600 hover:text-blue-800 hover:underline">
+                                    {{ $form->name }}
+                                </a>
+                            </td>
                             <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $form->city }}</td>
                             <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $form->address }}</td>
                             <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $form->birth_date ? \Carbon\Carbon::parse($form->birth_date)->format('Y-m-d') : 'N/A' }}</td>

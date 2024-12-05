@@ -23,10 +23,10 @@
 
             {{--------- Start Main Content ------------------}}
             <div id="main-content"
-                class="flex-1 gap-4 flex flex-col items-center transition-all duration-300 ease-in-out w-full">
+                class="flex-1 gap-2 flex flex-col items-center transition-all duration-300 ease-in-out w-full">
                 {{--------- NavBar ------------------}}
                 <x-layouts.navbar />
-                <main class="p-6 space-y-6 overflow-y-auto overflow-x-hidden">
+                <main class="px-2 pb-6 w-full space-y-2 overflow-y-auto overflow-x-hidden">
                     {{ $slot }}
                 </main>
             </div>

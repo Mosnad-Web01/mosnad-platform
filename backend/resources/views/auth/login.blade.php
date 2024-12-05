@@ -1,13 +1,17 @@
 <x-layout :navbar="false">
+    <x-slot name="title">
+       Login
+    </x-slot>
+    
     <div class="flex items-center justify-center h-screen lg:flex-row flex-col bg-gray-50">
         <!-- Left side (form) -->
         <div class="flex flex-1 flex-col items-center justify-center p-4">
             <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
                 <h2 class="text-start text-2xl mb-6 font-bold">أهلاً في منصة مسند للتدريب </h2>
                 <p class="mb-6 text-gray-500">تسجيل الدخول الى لوحة التحكم</p>
-              
 
-                <form action="{{ route('dashboard.login') }}" method="POST">
+
+                <form action="{{ route('login') }}" method="POST">
                     @csrf
                     <x-form.input
                         name="email"
@@ -24,7 +28,7 @@
                         placeholder="أدخل كلمة المرور"
                         icon="fa fa-lock"
                         inputClass="border-gray-300" />
-                   
+
                     <button type="submit" class="w-full py-2 bg-gradient text-white rounded-md mt-2">
                         تسجيل الدخول
                     </button>

@@ -51,15 +51,15 @@ class CompanyFormController extends Controller
      */
     public function index()
     {
-        $companyForms = CompanyForm::all();
+        // $companyForms = CompanyForm::all();
 
-        // Decode JSON fields for readability
-        $companyForms->transform(function ($form) {
-            $form->skills = json_decode($form->skills, true);
-            $form->remote_hiring_preferences = json_decode($form->remote_hiring_preferences, true);
-            return $form;
-        });
+        // // Decode JSON fields for readability
+        // $companyForms->transform(function ($form) {
+        //     $form->skills = json_decode($form->skills, true);
+        //     $form->remote_hiring_preferences = json_decode($form->remote_hiring_preferences, true);
+        //     return $form;
+        // });
 
-        return response()->json($companyForms);
+        // return response()->json($companyForms);
     }
 }

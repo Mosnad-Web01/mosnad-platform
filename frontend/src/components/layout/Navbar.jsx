@@ -23,14 +23,15 @@ const Navbar = () => {
 	const { user } = useAuth(); // Get user from AuthContext
 	const logout = useLogout(); // Logout hook
 
-	const navItems = [
-		{ label: 'الرئيسية', href: '/', icon: <FaHome /> },
-		{ label: 'من نحن', href: '/about', icon: <FaUsers /> },
-		{ label: 'الشباب', href: '/YouthForm', icon: <FaUserPlus /> },
-		{ label: 'الشركات', href: '/CompaniesForm', icon: <FaBriefcase /> },
-		{ label: 'قصص النجاح', href: '#', icon: <FaBookOpen /> },
-		{ label: 'تواصل معنا', href: '#', icon: <FaEnvelope /> },
-	];
+  const navItems = [
+    { label: "الرئيسية", href: "/", icon: <FaHome /> },
+    { label: "من نحن", href: "/about", icon: <FaUsers /> },
+    { label: "الشباب", href: "/YouthForm", icon: <FaUserPlus /> },
+    { label: "الشركات", href: "/CompaniesForm", icon: <FaBriefcase /> },
+    { label: "قصص النجاح", href: "#", icon: <FaBookOpen /> },
+    { label: "المستخدم", href: "/userProfile", icon: <FaThList /> },
+	{label: "الشركات", href: "/companyProfile", icon: <FaBriefcase />}
+  ];
 
 	return (
 		<header

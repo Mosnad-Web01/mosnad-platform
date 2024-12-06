@@ -2,17 +2,17 @@
 
     <x-common.header title="إدارة الفرص" />
 
-    <x-common.content-container title="جدول الاستبانات">
-        <div class="relative overflow-hidden rounded-xl shadow-lg bg-white">
+    <x-common.content-container title="جدول الفرص">
+    <div class="relative  rounded-xl shadow-lg bg-white">
             <div class="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-                <table class="w-full">
+                <table class="w-full  ">
                     <thead>
                         <tr class="bg-blue-600 text-white">
-                            <th class="px-2 sm:px-4 py-2 sm:py-4 text-center text-xs sm:text-sm font-medium sm:font-bold">ID</th>
-                            <th class="px-2 sm:px-4 py-2 sm:py-4 text-center text-xs sm:text-sm font-medium sm:font-bold">اسم الفرصة</th>
-                            <th class="px-2 sm:px-4 py-2 sm:py-4 text-center text-xs sm:text-sm font-medium sm:font-bold">حالة الفرصة</th>
-                            <th class="px-2 sm:px-4 py-2 sm:py-4 text-center text-xs sm:text-sm font-medium sm:font-bold">المتقدمين</th>
-                            <th class="px-2 sm:px-4 py-2 sm:py-4 text-center text-xs sm:text-sm font-medium sm:font-bold">action</th>
+                        <th class="px-4 sm:px-6 py-4 text-center text-sm font-bold text-white whitespace-nowrap">ID</th>
+                            <th class="px-4 sm:px-6 py-4 text-center text-sm font-bold text-white whitespace-nowrap">اسم الفرصة</th>
+                            <th class="px-4 sm:px-6 py-4 text-center text-sm font-bold text-white whitespace-nowrap">حالة الفرصة</th>
+                            <th class="px-4 sm:px-6 py-4 text-center text-sm font-bold text-white whitespace-nowrap">المتقدمين</th>
+                            <th class="px-4 sm:px-6 py-4 text-center text-sm font-bold text-white whitespace-nowrap">action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -34,8 +34,8 @@
                                 </td>
                                 <td class="px-2 sm:px-4 py-2 sm:py-4 text-center">
                                     <a href="#"
-                                        class="px-2 sm:px-4 py-0.5 sm:py-1 text-xs sm:text-sm font-light sm:font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-full">
-                                         المتقدمين ({{ $jobOpportunity->applicants_count ?? "0" }})
+                                        class="px-2 sm:px-4 py-0.5 sm:py-1 text-xs sm:text-sm font-light sm:font-medium lg:text-white lg:bg-blue-600 hover:bg-blue-700 rounded-full">
+                                          ({{ $jobOpportunity->applicants_count ?? "0" }})
                                     </a>
                                 </td>
                                 <td class="px-2 sm:px-4 py-2 sm:py-4 text-center">
@@ -67,7 +67,7 @@
 
         <!-- Empty State -->
         @if($jobOpportunities->isEmpty())
-            <div class="text-center py-6 sm:py-12">
+            <div class="text-center py-6 sm:py-12 overflow-hidden">
                 <svg class="mx-auto h-8 w-8 sm:h-12 sm:w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />

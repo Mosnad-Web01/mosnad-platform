@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\CompanyFormController;
+use App\Http\Controllers\Dashboard\ContactUsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardSessionController;
 use App\Http\Controllers\Dashboard\YouthFormController;
@@ -24,13 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::get('youth-surveys/{id}', [YouthFormController::class, 'show'])->name('youth-surveys.show');
     Route::get('/company-surveys', [CompanyFormController::class, 'index'])->name('company-surveys.index');
     Route::get('/company-surveys/{id}', [CompanyFormController::class, 'show'])->name('company-surveys.show');
+    Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact-us.index');
     Route::get('/users', fn() => view('dashboard.users.index'))->name('users.index');
 });
 
 
 // Fallback route for '/' (redirect to login if not authenticated)
 // Route::redirect('/', '/login');
-
-
-
-

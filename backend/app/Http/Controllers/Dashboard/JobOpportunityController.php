@@ -22,7 +22,8 @@ class JobOpportunityController extends Controller
     }
     public function show(JobOpportunity $jobOpportunity)
     {
-        // return view('dashboard.job-opportunities.show', compact('jobOpportunity'));
+
+        return view('dashboard.job-opportunities.show', compact('jobOpportunity'));
     }
     public function create()
     {
@@ -53,7 +54,7 @@ class JobOpportunityController extends Controller
         // Save the jobopportunity
         $jobOpportunity = JobOpportunity::create($validatedData);
         if ($jobOpportunity) {
-            Session::flash('success', 'تم إنشاء فرصة العمل بنجاح  !');
+            Session::flash('success', 'تم إنشاء فرصة العمل بنجاح   !');
             return redirect()->route('job-opportunities.index');
         } else {
             Session::flash('error', 'حدث خطأ أثناء إنشاء فرصة العمل  . ');
@@ -94,7 +95,7 @@ class JobOpportunityController extends Controller
         $jobOpportunity->update($validatedData);
 
         // flash a success message
-        Session::flash('success', 'تم تحديث فرصة العمل بنجاح!');
+        Session::flash('success', 'تم تحديث فرصة العمل بنجاح ! ');
         return redirect()->route('job-opportunities.index');
     }
 
@@ -108,7 +109,7 @@ class JobOpportunityController extends Controller
         $jobOpportunity->delete();
 
         // flash a success message
-        Session::flash('success', 'تم حذف فرصة العمل بنجاح!');
+        Session::flash('success', ' تم حذف فرصة العمل بنجاح  ! ');
         return redirect()->route('job-opportunities.index');
     }
 

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -74,5 +75,11 @@ class User extends Authenticatable
     {
         // return $this->role && $this->role->name === 'student';
         return $this->role_id === 3;
+    }
+
+    public function jobOpportunities(): BelongsToMany
+    {
+        return $this->belongsToMany(JobOpportunity::class, 'job_opportunity_applies')
+                    ->withTimestamps(); // Tracks the applied time
     }
 }

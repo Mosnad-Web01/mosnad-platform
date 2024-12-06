@@ -17,7 +17,7 @@
             <div id="logo-container" class="transition-all duration-300">
                 <img id="logo-image" src="{{ asset('images/mosnad-logo-login.svg') }}" alt="Mosnad Logo"
                      class="hidden lg:block max-w-[8rem] mx-auto transition-all duration-300">
-                <span id="logo-letter" class="lg:hidden text-indigo-600 text-2xl font-bold transition-all duration-300">
+                <span id="logo-letter" class="lg:hidden text-indigo-50 text-2xl font-bold transition-all duration-300">
                     M
                 </span>
             </div>
@@ -30,6 +30,13 @@
         <x-layouts.sidebar-link :route="route('home')" :label="'لوحة التحكم '" :icon="'dashboard'" :active="request()->routeIs('home')" />
 
         <!-- Collapsible Groups -->
+        <x-layouts.sidebar-link :label="'إدارة فرص التوظيف'" :icon="'work'"
+            :children="[
+                ['route' => route('job-opportunities.create'), 'label' => 'إضافة فرصة جديدة', 'icon' => 'add'],
+                ['route' => route('job-opportunities.index'), 'label' => 'عرض فرص التوظيف', 'icon' => 'list_alt'],
+
+            ]" />
+
         <x-layouts.sidebar-link :label="'إدارة المستخدمين'" :icon="'people'"
             :children="[
                 ['route' => route('users.index'), 'label' => 'إضافة مستخدم جديد', 'icon' => 'add'],
@@ -52,12 +59,6 @@
             :children="[
                 ['route' => route('bootcamps.index'), 'label' => 'إضافة كورس جديد', 'icon' => 'add'],
                 ['route' => route('bootcamps.index'), 'label' => 'عرض الكورسات', 'icon' => 'list_alt'],
-            ]" />
-
-        <x-layouts.sidebar-link :label="'إدارة الوظائف'" :icon="'work'"
-            :children="[
-                ['route' => route('jobs.index'), 'label' => 'إضافة وظيفة جديدة', 'icon' => 'add'],
-                ['route' => route('jobs.index'), 'label' => 'عرض الوظائف', 'icon' => 'list_alt'],
             ]" />
 
         <x-layouts.sidebar-link :label="'إدارة الاستبيانات'" :icon="'poll'"

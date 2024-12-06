@@ -34,12 +34,12 @@ class JobOpportunityController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'required_skills' => 'nullable|string',
-            'experience' => 'nullable|string',
-            'position_level' => 'nullable|string',
-            'other_criteria' => 'nullable|string',
-            'imgurl' => 'nullable|image|mimes:png,jpg,jpeg,webp,svg|max:2048',
-            'end_date' => 'nullable|date|after:today',
+            'required_skills' => 'required|string',
+            'experience' => 'required|string',
+            'position_level' => 'required|string',
+            'other_criteria' => 'required|string',
+            'imgurl' => 'required|image|mimes:png,jpg,jpeg,webp,svg|max:2048',
+            'end_date' => 'required|date|after:today',
         ]);
 
 
@@ -61,8 +61,40 @@ class JobOpportunityController extends Controller
     }
 
     public function edit(JobOpportunity $jobOpportunity)
-{
-    return view('dashboard.job-opportunities.edit', compact('jobOpportunity'));
-}
+    {
+        return view('dashboard.job-opportunities.edit', compact('jobOpportunity'));
+    }
+    public function update(Request $request, JobOpportunity $jobOpportunity)
+    {
+
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'required_skills' => 'string',
+            'experience' => 'string',
+            'position_level' => 'string',
+            'other_criteria' => 'string',
+            'imgurl' => 'nullable|image|mimes:png,jpg,jpeg,webp,svg|max:2048',
+            'end_date' => 'required|date|after:today',
+        ]);
+
+        // Handle the image upload if a new image is provided
+        if ($request->hasFile('imgurl')) {
+            $imagePath = $request->file('imgurl')->store('job_opportunities', 'public');
+            $validatedData['imgurl'] = $imagePath;
+
+            // Optionally, delete the old image from storage
+            if ($jobOpportunity->imgurl) {
+                \Storage::disk('public')->delete($jobOpportunity->imgurl);
+            }
+        }
+
+        // Update the job opportunity
+        $jobOpportunity->update($validatedData);
+
+        // Flash a success message
+        Session::flash('success', 'تم تحديث فرصة العمل بنجاح!');
+        return redirect()->route('job-opportunities.index');
+    }
 
 }

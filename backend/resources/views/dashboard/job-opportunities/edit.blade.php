@@ -16,6 +16,9 @@
                     <label for="title" class="block mb-2 text-sm font-medium text-gray-900">اسم الفرصة</label>
                     <input type="text" id="title" name="title" value="{{ old('title', $jobOpportunity->title) }}"
                         class="block w-full border border-gray-300 rounded-lg text-sm p-2">
+                    @error('title')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 <!-- Image Upload -->
                 <div>
@@ -32,11 +35,15 @@
             </div>
 
             <!-- Row 2: Description -->
-            <div>
+            <>
                 <label for="description" class="block mb-2 text-sm font-medium text-gray-900">الوصف</label>
                 <textarea id="description" name="description" rows="4"
                     class="block w-full border border-gray-300 rounded-lg text-sm p-2">{{ old('description', $jobOpportunity->description) }}</textarea>
-            </div>
+                @error('description')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+
+            </>
 
             <!-- Row 3: Required Skills and Experience -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -52,6 +59,9 @@
                         <option value="مستوى خبير" {{ old('position_level', $jobOpportunity->position_level) == 'مستوى خبير' ? 'selected' : '' }}>مستوى خبير</option>
                     </select>
                 </div>
+                @error('position_level')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
                 <!-- Experience -->
                 <div>
                     <label for="experience" class="block mb-2 text-sm font-medium text-gray-900">مستوى الخبرة</label>
@@ -63,6 +73,9 @@
                         <option value="5+ سنوات" {{ old('experience', $jobOpportunity->experience) == '5+ سنوات' ? 'selected' : '' }}>5+ سنوات</option>
                     </select>
                 </div>
+                @error('experience')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Row 4: Required Skills and Other Criteria -->
@@ -73,21 +86,31 @@
                     <input type="text" id="required_skills" name="required_skills"
                         value="{{ old('required_skills', $jobOpportunity->required_skills) }}"
                         class="block w-full border border-gray-300 rounded-lg text-sm p-2">
+                    @error('required_skills')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 <!-- End Date -->
                 <div>
                     <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900">تاريخ انتهاء
                         الفرصة</label>
                     <input type="date" id="end_date" name="end_date"
-                        value="{{ old('end_date', $jobOpportunity->end_date) }}"
+                        value="{{ old('end_date') ? date('Y-m-d', strtotime(old('end_date'))) : '' }}"
                         class="block w-full border border-gray-300 rounded-lg text-sm p-2">
+                    @error('end_date')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
+
             </div>
 
             <div>
                 <label for="other_criteria" class="block mb-2 text-sm font-medium text-gray-900">معايير أخرى</label>
                 <textarea id="other_criteria" name="other_criteria" rows="4"
                     class="block w-full border border-gray-300 rounded-lg text-sm p-2">{{ old('other_criteria', $jobOpportunity->other_criteria) }}</textarea>
+                @error('other_criteria')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="flex justify-center">

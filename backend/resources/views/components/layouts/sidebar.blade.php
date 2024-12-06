@@ -48,10 +48,10 @@
                 ['route' => route('permissions.index'), 'label' => 'عرض الصلاحيات', 'icon' => 'list_alt'],
             ]" />
 
-        <x-layouts.sidebar-link :label="'إدارة الكورسات'" :icon="'school'"
+        <x-layouts.sidebar-link :label="'إدارة المخيمات'" :icon="'school'"
             :children="[
-                ['route' => route('bootcamps.index'), 'label' => 'إضافة كورس جديد', 'icon' => 'add'],
-                ['route' => route('bootcamps.index'), 'label' => 'عرض الكورسات', 'icon' => 'list_alt'],
+                ['route' => route('bootcamps.index'), 'label' => 'إضافة مخيم جديد', 'icon' => 'add'],
+                ['route' => route('bootcamps.index'), 'label' => 'عرض المخيمات', 'icon' => 'list_alt'],
             ]" />
 
         <x-layouts.sidebar-link :label="'إدارة الوظائف'" :icon="'work'"
@@ -70,6 +70,7 @@
             :children="[
                 ['route' => route('contact-us.index'), 'label' => 'رسائل المستخدمين', 'icon' => 'list_alt'],
             ]" />
+        
     </nav>
 
     <!-- Logout Section -->

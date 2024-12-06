@@ -7,11 +7,13 @@
 
         <!-- Optional Back Button -->
         @if($showBackButton ?? false)
-        <a href="javascript:history.back()"
-            class="text-blue-500 font-medium hover:underline text-sm px-3 py-1.5 bg-blue-100 rounded-lg">
-            العودة
+        <a href="javascript:history.back()" class="text-blue-500 font-medium hover:underline text-sm px-1 py-1.5 bg-blue-100 rounded-lg flex items-center">
+            <!-- Back Icon --> رجوع
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+           
         </a>
-
         @endif
     </div>
 </header>

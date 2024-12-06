@@ -61,7 +61,6 @@ class User extends Authenticatable
     {
         // return $this->role && $this->role->name === 'admin';
         return $this->role_id === 1;
-
     }
 
     public function isCompany()
@@ -75,4 +74,9 @@ class User extends Authenticatable
         // return $this->role && $this->role->name === 'student';
         return $this->role_id === 3;
     }
+    public function bootcamp()
+    {
+        return $this->belongsTo(Bootcamp::class);
+    }
+    
 }

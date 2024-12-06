@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\BootcampController;
 use App\Http\Controllers\Dashboard\CompanyFormController;
 use App\Http\Controllers\Dashboard\ContactUsController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/contact-us/{id}', [ContactUsController::class, 'show'])->name('dashboard.contact-us.show');
     Route::post('/contact-us/{id}/reply', [ContactUsController::class, 'reply'])->name('contact-us.reply');
     Route::get('/users', fn() => view('dashboard.users.index'))->name('users.index');
+
+
+
+
+    Route::get('/bootcamps', [BootcampController::class, 'index'])->name('bootcamps.index');
+    Route::get('/bootcamps/create', [BootcampController::class, 'create'])->name('bootcamps.create');
+    Route::post('/bootcamps', [BootcampController::class, 'store'])->name('bootcamps.store');
+    Route::get('/bootcamps/{id}', [BootcampController::class, 'show'])->name('bootcamps.show');
+    Route::get('/bootcamps/{id}/edit', [BootcampController::class, 'edit'])->name('bootcamps.edit');
+    Route::put('/bootcamps/{id}', [BootcampController::class, 'update'])->name('dashboard.bootcamps.update');  // This is the route you're missing
+    Route::delete('/bootcamps/{id}', [BootcampController::class, 'destroy'])->name('bootcamps.destroy');
 });
 
 

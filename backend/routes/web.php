@@ -28,8 +28,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/users', fn() => view('dashboard.users.index'))->name('users.index');
 
     Route::get('/job-opportunities', [JobOpportunityController::class, 'index'])->name('job-opportunities.index');
-    Route::get('/job-opportunities/{jobOpportunity}', [JobOpportunityController::class, 'show'])->name('job-opportunities.show');
+    
     Route::get('/job-opportunities/create', [JobOpportunityController::class, 'create'])->name('job-opportunities.create');
+
+    Route::get('/job-opportunities/{jobOpportunity}', [JobOpportunityController::class, 'show'])->name('job-opportunities.show');
+
     Route::post('/job-opportunities', [JobOpportunityController::class, 'store'])->name('job-opportunities.store');
     Route::get('/job-opportunities/{jobOpportunity}/edit', [JobOpportunityController::class, 'edit'])->name('job-opportunities.edit');
     Route::put('/job-opportunities/{jobOpportunity}', [JobOpportunityController::class, 'update'])->name('job-opportunities.update');

@@ -29,9 +29,14 @@
         <!-- Single Links -->
         <x-layouts.sidebar-link :route="route('home')" :label="'لوحة التحكم '" :icon="'dashboard'" :active="request()->routeIs('home')" />
 
-        <x-layouts.sidebar-link :route="route('job-opportunities.index')" :label="'  إدارة فرص الوظائف'" :icon="'work'" :active="request()->routeIs('job-opportunities.index')" />
-
         <!-- Collapsible Groups -->
+        <x-layouts.sidebar-link :label="'إدارة فرص التوظيف'" :icon="'work'"
+            :children="[
+                ['route' => route('job-opportunities.create'), 'label' => 'إضافة فرصة جديدة', 'icon' => 'add'],
+                ['route' => route('job-opportunities.index'), 'label' => 'عرض فرص التوظيف', 'icon' => 'list_alt'],
+
+            ]" />
+
         <x-layouts.sidebar-link :label="'إدارة المستخدمين'" :icon="'people'"
             :children="[
                 ['route' => route('users.index'), 'label' => 'إضافة مستخدم جديد', 'icon' => 'add'],

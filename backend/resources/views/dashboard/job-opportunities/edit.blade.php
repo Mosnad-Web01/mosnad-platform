@@ -35,7 +35,7 @@
             </div>
 
             <!-- Row 2: Description -->
-            <>
+            <div>
                 <label for="description" class="block mb-2 text-sm font-medium text-gray-900">الوصف</label>
                 <textarea id="description" name="description" rows="4"
                     class="block w-full border border-gray-300 rounded-lg text-sm p-2">{{ old('description', $jobOpportunity->description) }}</textarea>
@@ -43,7 +43,7 @@
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
 
-            </>
+            </div>
 
             <!-- Row 3: Required Skills and Experience -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -58,10 +58,11 @@
                         <option value="مستوى متوسط" {{ old('position_level', $jobOpportunity->position_level) == 'مستوى متوسط' ? 'selected' : '' }}>مستوى متوسط</option>
                         <option value="مستوى خبير" {{ old('position_level', $jobOpportunity->position_level) == 'مستوى خبير' ? 'selected' : '' }}>مستوى خبير</option>
                     </select>
+                    @error('position_level')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
-                @error('position_level')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
+
                 <!-- Experience -->
                 <div>
                     <label for="experience" class="block mb-2 text-sm font-medium text-gray-900">مستوى الخبرة</label>
@@ -72,10 +73,10 @@
                         <option value="3-5 سنوات" {{ old('experience', $jobOpportunity->experience) == '3-5 سنوات' ? 'selected' : '' }}>3-5 سنوات</option>
                         <option value="5+ سنوات" {{ old('experience', $jobOpportunity->experience) == '5+ سنوات' ? 'selected' : '' }}>5+ سنوات</option>
                     </select>
+                    @error('experience')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
-                @error('experience')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
             </div>
 
             <!-- Row 4: Required Skills and Other Criteria -->

@@ -89,10 +89,10 @@ class JobOpportunityController extends Controller
             }
         }
 
-        // Update the job opportunity
+        // update the job opportunity
         $jobOpportunity->update($validatedData);
 
-        // Flash a success message
+        // flash a success message
         Session::flash('success', 'تم تحديث فرصة العمل بنجاح!');
         return redirect()->route('job-opportunities.index');
     }

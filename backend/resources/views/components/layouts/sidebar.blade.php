@@ -50,7 +50,7 @@
 
         <x-layouts.sidebar-link :label="'إدارة المخيمات'" :icon="'school'"
             :children="[
-                ['route' => route('bootcamps.index'), 'label' => 'إضافة مخيم جديد', 'icon' => 'add'],
+                ['route' => route('bootcamps.create'), 'label' => 'إضافة مخيم جديد', 'icon' => 'add'],
                 ['route' => route('bootcamps.index'), 'label' => 'عرض المخيمات', 'icon' => 'list_alt'],
             ]" />
 

@@ -13,6 +13,7 @@
                             <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white whitespace-nowrap">المدينة</th>
                             <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white whitespace-nowrap">الرسوم</th>
                             <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white whitespace-nowrap">المدة</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white whitespace-nowrap">الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -20,15 +21,26 @@
                         <tr class="transition-colors hover:bg-gray-50">
                             <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $bootcamp->id }}</td>
                             <td class="px-4 sm:px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                <!-- Link to the detailed page -->
                                 <a href="{{ route('bootcamps.show', $bootcamp->id) }}" class="text-blue-600 hover:text-blue-800 hover:underline">
                                     {{ $bootcamp->name }}
                                 </a>
                             </td>
                             <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $bootcamp->instructor }}</td>
                             <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $bootcamp->city }}</td>
-                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $bootcamp->fees }}$ {{ $bootcamp->fees_details }}</td>
+                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $bootcamp->fees }}$</td>
                             <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $bootcamp->training_duration }} أسابيع</td>
+                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap flex justify-start gap-3">
+                                <!-- Edit Button -->
+                                <a href="{{ route('bootcamps.edit', $bootcamp->id) }}" class="text-yellow-500 hover:text-yellow-700">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <!-- Delete Button -->
+                                <button onclick="openDeleteModal('{{ $bootcamp->id }}')" class="ml-2 text-red-500 hover:text-red-700">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -37,7 +49,7 @@
         </div>
 
         <x-common.pagination :items="$bootcamps" />
-        
+
         <!-- Empty State -->
         @if($bootcamps->isEmpty())
         <div class="text-center py-12">
@@ -49,4 +61,43 @@
         @endif
     </x-common.content-container>
 
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-500 bg-opacity-50 transition-opacity duration-300 ease-in-out">
+        <div class="bg-white p-8 rounded-xl shadow-lg w-96 max-w-md">
+            <h2 class="text-xl font-semibold text-gray-800">هل أنت متأكد من حذف هذا المخيم التدريبي؟</h2>
+            <div class="mt-6 flex justify-end gap-4">
+                <!-- Cancel Button -->
+                <button onclick="closeDeleteModal()" class="px-6 py-2 text-sm text-gray-700 bg-gray-300 rounded-lg hover:bg-gray-400 transition-colors duration-300">
+                    إلغاء
+                </button>
+                <!-- Confirm Delete Button -->
+                <form id="deleteForm" method="POST" action="" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="px-6 py-2 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors duration-300">
+                        حذف
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </x-layout>
+
+<!-- JavaScript for Modal -->
+<script>
+    let deleteModal = document.getElementById('deleteModal');
+    let deleteForm = document.getElementById('deleteForm');
+
+    function openDeleteModal(bootcampId) {
+        // Set the action for the delete form
+        deleteForm.action = '/bootcamps/' + bootcampId; // Adjust the route as needed
+        // Show the modal
+        deleteModal.classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+        // Hide the modal
+        deleteModal.classList.add('hidden');
+    }
+</script>

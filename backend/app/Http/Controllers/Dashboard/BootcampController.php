@@ -35,9 +35,9 @@ class BootcampController extends Controller
             'fees' => 'required|numeric',
             'instructor' => 'required|string',
             'training_duration' => 'required|integer',
-            'main_image' => 'required|image',
+            'main_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'additional_images' => 'nullable|array',
-            'additional_images.*' => 'image',
+            'additional_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $data = $request->all();
@@ -54,7 +54,7 @@ class BootcampController extends Controller
 
         Bootcamp::create($data);
 
-        return redirect()->route('dashboard.bootcamps.index')->with('success', 'Bootcamp created successfully!');
+        return redirect()->route('bootcamps.index')->with('success', 'Bootcamp created successfully!');
     }
 
     public function edit($id)
@@ -72,9 +72,9 @@ class BootcampController extends Controller
             'fees' => 'required|numeric',
             'instructor' => 'required|string',
             'training_duration' => 'required|integer',
-            'main_image' => 'nullable|image',
+            'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'additional_images' => 'nullable|array',
-            'additional_images.*' => 'image',
+            'additional_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $bootcamp = Bootcamp::findOrFail($id);
@@ -127,6 +127,6 @@ class BootcampController extends Controller
         }
 
         $bootcamp->delete();
-        return redirect()->route('dashboard.bootcamps.index')->with('success', 'Bootcamp deleted successfully!');
+        return redirect()->route('bootcamps.index')->with('success', 'Bootcamp deleted successfully!');
     }
 }

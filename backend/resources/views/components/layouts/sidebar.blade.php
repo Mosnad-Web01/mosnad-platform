@@ -66,6 +66,11 @@
                 ['route' => route('youth-surveys.index'), 'label' => 'إستبانات الشباب', 'icon' => 'list_alt'],
                 ['route' => route('company-surveys.index'), 'label' => 'إستبانات الشركات', 'icon' => 'list_alt'],
             ]" />
+
+        <x-layouts.sidebar-link :label="'رسائل المستخدمين'" :icon="'contact_support'"
+            :children="[
+                ['route' => route('contact-us.index'), 'label' => 'رسائل المستخدمين', 'icon' => 'list_alt'],
+            ]" />
     </nav>
 
     <!-- Logout Section -->

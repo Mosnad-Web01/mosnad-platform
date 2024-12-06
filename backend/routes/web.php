@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\CompanyFormController;
+use App\Http\Controllers\Dashboard\ContactUsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardSessionController;
 use App\Http\Controllers\Dashboard\JobOpportunityController;
@@ -25,6 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::get('youth-surveys/{id}', [YouthFormController::class, 'show'])->name('youth-surveys.show');
     Route::get('/company-surveys', [CompanyFormController::class, 'index'])->name('company-surveys.index');
     Route::get('/company-surveys/{id}', [CompanyFormController::class, 'show'])->name('company-surveys.show');
+    Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact-us.index');
+    Route::get('/contact-us/{id}', [ContactUsController::class, 'show'])->name('dashboard.contact-us.show');
+    Route::post('/contact-us/{id}/reply', [ContactUsController::class, 'reply'])->name('contact-us.reply');
     Route::get('/users', fn() => view('dashboard.users.index'))->name('users.index');
 
     Route::get('/job-opportunities', [JobOpportunityController::class, 'index'])->name('job-opportunities.index');
@@ -43,7 +47,3 @@ Route::middleware('auth')->group(function () {
 
 // Fallback route for '/' (redirect to login if not authenticated)
 // Route::redirect('/', '/login');
-
-
-
-

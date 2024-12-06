@@ -60,4 +60,9 @@ class JobOpportunityController extends Controller
         }
     }
 
+    public function edit(JobOpportunity $jobOpportunity)
+{
+    return view('dashboard.job-opportunities.edit', compact('jobOpportunity'));
+}
+
 }

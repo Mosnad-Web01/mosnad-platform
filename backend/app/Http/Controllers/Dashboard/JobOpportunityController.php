@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\JobOpportunity;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 
@@ -94,6 +95,20 @@ class JobOpportunityController extends Controller
 
         // flash a success message
         Session::flash('success', 'تم تحديث فرصة العمل بنجاح!');
+        return redirect()->route('job-opportunities.index');
+    }
+
+    public function destroy(JobOpportunity $jobOpportunity)
+    {
+        // check if the job opportunity has an associated image
+        if ($jobOpportunity->imgurl) {
+            // delete the image from public storage
+            Storage::disk('public')->delete($jobOpportunity->imgurl);
+        }
+        $jobOpportunity->delete();
+
+        // flash a success message
+        Session::flash('success', 'تم حذف فرصة العمل بنجاح!');
         return redirect()->route('job-opportunities.index');
     }
 

@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const TeamMembersSection = () => {
 	return (
-		<section className="max-w-screen-xl mx-auto px-6 py-10 bg-white rounded-lg shadow-2xl overflow-hidden mt-20">
+		<section className="max-w-screen-xl mx-auto px-6 py-10 bg-white rounded-lg  overflow-hidden mt-20">
 			{/* Section Title */}
 			<h2 className="text-center text-3xl md:text-5xl font-bold text-blue-900 mb-20">
 				اعضاء الفريق
@@ -12,7 +12,7 @@ const TeamMembersSection = () => {
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center justify-center">
 				{/* Member 1 */}
 				<div className="flex flex-col items-center">
-					<figure className="relative overflow-hidden shadow-lg md:w-[372px] md:h-[368px]">
+					<figure className="relative overflow-hidden  md:w-[372px] md:h-[368px]">
 						<Image
 							src="/team-member.svg"
 							width={353}

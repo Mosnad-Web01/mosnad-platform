@@ -17,7 +17,7 @@ const SuccessStoriesSection = () => {
 	];
 
 	return (
-		<section className="max-w-screen-xl mx-auto px-6 py-10 bg-white rounded-lg shadow-2xl overflow-hidden mt-20">
+		<section className="max-w-screen-xl mx-auto px-6 py-10 bg-white rounded-lg  overflow-hidden mt-20">
 			{/* Section Title */}
 			<h2 className="text-center text-3xl md:text-5xl font-bold text-blue-900 mb-10">
 				قصص نجاح

@@ -17,23 +17,25 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                         @foreach ($contactUsMessages as $message)
-                            <tr class="transition-colors hover:bg-gray-50">
-                                <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $message->id }}</td>
+                        <tr class="transition-colors hover:bg-gray-50">
+                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $message->id }}</td>
 
-                                <td class="px-4 sm:px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                    <!-- Link to the detailed message view -->
-                                        {{ Str::limit($message->name, 20) }}
-                                </td>
+                            <td class="px-4 sm:px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                <a href="{{ route('dashboard.contact-us.show', $message->id) }}" class="text-blue-600 hover:text-blue-800 hover:underline">
+                                    {{ Str::limit($message->name, 20) }}
+                                </a>
+                            </td>
 
-                                <td class="px-4 sm:px-6 py-4 text-sm whitespace-nowrap">
-                                    <a href="mailto:{{ $message->email }}" class="text-blue-600 hover:text-blue-800 hover:underline">{{ Str::limit($message->email, 20) }}</a>
-                                </td>
-                                <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ Str::limit($message->phone, 20) }}</td>
-                                <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ Str::limit($message->message, 20) }}</td>
-                                <td class="px-4 sm:px-6 py-4 text-sm whitespace-nowrap">
-                                    <span class="inline-flex bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ $message->created_at->format('Y-m-d H:i') }}</span>
-                                </td>
-                            </tr>
+
+                            <td class="px-4 sm:px-6 py-4 text-sm whitespace-nowrap">
+                                <a href="mailto:{{ $message->email }}" class="text-blue-600 hover:text-blue-800 hover:underline">{{ Str::limit($message->email, 20) }}</a>
+                            </td>
+                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ Str::limit($message->phone, 20) }}</td>
+                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ Str::limit($message->message, 20) }}</td>
+                            <td class="px-4 sm:px-6 py-4 text-sm whitespace-nowrap">
+                                <span class="inline-flex bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ $message->created_at->format('Y-m-d H:i') }}</span>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>

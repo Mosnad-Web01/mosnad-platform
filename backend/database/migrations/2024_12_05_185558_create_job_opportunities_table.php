@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('position_level')->nullable(); //junior - midlevel - senior
             $table->text('other_criteria')->nullable();
             $table->string('imgurl')->nullable();
-            $table->date('end_date')->nullable();
+            $table->date('end_date');
             $table->timestamps();
         });
     }

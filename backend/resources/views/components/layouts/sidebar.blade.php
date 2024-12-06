@@ -17,7 +17,7 @@
             <div id="logo-container" class="transition-all duration-300">
                 <img id="logo-image" src="{{ asset('images/mosnad-logo-login.svg') }}" alt="Mosnad Logo"
                      class="hidden lg:block max-w-[8rem] mx-auto transition-all duration-300">
-                <span id="logo-letter" class="lg:hidden text-indigo-600 text-2xl font-bold transition-all duration-300">
+                <span id="logo-letter" class="lg:hidden text-indigo-50 text-2xl font-bold transition-all duration-300">
                     M
                 </span>
             </div>

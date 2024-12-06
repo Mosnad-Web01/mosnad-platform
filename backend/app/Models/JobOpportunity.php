@@ -15,4 +15,9 @@ class JobOpportunity extends Model
         return $this->belongsToMany(User::class, 'job_opportunity_applies')
                     ->withTimestamps(); // Tracks the applied time
     }
+
+    // Define the data type of the 'end_date' column
+    protected $casts = [
+        'end_date' => 'date',
+    ];
 }

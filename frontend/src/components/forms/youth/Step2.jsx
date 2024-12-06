@@ -1,6 +1,5 @@
 import React from "react";
 import Input from "@/components/common/Input";
-import Checkbox from "@/components/common/Checkbox";
 import FieldContainer from "@/components/common/FieldContainer";
 import RadioButton from "@/components/common/Radio";
 import TextArea from "@/components/common/TextArea";

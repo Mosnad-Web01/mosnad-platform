@@ -10,4 +10,9 @@ class ContactUs extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'phone', 'email', 'message'];
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class, 'contact_us_id');
+    }
 }

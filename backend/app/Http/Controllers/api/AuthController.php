@@ -50,6 +50,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password', 'role_id');
         $credentials['password'] = Hash::make($credentials['password']);
         $credentials['name'] = $name; // use combined name
+        $credentials['status'] = 'suspended';
         $user = User::create($credentials);
 
         // create company record if role_id is 2 (Company role)

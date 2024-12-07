@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('phone_number', 20)->nullable();
             $table->foreignId('role_id')->constrained('roles')->nullable()->after('email');
-            $table->enum('status', ['active', 'inactive', 'suspended'])->default('active')->after('role_id');
+            $table->enum('status', ['active', 'inactive', 'suspended'])->default(value: 'suspended')->after('role_id');
             $table->softDeletes()->after('status'); // to add deleted_at for soft deletes
         });
     }

@@ -50,17 +50,19 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password', 'role_id');
         $credentials['password'] = Hash::make($credentials['password']);
         $credentials['name'] = $name; // use combined name
+        $credentials['status'] = 'suspended';
         $user = User::create($credentials);
 
+        $companyForm = null;
         // create company record if role_id is 2 (Company role)
         if ($roleId == 2) {
 
-            // TODO: After creating company table
-
-            // $user->companies()->create([
-            //     'company_name' => $request->input('company_name'),
-            // ]);
+            $companyForm = $user->companyForm()->create([
+                'name' => $request->input('company_name'),
+                'user_id' => $user->id
+            ]);
         }
+
 
         // generate token
         $token = $user->createToken($user->name)->plainTextToken;
@@ -68,6 +70,7 @@ class AuthController extends Controller
         return response()->json([
             'user' => $user,
             'role' => $user->role->name,
+            'status' => $user->status,
             'token' => $token,
         ], 200);
     }

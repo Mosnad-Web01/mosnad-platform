@@ -82,4 +82,8 @@ class User extends Authenticatable
         return $this->belongsToMany(JobOpportunity::class, 'job_opportunity_applies')
                     ->withTimestamps(); // Tracks the applied time
     }
+    public function companyForm()
+    {
+        return $this->hasOne(CompanyForm::class);
+    }
 }

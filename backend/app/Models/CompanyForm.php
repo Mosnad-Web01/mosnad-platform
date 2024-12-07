@@ -28,4 +28,9 @@ class CompanyForm extends Model
         'hiring' => 'array',
         'remote_hiring_preferences' => 'array',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

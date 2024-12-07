@@ -14,17 +14,18 @@ return new class extends Migration
         Schema::create('company_forms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('industry')->nullable();
             $table->string('employees')->nullable();
             $table->string('stage')->nullable();
             $table->text('skills')->nullable(); // Store as JSON if multiple selections
             $table->string('home_workers')->nullable();
             $table->string('training')->nullable();
-            $table->string('hiring');
+            $table->string('hiring')->nullable();
             $table->json('remote_hiring_preferences')->nullable(); // Remote hiring preferences
             $table->text('additional_notes')->nullable();
             $table->timestamps();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
         });
     }
 

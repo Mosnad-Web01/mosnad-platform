@@ -53,15 +53,16 @@ class AuthController extends Controller
         $credentials['status'] = 'suspended';
         $user = User::create($credentials);
 
+        $companyForm = null;
         // create company record if role_id is 2 (Company role)
         if ($roleId == 2) {
 
-            // TODO: After creating company table
-
-            // $user->companies()->create([
-            //     'company_name' => $request->input('company_name'),
-            // ]);
+            $companyForm = $user->companyForm()->create([
+                'name' => $request->input('company_name'),
+                'user_id' => $user->id
+            ]);
         }
+
 
         // generate token
         $token = $user->createToken($user->name)->plainTextToken;

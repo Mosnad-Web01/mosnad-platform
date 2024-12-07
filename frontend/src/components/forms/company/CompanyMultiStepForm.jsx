@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie'; 
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
@@ -128,6 +129,13 @@ const CompanyMultiStepForm = () => {
 				},
 			});
 			console.log('Form submitted successfully:', response.data);
+			  // Update the "status" cookie to "active"
+			  Cookies.set('status', 'active', {
+				expires: 7,
+				secure: process.env.NODE_ENV === 'production',
+				sameSite: 'strict',
+			});
+
 			setCurrentStep(stepComponents.length); // Navigate to success page
 		} catch (error) {
 			console.error(

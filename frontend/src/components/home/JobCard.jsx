@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { formatDate } from '@/utils/formatter'; // 
+import Link from 'next/link';
 const JobCard = ({
 	title,
 	experience,
@@ -68,11 +69,11 @@ const JobCard = ({
 
 			{/* Register Button */}
 			<div className="flex justify-center md:justify-end mt-10">
-				<a
+				<Link 
 					className="w-full max-w-[200px] text-center py-3 rounded-lg bg-gradient text-sm font-medium text-white shadow transition hover:scale-105"
-					href="#">
-					سجل الان
-				</a>
+					href="/YouthForm">
+					 قدم الأن
+				</Link>
 			</div>
 		</div>
 	);

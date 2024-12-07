@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import { formatDate } from '@/utils/formatter'; // 
 const JobCard = ({
 	title,
 	experience,
@@ -10,7 +11,9 @@ const JobCard = ({
 	description,
 	image_url = '/hiring-compony-logo.png',
 }) => {
-	console.log(image_url);
+	
+	// Format the end date
+	  const formattedEndDate = formatDate(end_date);
 	return (
 		<div className="bg-pink-50 shadow-custom-all-sides rounded-[36px] p-4 w-full max-w-[504px] lg:w-[500px]">
 			{/* Company Logo */}
@@ -59,7 +62,7 @@ const JobCard = ({
 					<h3 className="text-lg font-semibold mb-2">
 						تاريخ الانتهاء
 					</h3>
-					<p className="text-gray-900 text-base">{end_date}</p>
+					<p className="text-gray-900 text-base">{formattedEndDate}</p>
 				</article>
 			</div>
 

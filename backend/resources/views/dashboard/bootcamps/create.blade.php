@@ -3,28 +3,30 @@
 
     <x-common.content-container>
         <div class="space-y-6">
-
             <!-- Create Bootcamp Form -->
-            <form action="{{ route('bootcamps.store') }}" method="POST" enctype="multipart/form-data" class="p-8 bg-white rounded-lg shadow-lg">
+            <form action="{{ route('bootcamps.store') }}" method="POST" enctype="multipart/form-data" class="p-8 bg-white rounded-lg shadow-lg space-y-6">
                 @csrf
 
-                <!-- Bootcamp Name -->
-                <x-form.input
-                    type="text"
-                    name="name"
-                    label="Bootcamp Name"
-                    placeholder="Enter Bootcamp Name"
-                    :value="old('name')"
-                    inputClass="sm:text-sm"
-                    required />
+                <!-- Row: Bootcamp Name & City -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <x-form.input
+                        type="text"
+                        name="name"
+                        label="Bootcamp Name"
+                        placeholder="Enter Bootcamp Name"
+                        :value="old('name')"
+                        inputClass="sm:text-sm"
+                        required />
 
-                <x-form.input
-                    type="text"
-                    name="city"
-                    label="City"
-                    placeholder="Enter City"
-                    :value="old('city')"
-                    required />
+                    <x-form.input
+                        type="text"
+                        name="city"
+                        label="City"
+                        placeholder="Enter City"
+                        :value="old('city')"
+                        inputClass="sm:text-sm"
+                        required />
+                </div>
 
                 <!-- Description -->
                 <x-form.textarea
@@ -46,43 +48,49 @@
                     required
                     inputClass="sm:text-sm" />
 
-                <!-- Fees -->
-                <x-form.input
-                    type="number"
-                    name="fees"
-                    label="Fees (in SAR)"
-                    value="{{ old('fees') }}"
-                    required
-                    inputClass="sm:text-sm" />
+                <!-- Row: Fees & Instructor -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <x-form.input
+                        type="number"
+                        name="fees"
+                        label="Fees (in SAR)"
+                        placeholder="Enter fees"
+                        :value="old('fees')"
+                        inputClass="sm:text-sm"
+                        required />
 
-                <!-- Instructor -->
-                <x-form.input
-                    type="text"
-                    name="instructor"
-                    label="Instructor"
-                    value="{{ old('instructor') }}"
-                    required
-                    inputClass="sm:text-sm" />
+                    <x-form.input
+                        type="text"
+                        name="instructor"
+                        label="Instructor"
+                        placeholder="Enter instructor name"
+                        :value="old('instructor')"
+                        inputClass="sm:text-sm"
+                        required />
+                </div>
 
                 <!-- Training Duration -->
                 <x-form.input
                     type="number"
                     name="training_duration"
                     label="Training Duration (in weeks)"
-                    value="{{ old('training_duration') }}"
-                    required
-                    inputClass="sm:text-sm" />
+                    placeholder="Enter training duration"
+                    :value="old('training_duration')"
+                    inputClass="sm:text-sm"
+                    required />
 
                 <!-- Main Image -->
                 <x-form.file
                     name="main_image"
-                    label="Main Image"
+                    label="Main Image (Required)"
+                    help="Upload the main image for the bootcamp. Only jpeg, png, jpg, gif, svg formats are allowed."
                     required />
 
                 <!-- Additional Images -->
                 <x-form.file
                     name="additional_images[]"
                     label="Additional Images"
+                    help="Upload additional images (optional). You can upload multiple images."
                     multiple />
 
                 <!-- Submit Button -->
@@ -92,7 +100,6 @@
                     </button>
                 </div>
             </form>
-
         </div>
     </x-common.content-container>
 </x-layout>

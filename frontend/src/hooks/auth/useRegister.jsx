@@ -22,7 +22,7 @@ const useRegister = () => {
 		try {
 			const response = await axios.post('/auth/register', formData);
 
-			const { user, token, role } = response.data;
+			const { user, token, role , status } = response.data;
 
 			// save to context
 			setUser(user);
@@ -36,6 +36,12 @@ const useRegister = () => {
 			});
 
 			Cookies.set('role', role, {
+				expires: 7,
+				secure: process.env.NODE_ENV === 'production',
+				sameSite: 'strict',
+			});
+
+			Cookies.set('status', status, {
 				expires: 7,
 				secure: process.env.NODE_ENV === 'production',
 				sameSite: 'strict',

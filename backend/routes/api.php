@@ -7,7 +7,7 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\CompanyFormController;
 use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\api\YouthFormController;
-use App\Http\Controllers\api\JobOpportunityController ;
+use App\Http\Controllers\api\JobOpportunityController;
 
 
 // public routes --- Endpoint: /api/test
@@ -70,6 +70,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('/company-forms', [CompanyFormController::class, 'index']);
 Route::post('/company-forms', [CompanyFormController::class, 'store']);
+Route::get('/company-name/{user_id}', [CompanyFormController::class, 'getCompanyByUserId']);
+Route::put('/company-forms/{id}', [CompanyFormController::class, 'update']);
+
+
 
 Route::get('/youth-forms', [YouthFormController::class, 'index']); // Fetch all forms
 Route::get('/youth-forms/{id}', [YouthFormController::class, 'show']); // Fetch a single form
@@ -79,4 +83,4 @@ Route::delete('/youth-forms/{id}', [YouthFormController::class, 'destroy']); // 
 Route::post('/contact-us', [ContactUsController::class, 'store']);
 
 //JobOpportunity API Routes
-Route::get('/job-opportunities', [JobOpportunityController ::class, 'index']);
+Route::get('/job-opportunities', [JobOpportunityController::class, 'index']);

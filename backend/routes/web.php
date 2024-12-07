@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/bootcamps', [BootcampController::class, 'store'])->name('bootcamps.store');
     Route::get('/bootcamps/{id}', [BootcampController::class, 'show'])->name('bootcamps.show');
     Route::get('/bootcamps/{id}/edit', [BootcampController::class, 'edit'])->name('bootcamps.edit');
-    Route::put('/bootcamps/{id}', [BootcampController::class, 'update'])->name('dashboard.bootcamps.update');  // This is the route you're missing
+    Route::put('/bootcamps/{id}', [BootcampController::class, 'update'])->name('bootcamps.update');
     Route::delete('/bootcamps/{id}', [BootcampController::class, 'destroy'])->name('bootcamps.destroy');
 
     Route::get('/job-opportunities', [JobOpportunityController::class, 'index'])->name('job-opportunities.index');

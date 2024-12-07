@@ -4,7 +4,7 @@
     <x-common.content-container>
         <div class="space-y-6">
             <!-- Edit Bootcamp Form -->
-            <form action="{{ route('dashboard.bootcamps.update', $bootcamp->id) }}" method="POST" enctype="multipart/form-data" class="p-8 bg-white rounded-lg shadow-lg">
+            <form action="{{ route('bootcamps.update', $bootcamp->id) }}" method="POST" enctype="multipart/form-data" class="p-8 bg-white rounded-lg shadow-lg">
                 @csrf
                 @method('PUT')
 
@@ -30,6 +30,17 @@
                         required
                         error="{{ $errors->first('fees') }}" />
                 </div>
+
+                <!-- City -->
+                <x-form.input
+                    type="text"
+                    name="city"
+                    label="المدينة"
+                    placeholder="أدخل اسم المدينة"
+                    :value="old('city', $bootcamp->city)"
+                    inputClass="sm:text-sm"
+                    required
+                    error="{{ $errors->first('city') }}" />
 
                 <!-- Description -->
                 <x-form.textarea
@@ -81,7 +92,6 @@
                     <x-form.file
                         name="main_image"
                         label="الصورة الرئيسية"
-                        :existingImage="Storage::url($bootcamp->main_image)"
                         error="{{ $errors->first('main_image') }}" />
                     @if ($bootcamp->main_image)
                         <div class="mt-4">
@@ -97,7 +107,6 @@
                         name="additional_images[]"
                         label="صور إضافية"
                         multiple
-                        :existingImages="is_array($bootcamp->additional_images) ? array_map(fn($image) => Storage::url($image), $bootcamp->additional_images) : []"
                         error="{{ $errors->first('additional_images.*') }}" />
                     @if ($bootcamp->additional_images)
                         <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4">

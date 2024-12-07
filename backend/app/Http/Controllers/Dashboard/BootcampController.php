@@ -6,184 +6,182 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Bootcamp;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 
 class BootcampController extends Controller
 {
+    /**
+     * Display a listing of the bootcamps.
+     */
     public function index()
     {
         $bootcamps = Bootcamp::paginate(10);
         return view('dashboard.bootcamps.index', compact('bootcamps'));
     }
 
-    public function show($id)
-    {
-        $bootcamp = Bootcamp::findOrFail($id);
-        return view('dashboard.bootcamps.show', compact('bootcamp'));
-    }
-
+    /**
+     * Show the form for creating a new bootcamp.
+     */
     public function create()
     {
         return view('dashboard.bootcamps.create');
     }
 
+    /**
+     * Store a newly created bootcamp in storage.
+     */
     public function store(Request $request)
     {
-        // Validation Rules
+        // Validate the input
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'description' => 'required|string',
             'features' => 'required|string',
-            'fees' => [
-                'required',
-                'numeric',
-                'regex:/^\d{1,8}(\.\d{1,2})?$/', // Up to 8 digits, optional 2 decimals
-            ],
+            'fees' => 'required|numeric',
             'instructor' => 'required|string|max:255',
             'training_duration' => 'required|integer|min:1',
-            'main_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'main_image' => 'required|image|mimes:jpeg,png,jpg,webp,svg|max:5048',
             'additional_images' => 'nullable|array',
-            'additional_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ], [
-            // Custom error messages
-            'name.required' => 'The bootcamp name is required.',
-            'description.required' => 'The description is required.',
-            'features.required' => 'The features are required.',
-            'fees.required' => 'The fees are required.',
-            'fees.regex' => 'Fees must be a numeric value with a maximum of 8 digits and optional 2 decimal places.',
-            'instructor.required' => 'The instructor name is required.',
-            'training_duration.required' => 'The training duration is required.',
-            'main_image.required' => 'The main image is required.',
-            'main_image.image' => 'The main image must be a valid image file.',
-            'main_image.mimes' => 'Allowed formats for the main image are jpeg, png, jpg, gif, svg.',
-            'main_image.max' => 'The main image size cannot exceed 2MB.',
-            'additional_images.*.image' => 'Each additional image must be a valid image file.',
-            'additional_images.*.mimes' => 'Allowed formats for additional images are jpeg, png, jpg, gif, svg.',
-            'additional_images.*.max' => 'Each additional image size cannot exceed 2MB.',
+            'additional_images.*' => 'image|mimes:jpeg,png,jpg,webp,svg|max:5048',
         ]);
-
-        // Prepare data for storing
-        $data = $validatedData;
-
-        // Handle main image
-        if ($request->hasFile('main_image')) {
-            $data['main_image'] = $request->file('main_image')->store('public/bootcamp_images');
+    
+        try {
+            // Handle the main image upload
+            if ($request->hasFile('main_image')) {
+                $mainImagePath = $request->file('main_image')->store('bootcamp_images', 'public');
+                $validatedData['main_image'] = $mainImagePath;
+            }
+    
+            // Handle additional images if provided
+            if ($request->hasFile('additional_images')) {
+                $validatedData['additional_images'] = array_map(function ($image) {
+                    return $image->store('bootcamp_images', 'public');
+                }, $request->file('additional_images'));
+            }
+    
+            // Save the bootcamp
+            $bootcamp = Bootcamp::create($validatedData);
+    
+            // Flash success message
+            if ($bootcamp) {
+                Session::flash('success', 'Bootcamp created successfully!');
+                return redirect()->route('bootcamps.index');
+            } else {
+                Session::flash('error', 'An error occurred while creating the bootcamp.');
+                return back()->withInput();
+            }
+        } catch (\Exception $e) {
+            // Log the exception or handle errors if needed
+            Session::flash('error', 'An unexpected error occurred: ' . $e->getMessage());
+            return back()->withInput();
         }
-
-        // Handle additional images
-        if ($request->hasFile('additional_images')) {
-            $data['additional_images'] = array_map(function ($image) {
-                return $image->store('public/bootcamp_images');
-            }, $request->file('additional_images'));
-        }
-
-        // Create the bootcamp
-        Bootcamp::create($data);
-
-        // Redirect with success message
-        return redirect()->route('bootcamps.index')->with('success', 'Bootcamp created successfully!');
     }
 
+    /**
+     * Display the specified bootcamp.
+     */
+    public function show($id)
+    {
+        $bootcamp = Bootcamp::findOrFail($id);
+
+        // Append the public URL to the image paths to ensure the image can be accessed publicly
+        $bootcamp->main_image = Storage::url($bootcamp->main_image);
+        if (!empty($bootcamp->additional_images)) {
+            $bootcamp->additional_images = array_map(function ($image) {
+                return Storage::url($image);
+            }, $bootcamp->additional_images);
+        }
+
+        return view('dashboard.bootcamps.show', compact('bootcamp'));
+    }
+
+    /**
+     * Show the form for editing the specified bootcamp.
+     */
     public function edit($id)
     {
         $bootcamp = Bootcamp::findOrFail($id);
         return view('dashboard.bootcamps.edit', compact('bootcamp'));
     }
 
-    public function update(Request $request, $id)
-{
-    // Validation Rules
-    $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-        'city' => 'required|string|max:255',
-        'description' => 'required|string',
-        'features' => 'required|string',
-        'fees' => [
-            'required',
-            'numeric',
-            'regex:/^\d{1,8}(\.\d{1,2})?$/', // Up to 8 digits, optional 2 decimals
-        ],
-        'instructor' => 'required|string|max:255',
-        'training_duration' => 'required|integer|min:1',
-        'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'additional_images' => 'nullable|array',
-        'additional_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ], [
-        // Custom error messages
-        'name.required' => 'The bootcamp name is required.',
-        'description.required' => 'The description is required.',
-        'features.required' => 'The features are required.',
-        'fees.required' => 'The fees are required.',
-        'fees.regex' => 'Fees must be a numeric value with a maximum of 8 digits and optional 2 decimal places.',
-        'instructor.required' => 'The instructor name is required.',
-        'training_duration.required' => 'The training duration is required.',
-        'main_image.image' => 'The main image must be a valid image file.',
-        'main_image.mimes' => 'Allowed formats for the main image are jpeg, png, jpg, gif, svg.',
-        'main_image.max' => 'The main image size cannot exceed 2MB.',
-        'additional_images.*.image' => 'Each additional image must be a valid image file.',
-        'additional_images.*.mimes' => 'Allowed formats for additional images are jpeg, png, jpg, gif, svg.',
-        'additional_images.*.max' => 'Each additional image size cannot exceed 2MB.',
-    ]);
-
-    // Find the bootcamp or fail
-    $bootcamp = Bootcamp::findOrFail($id);
-
-    // Prepare data for update
-    $data = $validatedData;
-
-    // Handle main image
-    if ($request->hasFile('main_image')) {
-        // Delete the old main image if it exists
-        if ($bootcamp->main_image && Storage::exists($bootcamp->main_image)) {
-            Storage::delete($bootcamp->main_image);
-        }
-        // Store the new main image
-        $data['main_image'] = $request->file('main_image')->store('public/bootcamp_images');
-    }
-
-    // Handle additional images
-    if ($request->hasFile('additional_images')) {
-        // Delete the old additional images if they exist
-        if (!empty($bootcamp->additional_images)) {
-            foreach ($bootcamp->additional_images as $imagePath) {
-                if (Storage::exists($imagePath)) {
-                    Storage::delete($imagePath);
-                }
+    /**
+     * Update the specified bootcamp in storage.
+     */
+    public function update(Request $request, Bootcamp $bootcamp)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'description' => 'required|string',
+            'features' => 'required|string',
+            'fees' => 'required|numeric',
+            'instructor' => 'required|string|max:255',
+            'training_duration' => 'required|integer|min:1',
+            'main_image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5048',
+            'additional_images' => 'nullable|array',
+            'additional_images.*' => 'image|mimes:jpeg,png,jpg,webp,svg|max:5048',
+        ]);
+    
+        // Handle the main image upload if a new image is provided
+        if ($request->hasFile('main_image')) {
+            $mainImagePath = $request->file('main_image')->store('bootcamp_images', 'public');
+            $validatedData['main_image'] = $mainImagePath;
+    
+            // Delete the old main image if it exists
+            if ($bootcamp->main_image) {
+                \Storage::disk('public')->delete($bootcamp->main_image);
             }
         }
-
-        // Store new additional images
-        $data['additional_images'] = array_map(function ($image) {
-            return $image->store('public/bootcamp_images');
-        }, $request->file('additional_images'));
+    
+        // Handle additional images if provided
+        if ($request->hasFile('additional_images')) {
+            // Delete old additional images if they exist
+            if (!empty($bootcamp->additional_images)) {
+                foreach ($bootcamp->additional_images as $imagePath) {
+                    \Storage::disk('public')->delete($imagePath);
+                }
+            }
+    
+            // Store the new additional images
+            $validatedData['additional_images'] = array_map(function ($image) {
+                return $image->store('bootcamp_images', 'public');
+            }, $request->file('additional_images'));
+        }
+    
+        // Update the bootcamp
+        $bootcamp->update($validatedData);
+    
+        // Flash a success message
+        Session::flash('success', 'Bootcamp updated successfully!');
+        return redirect()->route('bootcamps.show', $bootcamp->id);
     }
 
-    // Update the bootcamp
-    $bootcamp->update($data);
-
-    // Redirect with success message
-    return redirect()->route('bootcamps.show', $bootcamp->id)
-        ->with('success', 'Bootcamp updated successfully!');
-}
-
+    /**
+     * Remove the specified bootcamp from storage.
+     */
     public function destroy($id)
     {
         $bootcamp = Bootcamp::findOrFail($id);
 
-        // Delete associated images
-        if ($bootcamp->main_image && Storage::exists($bootcamp->main_image)) {
-            Storage::delete($bootcamp->main_image);
+        // Delete the main image
+        if ($bootcamp->main_image) {
+            Storage::disk('public')->delete($bootcamp->main_image);
         }
 
-        if ($bootcamp->additional_images) {
+        // Delete additional images
+        if (!empty($bootcamp->additional_images)) {
             foreach ($bootcamp->additional_images as $imagePath) {
-                if (Storage::exists($imagePath)) {
-                    Storage::delete($imagePath);
-                }
+                Storage::disk('public')->delete($imagePath);
             }
         }
 
+        // Delete the bootcamp
         $bootcamp->delete();
-        return redirect()->route('bootcamps.index')->with('success', 'Bootcamp deleted successfully!');
+
+        // Flash success message
+        Session::flash('success', 'Bootcamp deleted successfully!');
+
+        return redirect()->route('bootcamps.index');
     }
 }

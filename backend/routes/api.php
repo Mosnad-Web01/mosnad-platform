@@ -7,6 +7,7 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\CompanyFormController;
 use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\api\YouthFormController;
+use App\Http\Controllers\api\JobOpportunityController ;
 
 
 // public routes --- Endpoint: /api/test
@@ -76,3 +77,6 @@ Route::post('/youth-forms', [YouthFormController::class, 'store']); // Submit a 
 Route::delete('/youth-forms/{id}', [YouthFormController::class, 'destroy']); // Delete a form
 
 Route::post('/contact-us', [ContactUsController::class, 'store']);
+
+//JobOpportunity API Routes
+Route::get('/job-opportunities', [JobOpportunityController ::class, 'index']);

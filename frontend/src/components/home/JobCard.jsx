@@ -1,14 +1,19 @@
 'use client';
 import Image from 'next/image';
-import React from 'react';
-
+import { formatDate } from '@/utils/formatter'; // 
 const JobCard = ({
 	title,
-	experienceLevel,
-	skills,
+	experience,
+	required_skills,
+	position_level,
+	end_date,
+	other_criteria,
 	description,
 	image_url = '/hiring-compony-logo.png',
 }) => {
+	
+	// Format the end date
+	  const formattedEndDate = formatDate(end_date);
 	return (
 		<div className="bg-pink-50 shadow-custom-all-sides rounded-[36px] p-4 w-full max-w-[504px] lg:w-[500px]">
 			{/* Company Logo */}
@@ -29,7 +34,13 @@ const JobCard = ({
 				{/* Experience Level */}
 				<article className="mb-4">
 					<h3 className="text-lg font-semibold">مستوى الخبرة :</h3>
-					<p className="text-gray-900 text-base">{experienceLevel}</p>
+					<p className="text-gray-900 text-base">{experience}</p>
+				</article>
+
+				{/* position Level */}
+				<article className="mb-4">
+					<h3 className="text-lg font-semibold"> مستوى الوظيفة</h3>
+					<p className="text-gray-900 text-base">{position_level}</p>
 				</article>
 
 				{/* Required Skills */}
@@ -37,15 +48,21 @@ const JobCard = ({
 					<h3 className="text-lg font-semibold mb-2">
 						المهارات المطلوبة:
 					</h3>
-					<p className="text-gray-900 text-base">{skills}</p>
+					<p className="text-gray-900 text-base">{required_skills}</p>
 				</article>
 
-				{/* Other Criteria */}
+				{/* Description */}
+				<article className="mb-4">
+					<h3 className="text-lg font-semibold mb-2">الوصف</h3>
+					<p className="text-gray-900 text-base">{description}</p>
+				</article>
+
+				{/* End Date */}
 				<article className="mb-4">
 					<h3 className="text-lg font-semibold mb-2">
-						معايير أخرى :
+						تاريخ الانتهاء
 					</h3>
-					<p className="text-gray-900 text-base">{description}</p>
+					<p className="text-gray-900 text-base">{formattedEndDate}</p>
 				</article>
 			</div>
 

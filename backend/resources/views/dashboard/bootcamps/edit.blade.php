@@ -76,19 +76,39 @@
                     required
                     error="{{ $errors->first('training_duration') }}" />
 
-                <!-- Main and Additional Images -->
-                <x-form.file
-                    name="main_image"
-                    label="الصورة الرئيسية"
-                    :existingImage="Storage::url($bootcamp->main_image)"
-                    error="{{ $errors->first('main_image') }}" />
+                <!-- Main Image -->
+                <div>
+                    <x-form.file
+                        name="main_image"
+                        label="الصورة الرئيسية"
+                        :existingImage="Storage::url($bootcamp->main_image)"
+                        error="{{ $errors->first('main_image') }}" />
+                    @if ($bootcamp->main_image)
+                        <div class="mt-4">
+                            <label class="text-sm">الصورة الحالية:</label>
+                            <img src="{{ Storage::url($bootcamp->main_image) }}" alt="Current Main Image" class="mt-2 w-32 h-32 object-cover rounded-md" />
+                        </div>
+                    @endif
+                </div>
 
-                <x-form.file
-                    name="additional_images[]"
-                    label="صور إضافية"
-                    multiple
-                    :existingImages="is_array($bootcamp->additional_images) ? array_map(fn($image) => Storage::url($image), $bootcamp->additional_images) : []"
-                    error="{{ $errors->first('additional_images.*') }}" />
+                <!-- Additional Images -->
+                <div>
+                    <x-form.file
+                        name="additional_images[]"
+                        label="صور إضافية"
+                        multiple
+                        :existingImages="is_array($bootcamp->additional_images) ? array_map(fn($image) => Storage::url($image), $bootcamp->additional_images) : []"
+                        error="{{ $errors->first('additional_images.*') }}" />
+                    @if ($bootcamp->additional_images)
+                        <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4">
+                            @foreach ($bootcamp->additional_images as $image)
+                                <div>
+                                    <img src="{{ Storage::url($image) }}" alt="Additional Image" class="w-32 h-32 object-cover rounded-md" />
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
 
                 <!-- Submit Button -->
                 <div class="mt-6">

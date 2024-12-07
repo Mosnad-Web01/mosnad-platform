@@ -11,7 +11,7 @@ class JobOpportunityController extends Controller
     public function index()
     {
         //pass full url by modifying imageUrl in cases of local storage and external url
-        $opportunities = JobOpportunity::all()->map(function ($opportunity) {
+        $opportunities = JobOpportunity::latest()->paginate(10)->map(function ($opportunity) {
             if ($opportunity->imgurl) {
                 // check if the URL is an external URL
                 if (filter_var($opportunity->imgurl, FILTER_VALIDATE_URL)) {

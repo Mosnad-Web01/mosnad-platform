@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\BootcampController;
 use App\Http\Controllers\api\CompanyFormController;
 use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\api\YouthFormController;
+use App\Http\Controllers\api\JobOpportunityController ;
 
 
 // public routes --- Endpoint: /api/test
@@ -80,3 +81,6 @@ Route::post('/contact-us', [ContactUsController::class, 'store']);
 
 Route::get('/bootcamps', [BootcampController::class, 'index']); // Endpoint: /api/bootcamps
 Route::get('/bootcamps/{id}', [BootcampController::class, 'show']); // Endpoint: /api/bootcamps/{id}
+
+//JobOpportunity API Routes
+Route::get('/job-opportunities', [JobOpportunityController ::class, 'index']);

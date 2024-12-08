@@ -154,7 +154,8 @@ class BootcampController extends Controller
     
         // Flash a success message
         Session::flash('success', 'Bootcamp updated successfully!');
-        return redirect()->route('bootcamps.show', $bootcamp->id);
+        return redirect()->route('bootcamps.index');
+        
     }
 
     /**

@@ -1,5 +1,5 @@
 <x-layout title="Contact Us Messages">
-    <x-common.header title="تواصل معنا" />
+    <x-common.header title="تواصل معنا" :showBackButton="true" />
 
     <x-common.content-container title="جدول الرسائل">
         <div class="relative overflow-hidden rounded-xl shadow-lg bg-white">

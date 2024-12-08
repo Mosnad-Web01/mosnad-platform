@@ -7,13 +7,9 @@
 
         <!-- Optional Back Button -->
         @if($showBackButton ?? false)
-        <a href="javascript:history.back()" class="text-blue-500 font-medium hover:underline text-sm px-1 py-1.5 bg-blue-100 rounded-lg flex items-center">
-            <!-- Back Icon --> رجوع
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-            </svg>
-           
-        </a>
+        <a href="javascript:history.back()" class="text-blue-700 hover:text-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50 px-3 py-1 rounded-md bg-white border border-blue-500  flex items-center justify-center transition-all duration-200 ease-in-out hover:bg-blue-50">
+    <i class="fas fa-arrow-left text-lg"></i>
+</a>
         @endif
     </div>
 </header>

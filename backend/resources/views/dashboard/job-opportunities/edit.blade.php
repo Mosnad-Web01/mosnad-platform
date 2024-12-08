@@ -1,8 +1,8 @@
 <x-layout title="Edit Job Opportunity">
 
-    <x-common.header title="تعديل فرصة العمل" />
+    <x-common.header title="تعديل فرصة العمل" :showBackButton="true" />
 
-    <x-common.content-container title="معلومات الفرصة">
+    <x-common.content-container title="معلومات الفرصة" >
 
         <form action="{{ route('job-opportunities.update', $jobOpportunity->id) }}" method="POST"
             enctype="multipart/form-data" class="space-y-4 p-4">

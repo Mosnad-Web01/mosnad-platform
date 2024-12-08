@@ -14,7 +14,7 @@ export default function Home() {
       <AboutSection />
       <ServedCompaniesSection />
       <JobListings/>
-      <CareerPathSection />
+      {/* <CareerPathSection /> */}
       <SuccessStoriesSection />
       <TeamMembersSection />
       <ClientOpinionsSection />

@@ -1,5 +1,5 @@
 <x-layout title="Bootcamps">
-    <x-common.header title="الدورات التدريبية" />
+    <x-common.header title="الدورات التدريبية" :showBackButton="true" />
 
     <x-common.content-container title="جدول الدورات التدريبية">
         <div class="relative overflow-hidden rounded-xl shadow-lg bg-white">

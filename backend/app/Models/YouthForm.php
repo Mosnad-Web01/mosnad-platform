@@ -33,6 +33,7 @@ class YouthForm extends Model
         'usability_steps',
         'additional_info',
         'document',
+        'user_id',
     ];
     public function user()
     {

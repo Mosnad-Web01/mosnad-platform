@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('youth_forms', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Full name
-            $table->string('city'); // Selected city
+            $table->string('name');
+            $table->string('city')->nullable();
             $table->string('address')->nullable(); // Address
             $table->date('birth_date')->nullable(); // Birth date
             $table->string('phone')->nullable(); // Phone number

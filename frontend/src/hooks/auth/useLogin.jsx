@@ -25,7 +25,7 @@ const useLogin = () => {
 				password,
 			});
 
-			const { user, token, role } = response.data;
+			const { user, token, role , status } = response.data;
 
 			// Save to context
 			setUser(user);
@@ -39,6 +39,12 @@ const useLogin = () => {
 			});
 
 			Cookies.set('role', role, {
+				expires: 7,
+				secure: process.env.NODE_ENV === 'production',
+				sameSite: 'strict',
+			});
+
+			Cookies.set('status', status, {
 				expires: 7,
 				secure: process.env.NODE_ENV === 'production',
 				sameSite: 'strict',

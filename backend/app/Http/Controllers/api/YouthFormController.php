@@ -35,6 +35,7 @@ class YouthFormController extends Controller
             'usability_steps' => 'nullable|string',
             'additional_info' => 'nullable|string',
             'document' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'user_id' => 'required|exists:users,id',
         ]);
 
         if ($request->hasFile('document')) {
@@ -43,13 +44,16 @@ class YouthFormController extends Controller
 
         $youthForm = YouthForm::create($validated);
 
+        $user = $youthForm->user;
+        if ($user->status === 'suspended') {
+            $user->status = 'active';
+            $user->save();
+        }
         return response()->json([
             'message' => 'Form submitted successfully!',
             'data' => $youthForm,
         ], 201);
     }
-
-
 
 
 

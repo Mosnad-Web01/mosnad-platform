@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export function middleware(request) {
 	const token = request.cookies.get('token')?.value;
 	const role = request.cookies.get('role')?.value;
-	const status = request.cookies.get('status')?.value;	
+	const status = request.cookies.get('status')?.value;
 
 	console.log(role);
 
@@ -20,20 +20,39 @@ export function middleware(request) {
 		return NextResponse.redirect(new URL('/login', request.url));
 	}
 
-	    // Role-based access control for `/company` routes
-		if (role === 'company') {
-			const companyPath = request.nextUrl.pathname;
-	
-			// Suspended users: Only allow access to `/company/companyForm`
-			if (status === 'suspended' && companyPath !== '/company/companyForm') {
-				return NextResponse.redirect(new URL('/company/companyForm', request.url));
-			}
-	
-			// Active users: Deny access to `/company/Companiesform`
-			if (status === 'active' && companyPath === '/company/companyForm') {
-				return NextResponse.redirect(new URL('/company', request.url)); // Or another default company route
-			}
+	// Role-based access control for `/company` routes
+	if (role === 'company') {
+		const companyPath = request.nextUrl.pathname;
+
+		// Suspended users: Only allow access to `/company/companyForm`
+		if (status === 'suspended' && companyPath !== '/company/companyForm') {
+			return NextResponse.redirect(
+				new URL('/company/companyForm', request.url),
+			);
 		}
+
+		// Active users: Deny access to `/company/Companiesform`
+		if (status === 'active' && companyPath === '/company/companyForm') {
+			return NextResponse.redirect(new URL('/company', request.url)); // Or another default company route
+		}
+	}
+
+	// Role-based access control for `/student` routes
+	if (role === 'student') {
+		const studentPath = request.nextUrl.pathname;
+
+		// Suspended users: Only allow access to `/student/youthForm`
+		if (status === 'suspended' && studentPath !== '/student/youthForm') {
+			return NextResponse.redirect(
+				new URL('/company/youthForm', request.url),
+			);
+		}
+
+		// Active users: Deny access to `/student/youthForm`
+		if (status === 'active' && studentPath === '/student/youthForm') {
+			return NextResponse.redirect(new URL('/student', request.url)); // Or another default company route
+		}
+	}
 
 	// Role-based access control
 	const rolePaths = {
@@ -64,11 +83,9 @@ export function middleware(request) {
 		return NextResponse.redirect(new URL('/404', request.url));
 	}
 
-
-
 	return NextResponse.next();
 }
 
 export const config = {
-	matcher: ['/login', '/student', '/company', '/register' , '/company/:path*'],
+	matcher: ['/login', '/student', '/company', '/register', '/company/:path*', '/student/:path*'],
 };

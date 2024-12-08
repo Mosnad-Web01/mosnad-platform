@@ -1,5 +1,5 @@
 <x-layout title="Company Surveys">
-    <x-common.header title="استبانات الشركات" />
+    <x-common.header title="استبانات الشركات" :showBackButton="true" />
 
     <x-common.content-container title="جدول الاستبانات">
         <div class="relative overflow-hidden rounded-xl shadow-lg bg-white">

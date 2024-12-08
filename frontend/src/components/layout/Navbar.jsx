@@ -25,10 +25,8 @@ const Navbar = () => {
 
   const navItems = [
     { label: "الرئيسية", href: "/", icon: <FaHome /> },
-    { label: "من نحن", href: "/about", icon: <FaUsers /> },
-    { label: "الشباب", href: "/YouthForm", icon: <FaUserPlus /> },
-    { label: "الشركات", href: "/CompaniesForm", icon: <FaBriefcase /> },
-    { label: "قصص النجاح", href: "#", icon: <FaBookOpen /> },
+    { label: "الشباب", href: "/student", icon: <FaUserPlus /> },
+    { label: "الشركات", href: "/company", icon: <FaBriefcase /> },
     { label: "المستخدم", href: "/userProfile", icon: <FaThList /> },
 	{label: "الشركات", href: "/companyProfile", icon: <FaBriefcase />}
   ];

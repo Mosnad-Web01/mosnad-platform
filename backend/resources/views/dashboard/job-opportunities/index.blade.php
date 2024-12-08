@@ -1,6 +1,6 @@
 <x-layout title="Manage Job Opportunities">
 
-    <x-common.header title="إدارة الفرص" />
+    <x-common.header title="إدارة الفرص"  :showBackButton="true" />
 
     <x-common.content-container title="جدول الفرص">
         <div class="relative  rounded-xl shadow-lg bg-white">

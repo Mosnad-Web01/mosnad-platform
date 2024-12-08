@@ -70,7 +70,7 @@ class JobOpportunityFactory extends Factory
     public function configure()
     {
         // Create 10 students (role_id = 3)
-        $students = User::factory(10)->create(['role_id' => 3]);
+        $students = User::factory(4)->create(['role_id' => 3]);
         return $this->afterCreating(function (JobOpportunity $jobOpportunity) {
             // Get random students (users with role_id = 3)
             $students = User::where('role_id', 3)->inRandomOrder()->take(rand(1, 5))->pluck('id');

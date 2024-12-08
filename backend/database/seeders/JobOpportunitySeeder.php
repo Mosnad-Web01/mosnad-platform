@@ -14,6 +14,6 @@ class JobOpportunitySeeder extends Seeder
     public function run(): void
     {
 
-        JobOpportunity::factory(10)->create();
+        JobOpportunity::factory(4)->create();
     }
 }

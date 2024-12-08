@@ -1,5 +1,5 @@
 <x-layout title="Youth Surveys">
-    <x-common.header title="استبانات الشباب" />
+    <x-common.header title="استبانات الشباب" :showBackButton="true" />
 
     <x-common.content-container title="جدول الاستبانات">
         <div class="relative overflow-hidden rounded-xl shadow-lg bg-white">

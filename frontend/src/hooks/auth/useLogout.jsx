@@ -24,6 +24,8 @@ const useLogout = () => {
 
       // Clear cookies and reset auth context
       Cookies.remove('token');
+      Cookies.remove('role');
+      Cookies.remove('status');
       delete axios.defaults.headers.common['Authorization'];
       setUser(null);
       setToken(null);

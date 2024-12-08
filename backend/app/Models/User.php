@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -89,5 +90,10 @@ class User extends Authenticatable
     public function companyForm()
     {
         return $this->hasOne(CompanyForm::class);
+    }
+
+    public function youthForm()
+    {
+        return $this->hasOne(YouthForm::class);
     }
 }

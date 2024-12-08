@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('youth_forms', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Full name
-            $table->string('city'); // Selected city
+            $table->string('name');
+            $table->string('city')->nullable();
             $table->string('address')->nullable(); // Address
             $table->date('birth_date')->nullable(); // Birth date
             $table->string('phone')->nullable(); // Phone number
@@ -31,6 +31,7 @@ return new class extends Migration
             $table->text('usability_steps')->nullable(); // Steps to ensure usability
             $table->text('additional_info')->nullable(); // Additional information
             $table->string('document')->nullable(); // File upload path
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

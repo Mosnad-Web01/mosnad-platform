@@ -25,7 +25,7 @@ const Navbar = () => {
 
   const navItems = [
     { label: "الرئيسية", href: "/", icon: <FaHome /> },
-    { label: "الشباب", href: "/YouthForm", icon: <FaUserPlus /> },
+    { label: "الشباب", href: "/student", icon: <FaUserPlus /> },
     { label: "الشركات", href: "/company", icon: <FaBriefcase /> },
     { label: "المستخدم", href: "/userProfile", icon: <FaThList /> },
 	{label: "الشركات", href: "/companyProfile", icon: <FaBriefcase />}

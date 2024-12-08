@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\BootcampController;
 use App\Http\Controllers\Dashboard\CompanyFormController;
 use App\Http\Controllers\Dashboard\ContactUsController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardSessionController;
 use App\Http\Controllers\Dashboard\JobOpportunityController;
@@ -31,7 +32,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact-us.index');
     Route::get('/contact-us/{id}', [ContactUsController::class, 'show'])->name('dashboard.contact-us.show');
     Route::post('/contact-us/{id}/reply', [ContactUsController::class, 'reply'])->name('contact-us.reply');
-    Route::get('/users', fn() => view('dashboard.users.index'))->name('users.index');
+   
+
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::put('/users/{user}/update-status', [UserController::class, 'updateStatus'])->name('users.update-status');
+   
 
 
 

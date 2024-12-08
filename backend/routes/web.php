@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\BootcampController;
 use App\Http\Controllers\Dashboard\CompanyFormController;
 use App\Http\Controllers\Dashboard\ContactUsController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardSessionController;
 use App\Http\Controllers\Dashboard\JobOpportunityController;
@@ -17,7 +18,7 @@ Route::middleware('guest')->group(function () {
 
 // Protected dashboard routes
 Route::middleware('auth')->group(function () {
-    Route::view('/', 'dashboard.index')->name('home');
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
     Route::post('/logout', [DashboardSessionController::class, 'logout'])->name('logout');
     Route::get('/roles', fn() => 'roles.index')->name('roles.index');
     Route::get('/permissions', fn() => 'permissions.index')->name('permissions.index');
@@ -44,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/bootcamps/{id}', [BootcampController::class, 'destroy'])->name('bootcamps.destroy');
 
     Route::get('/job-opportunities', [JobOpportunityController::class, 'index'])->name('job-opportunities.index');
-    
+
     Route::get('/job-opportunities/create', [JobOpportunityController::class, 'create'])->name('job-opportunities.create');
 
     Route::get('/job-opportunities/{jobOpportunity}', [JobOpportunityController::class, 'show'])->name('job-opportunities.show');

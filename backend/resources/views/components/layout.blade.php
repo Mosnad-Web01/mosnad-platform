@@ -57,6 +57,7 @@
         {{ $slot }}
     @endif
 
+
 </body>
 
 </html>

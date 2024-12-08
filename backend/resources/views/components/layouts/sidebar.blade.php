@@ -39,7 +39,7 @@
 
         <x-layouts.sidebar-link :label="'إدارة المستخدمين'" :icon="'people'"
             :children="[
-                ['route' => route('users.index'), 'label' => 'إضافة مستخدم جديد', 'icon' => 'add'],
+                ['route' => route('users.create'), 'label' => 'إضافة مستخدم جديد', 'icon' => 'add'],
                 ['route' => route('users.index'), 'label' => 'عرض المستخدمين', 'icon' => 'list_alt'],
             ]" />
 

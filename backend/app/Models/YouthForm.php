@@ -34,5 +34,8 @@ class YouthForm extends Model
         'additional_info',
         'document',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
-    

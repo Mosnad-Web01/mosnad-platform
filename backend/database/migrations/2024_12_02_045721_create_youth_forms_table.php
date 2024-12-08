@@ -31,6 +31,7 @@ return new class extends Migration
             $table->text('usability_steps')->nullable(); // Steps to ensure usability
             $table->text('additional_info')->nullable(); // Additional information
             $table->string('document')->nullable(); // File upload path
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

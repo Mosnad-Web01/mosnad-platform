@@ -3,22 +3,60 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // Show the list of users based on their role
-    public function index()
+    // Show the list of users with search, filter, and suspended users
+    public function index(Request $request)
     {
-
-        $users = User::paginate(10);
-        return view('dashboard.users.index', compact('users'));
+        // Initialize the query for both active and suspended users
+        $activeUsersQuery = User::query()->whereIn('status', ['active', 'inactive']);
+        $suspendedUsersQuery = User::query()->where('status', 'suspended');
+    
+        // Apply search filter
+        if ($search = $request->input('search')) {
+            $activeUsersQuery->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone_number', 'like', "%{$search}%");
+            });
+    
+            $suspendedUsersQuery->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone_number', 'like', "%{$search}%");
+            });
+        }
+    
+        // Filter by role
+        if ($role = $request->input('role')) {
+            $activeUsersQuery->where('role_id', $role);
+            $suspendedUsersQuery->where('role_id', $role);
+        }
+    
+        // Paginate results
+        $users = $activeUsersQuery->paginate(10)->appends($request->query());
+        $suspendedUsers = $suspendedUsersQuery->paginate(10)->appends($request->query());
+    
+        $roles = Role::all(); // Fetch roles for the filter dropdown
+    
+        return view('dashboard.users.index', compact('users', 'suspendedUsers', 'roles'));
     }
 
-    // Store a new user
+    public function create()
+    {
+        // Fetching roles from the database to populate a dropdown in the form
+        $roles = Role::all();
+
+        // Returning the 'create' view and passing the roles data to it
+        return view('dashboard.users.create', compact('roles'));
+    }
+
+    // Other methods remain unchanged
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -26,7 +64,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'phone_number' => 'nullable|string|max:20',
             'role_id' => 'required|exists:roles,id',
-            'status' => 'required|in:active,inactive',
+            'status' => 'required|in:active,inactive,suspended',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
@@ -42,19 +80,8 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
-    public function create()
-    {
-        // Fetching roles from the database to populate a dropdown in the form
-        $roles = Role::all();
-
-        // Returning the 'create' view and passing the roles data to it
-        return view('dashboard.users.create', compact('roles'));
-    }
-
-    // Update user status (active or inactive)
     public function updateStatus(User $user)
     {
-        // Toggle user status
         $user->status = ($user->status == 'active') ? 'inactive' : 'active';
         $user->save();
 

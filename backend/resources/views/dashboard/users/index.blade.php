@@ -1,74 +1,112 @@
 <x-layout title="Users Management">
     <x-common.header title="إدارة المستخدمين" :showBackButton="true" />
 
-    <x-common.content-container title="جدول المستخدمين">
-        <div class="relative overflow-hidden rounded-xl shadow-lg bg-white">
+    <x-common.content-container >
+        <!-- Search and Filter Component -->
+        {!! view()->make('components.common.search-filter', ['roles' => $roles]) !!}
+
+        <!-- Active Users Table -->
+        <div class="relative overflow-hidden rounded-xl shadow-lg bg-white mb-8">
+            <h2 class="px-6 py-4 text-lg font-semibold text-gray-700">المستخدمين النشطين</h2>
             <div class="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
                 <table class="w-full">
                     <thead>
                         <tr class="bg-gradient-to-r from-blue-600 to-blue-700">
-                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white whitespace-nowrap">الرقم</th>
-                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white whitespace-nowrap">الاسم</th>
-                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white whitespace-nowrap">البريد الإلكتروني</th>
-                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white whitespace-nowrap">رقم الهاتف</th>
-                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white whitespace-nowrap">الدور</th>
-                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white whitespace-nowrap">الحالة</th>
-                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white whitespace-nowrap">التاريخ</th>
-                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white whitespace-nowrap">الإجراءات</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">الرقم</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">الاسم</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">البريد الإلكتروني</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">رقم الهاتف</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">الدور</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">الحالة</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">التاريخ</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                        @foreach ($users as $user)
+                        @forelse ($users as $user)
                         <tr class="transition-colors hover:bg-gray-50">
-                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $user->id }}</td>
-                            <td class="px-4 sm:px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">{{ $user->name }}</td>
-                            <td class="px-4 sm:px-6 py-4 text-sm whitespace-nowrap">
+                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700">{{ $user->id }}</td>
+                            <td class="px-4 sm:px-6 py-4 text-sm font-medium text-gray-900">{{ $user->name }}</td>
+                            <td class="px-4 sm:px-6 py-4 text-sm">
                                 <a href="mailto:{{ $user->email }}" class="text-blue-600 hover:text-blue-800 hover:underline">{{ Str::limit($user->email, 20) }}</a>
                             </td>
-                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ Str::limit($user->phone_number, 20) }}</td>
-                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $user->role->name }}</td>
-                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
-                                @if($user->status == 'active')
-                                <span class="inline-flex bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">نشط</span>
-                                @else
-                                <span class="inline-flex bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">غير نشط</span>
-                                @endif
+                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700">{{ Str::limit($user->phone_number, 20) }}</td>
+                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700">{{ $user->role->name }}</td>
+                            <td class="px-4 sm:px-6 py-4 text-sm">
+                                <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium {{ $user->status == 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                    {{ $user->status == 'active' ? 'نشط' : 'غير نشط' }}
+                                </span>
                             </td>
-                            <td class="px-4 sm:px-6 py-4 text-sm whitespace-nowrap">
-                                <span class="inline-flex bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ $user->created_at->format('Y-m-d H:i') }}</span>
-                            </td>
-                            <td class="px-4 sm:px-6 py-4 text-sm whitespace-nowrap">
-                                <!-- Toggle User Status -->
-                                @if($user->role_id !== 1) <!-- Do not show for Admin -->
-                                <form action="{{ route('users.update-status', $user->id) }}" method="POST" class="inline ml-4">
+                            <td class="px-4 sm:px-6 py-4 text-sm">{{ $user->created_at->format('Y-m-d H:i') }}</td>
+                            <td class="px-4 sm:px-6 py-4 text-sm">
+                                @if ($user->role->name !== 'admin')
+                                <form action="{{ route('users.update-status', $user->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="text-sm font-medium 
-                                        {{ $user->status == 'active' ? 'text-red-600 hover:text-red-800' : 'text-green-600 hover:text-green-800' }} hover:underline">
+                                    <button type="submit" class="text-sm font-medium {{ $user->status == 'active' ? 'text-red-600 hover:text-red-800' : 'text-green-600 hover:text-green-800' }} hover:underline">
                                         {{ $user->status == 'active' ? 'تعطيل' : 'تفعيل' }}
                                     </button>
-
                                 </form>
+                                @else
+                                <span class="text-gray-400 text-sm font-medium">لا إجراءات</span>
                                 @endif
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="8" class="text-center py-4 text-gray-600">لا يوجد مستخدمين</td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
+
+                <x-common.pagination :items="$users" />
             </div>
         </div>
 
-        <!-- Pagination -->
-        <x-common.pagination :items="$users" />
+        <!-- Suspended Users Table -->
+        <div class="relative overflow-hidden rounded-xl shadow-lg bg-white">
+            <h2 class="px-6 py-4 text-lg font-semibold text-gray-700">المستخدمين الموقوفين</h2>
+            <div class="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-gray-700 text-white">
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">الرقم</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">الاسم</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">البريد الإلكتروني</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">الدور</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">الحالة</th>
+                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">التاريخ</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        @forelse ($suspendedUsers as $user)
+                        <tr class="transition-colors hover:bg-gray-50">
+                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700">{{ $user->id }}</td>
+                            <td class="px-4 sm:px-6 py-4 text-sm font-medium text-gray-900">{{ $user->name }}</td>
+                            <td class="px-4 sm:px-6 py-4 text-sm">
+                                <a href="mailto:{{ $user->email }}" class="text-blue-600 hover:text-blue-800 hover:underline">{{ Str::limit($user->email, 20) }}</a>
+                            </td>
+                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700">{{ $user->role->name }}</td>
+                            <td class="px-4 sm:px-6 py-4 text-sm">
+                                <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium {{ $user->status == 'suspended' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
+                                    {{ $user->status == 'suspended' ? 'موقوف' : 'نشط' }}
+                                </span>
+                            </td>
+                            <td class="px-4 sm:px-6 py-4 text-sm">{{ $user->created_at->format('Y-m-d H:i') }}</td>
 
-        <!-- Empty State -->
-        @if($users->isEmpty())
-        <div class="text-center py-12">
-            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-            </svg>
-            <h3 class="mt-2 text-sm font-medium text-gray-900">لا يوجد مستخدمين</h3>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="8" class="text-center py-4 text-gray-600">لا يوجد مستخدمين موقوفين</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
+                <x-common.pagination :items="$suspendedUsers" />
+
+            </div>
         </div>
-        @endif
     </x-common.content-container>
 </x-layout>

@@ -27,8 +27,8 @@ const Navbar = () => {
     { label: "الرئيسية", href: "/", icon: <FaHome /> },
     { label: "الشباب", href: "/student", icon: <FaUserPlus /> },
     { label: "الشركات", href: "/company", icon: <FaBriefcase /> },
-    { label: "المستخدم", href: "/user-profile", icon: <FaThList /> },
-	{label: "الشركات", href: "/companyProfile", icon: <FaBriefcase />}
+    { label: "المستخدم", href: "/student/user-profile/id", icon: <FaThList /> },
+	{label: "الشركات", href: "/company/company-profile/id", icon: <FaBriefcase />}
   ];
 
 	return (

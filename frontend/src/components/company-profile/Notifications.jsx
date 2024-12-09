@@ -34,7 +34,7 @@ const notifications = [
   ];
 
 
-const page = () => {
+const Notifications = () => {
   return (
     <article className="bg-white shadow rounded-2xl p-4 mt-4 max-h-screen overflow-auto">
     <h2 className="text-base text-[#21255C] font-bold mb-4">جميع الاشعارات</h2>
@@ -54,4 +54,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Notifications

@@ -1,57 +1,57 @@
 'use client';
 import { useState } from 'react';
-import Sidebar from '@/components/profile/Sidebar';
-import Header from '@/components/profile/Header';
-import CompleteAccountDetails from './CompleteAccountDetails';
-import MyFiles from './MyFiles';
-import Notifications from './Notifications';
-import JobApplications from './JobApplications';
-import Resume from './Resume';
+import Sidebar from '../profile/Sidebar';
+import Header from '../profile/Header';
 import ManageAccount from './account/ManageAccount';
+import Notifications from './Notifications';
+import JobOffers from './JobOffers';
+import JobsApplicants from './JobsApplicants';
 
-const UserProfilePage = () => {
-	const [activeTab, setActiveTab] = useState('manage-acount');
+const CompanyProfilePage = () => {
 	const profile = {
-		image: '/userImage.jpg',
-		name: 'ريم محمد محبوب',
+		image: '/userImage.svg',
+		name: 'مسند للتدريب والتوظيف',
 		flagIcon: '/flag.svg',
 		memberSince: 'عضو منذ سنة',
 		statusIcon: '/success.svg',
 		status: 'حساب نشط',
 	};
-  const tabData = [
+
+	const tabData = [
 		{
 			label: 'إدارة الحساب',
 			name: 'manage-acount',
 			icon: '/manage-account-icon.svg',
 		},
+
 		{
-			label: 'السيرة الذاتية',
-			name: 'resume',
-			icon: '/request.svg',
-		},
-		{
-			label: 'إكمال الحساب',
-			name: 'complete-account',
-			icon: '/verify-icon.svg',
-		},
-		{
-			label: 'طلبات التقديم على الفرص',
+			label: 'طلبات التقديم',
 			name: 'job-applications',
 			icon: '/request.svg',
 		},
-		{ label: 'ملفاتي', name: 'my-files', icon: '/files.svg' },
+		{
+			label: ' ادارة الوظائف',
+			name: 'job-offers',
+			icon: '/request.svg',
+		},
 		{
 			label: 'الإشعارات',
 			name: 'notifications',
 			icon: '/notification.svg',
 		},
 	];
+
+	const [activeTab, setActiveTab] = useState('manage-acount');
 	return (
 		<div className="bg-gray-50 py-6">
 			<div className="flex flex-col sm:flex-row min-h-screen mx-auto max-w-screen-xl gap-4 px-4 sm:px-6">
 				{/* Sidebar is persistent for all pages */}
-				<Sidebar activeTab={activeTab} setActiveTab={setActiveTab} profile={profile} tabData={tabData} />
+				<Sidebar
+					activeTab={activeTab}
+					setActiveTab={setActiveTab}
+					profile={profile}
+					tabData={tabData}
+				/>
 				<div className="flex-grow">
 					{activeTab === 'manage-acount' && (
 						<>
@@ -64,38 +64,22 @@ const UserProfilePage = () => {
 						</>
 					)}
 
-					{activeTab === 'resume' && (
+					{activeTab === 'job-offers' && (
 						<>
-							<Header title="السيرة الذاتية" />
+							<Header title="طلبات التقديم على الفرص" />
+
 							<main className="mt-4">
-								<Resume />
+								<JobOffers />
 							</main>
 						</>
 					)}
 
-					{activeTab === 'complete-account' && (
-						<>
-							<Header title="إكمال الحساب" />
-							<main className="mt-4">
-								<CompleteAccountDetails />
-							</main>
-						</>
-					)}
 					{activeTab === 'job-applications' && (
 						<>
 							<Header title="طلبات التقديم على الفرص" />
 
 							<main className="mt-4">
-								<JobApplications />
-							</main>
-						</>
-					)}
-
-					{activeTab === 'my-files' && (
-						<>
-							<Header title="ملفاتي" />
-							<main className="mt-4">
-								<MyFiles />
+								<JobsApplicants />
 							</main>
 						</>
 					)}
@@ -114,4 +98,4 @@ const UserProfilePage = () => {
 	);
 };
 
-export default UserProfilePage;
+export default CompanyProfilePage;

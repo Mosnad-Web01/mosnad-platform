@@ -1,7 +1,7 @@
 import React from "react";
 import StatusBadge from "@/components/common/StatusBadge";
 
-const HiringOperationsTable = () => {
+const JobOffers = () => {
   const data = [
     {
       id: 1,
@@ -80,4 +80,4 @@ const HiringOperationsTable = () => {
   );
 };
 
-export default HiringOperationsTable;
+export default JobOffers;

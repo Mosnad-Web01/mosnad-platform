@@ -212,7 +212,7 @@ const CompanyMultiStepForm = () => {
 						{currentStep < stepComponents.length ? (
 							stepComponents[currentStep]
 						) : (
-							<SuccessPage />
+							<SuccessPage type='company'/>
 						)}
 
 						<div className="flex justify-between mt-6 p-4">

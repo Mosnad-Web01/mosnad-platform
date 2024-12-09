@@ -1,7 +1,6 @@
 import Image from "next/image";
-import React from "react";
 
-const SettingAccountPage = () => {
+const AccountInfo = () => {
   return (
     <section>
       <div className="bg-white rounded-lg shadow">
@@ -113,4 +112,4 @@ const SettingAccountPage = () => {
   );
 };
 
-export default SettingAccountPage;
+export default AccountInfo;

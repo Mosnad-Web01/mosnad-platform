@@ -1,6 +1,6 @@
-import React from "react";
 
-const Page = () => {
+
+const Resume = () => {
   return (
     <article className="bg-white shadow rounded-2xl p-4 mt-4 max-h-screen overflow-auto">
       <h2 className="text-base text-[#21255C] font-bold mb-4">السيرة الذاتية</h2>
@@ -19,4 +19,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Resume;

@@ -236,7 +236,7 @@ const YouthMultiStepForm = () => {
 				{currentStep <= stepComponents.length ? (
 					stepComponents[currentStep - 1]
 				) : (
-					<SuccessPage />
+					<SuccessPage type='student'/>
 				)}
 
 				<div className="flex justify-between mt-6 p-4">

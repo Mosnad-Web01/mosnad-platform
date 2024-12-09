@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const NavLink = ({
 	label,
@@ -9,7 +10,9 @@ const NavLink = ({
 	onClick,
 }) => {
 	// Determine if the current link is active
-	const isActive = window.location.pathname === href;
+	const pathname = usePathname();
+	const isActive = pathname === href;
+
 
 	// Define the base styles for the link
 	const baseStyles = `text-sm font-bold relative group transition ${className}`;

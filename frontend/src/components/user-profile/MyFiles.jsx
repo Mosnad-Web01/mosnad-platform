@@ -1,9 +1,7 @@
-"use client";
-
 import Image from "next/image";
 import React, { useState } from "react";
 
-const Page = () => {
+const MyFiles = () => {
   // Static example files for demonstration
   const [cvFile] = useState(null); // No CV file uploaded
   const [certificateFiles, setCertificateFiles] = useState([
@@ -122,4 +120,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default MyFiles;

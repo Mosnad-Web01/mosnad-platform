@@ -1,50 +1,74 @@
-import React from "react";
 import StatusBadge from "@/components/common/StatusBadge";
 
-const HiringOperationsTable = () => {
+const JobApplications = () => {
+  // Sample data object
   const data = [
     {
       id: 1,
-      field: "مصممي واجهه وتجربة المستخدم",
-      employeesRequired: 4,
+      opportunityName: "UI/UX",
+      formAvailable: true,
       date: "أغسطس 2023",
-      employmentType: "دوام كامل",
       applicationStatus: { text: "تحت المراجعة", status: "review" },
-      applicantDetailsAvailable: false,
+      trainingAvailable: false,
     },
     {
       id: 2,
-      field: "مصممي واجهه وتجربة المستخدم",
-      employeesRequired: 4,
+      opportunityName: "Web Full Stack",
+      formAvailable: true,
       date: "أغسطس 2023",
-      employmentType: "دوام كامل",
-      applicationStatus: { text: "تم التقديم", status: "accepted" },
-      applicantDetailsAvailable: true,
+      applicationStatus: { text: "مرحلة الاختبار", status: "rejected" },
+      trainingAvailable: false,
+    },
+    {
+      id: 3,
+      opportunityName: "UI/UX",
+      formAvailable: true,
+      date: "أغسطس 2023",
+      applicationStatus: { text: "تم القبول", status: "accepted" },
+      trainingAvailable: true,
+    },
+    {
+      id: 4,
+      opportunityName: "Web Full Stack",
+      formAvailable: true,
+      date: "أغسطس 2023",
+      applicationStatus: { text: "مرحلة الاختبار", status: "rejected" },
+      trainingAvailable: false,
+    },
+    {
+      id: 5,
+      opportunityName: "UI/UX",
+      formAvailable: true,
+      date: "أغسطس 2023",
+      applicationStatus: { text: "تحت المراجعة", status: "review" },
+      trainingAvailable: false,
     },
   ];
 
   return (
     <article className="bg-white shadow rounded-2xl p-4 mt-4 max-h-screen w-full overflow-auto">
       <h2 className="text-xs sm:text-sm text-[#21255C] font-bold mb-8">
-        جميع عمليات التوظيف
+        جميع طلبات التقديم على تدريب
       </h2>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-right text-[10px] sm:text-xs">
+          {/* Table Head */}
           <thead className="bg-blue-800 text-white">
             <tr>
               <th className="py-5 px-2 sm:px-5 first:rounded-tr-xl first:rounded-br-xl">
                 ID
               </th>
-              <th className="py-5 px-2">المجال المطلوب</th>
-              <th className="py-5 px-2">عدد الموظفين المطلوب</th>
-              <th className="py-5 px-2">تاريخ الطلب</th>
-              <th className="py-5 px-2">نوع الدوام</th>
-              <th className="py-5 px-2">حالة الطلب</th>
+              <th className="py-5 px-2">اسم المخيم / الفرصة</th>
+              <th className="py-5 px-2">استمارة التقديم</th>
+              <th className="py-5 px-2">تاريخ التقديم</th>
+              <th className="py-5 px-2">حالة التقديم</th>
               <th className="py-5 px-2 last:rounded-tl-xl last:rounded-bl-xl">
-                تفاصيل المتقدم
+                شهادة اكمال التدريب
               </th>
             </tr>
           </thead>
+
+          {/* Table Body */}
           <tbody className="text-[#21255C]">
             {data.map((item, index) => (
               <tr
@@ -52,10 +76,15 @@ const HiringOperationsTable = () => {
                 className="border-b hover:bg-gray-100 transition duration-150"
               >
                 <td className="py-4 px-2 sm:px-6">{item.id}</td>
-                <td className="py-4 px-2">{item.field}</td>
-                <td className="py-4 px-2">{item.employeesRequired}</td>
+                <td className="py-4 px-2">{item.opportunityName}</td>
+                <td className="py-4 px-2">
+                  {item.formAvailable && (
+                    <button className="text-[#21255C] text-sm hover:underline">
+                      👁
+                    </button>
+                  )}
+                </td>
                 <td className="py-4 px-2">{item.date}</td>
-                <td className="py-4 px-2">{item.employmentType}</td>
                 <td className="py-4 px-2">
                   <StatusBadge
                     text={item.applicationStatus.text}
@@ -63,7 +92,7 @@ const HiringOperationsTable = () => {
                   />
                 </td>
                 <td className="py-4 px-2">
-                  {item.applicantDetailsAvailable ? (
+                  {item.trainingAvailable ? (
                     <button className="text-[#21255C] text-sm hover:underline">
                       👁
                     </button>
@@ -80,4 +109,4 @@ const HiringOperationsTable = () => {
   );
 };
 
-export default HiringOperationsTable;
+export default JobApplications;

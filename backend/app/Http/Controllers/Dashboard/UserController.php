@@ -16,7 +16,7 @@ class UserController extends Controller
         // Initialize the query for both active and suspended users
         $activeUsersQuery = User::query()->whereIn('status', ['active', 'inactive']);
         $suspendedUsersQuery = User::query()->where('status', 'suspended');
-    
+
         // Apply search filter
         if ($search = $request->input('search')) {
             $activeUsersQuery->where(function ($q) use ($search) {
@@ -24,26 +24,26 @@ class UserController extends Controller
                     ->orWhere('email', 'like', "%{$search}%")
                     ->orWhere('phone_number', 'like', "%{$search}%");
             });
-    
+
             $suspendedUsersQuery->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
                     ->orWhere('phone_number', 'like', "%{$search}%");
             });
         }
-    
+
         // Filter by role
         if ($role = $request->input('role')) {
             $activeUsersQuery->where('role_id', $role);
             $suspendedUsersQuery->where('role_id', $role);
         }
-    
+
         // Paginate results
         $users = $activeUsersQuery->paginate(10)->appends($request->query());
         $suspendedUsers = $suspendedUsersQuery->paginate(10)->appends($request->query());
-    
+
         $roles = Role::all(); // Fetch roles for the filter dropdown
-    
+
         return view('dashboard.users.index', compact('users', 'suspendedUsers', 'roles'));
     }
 

@@ -1,6 +1,9 @@
 <x-layout title="Youth Surveys">
     <x-common.header title="استبانات الشباب" :showBackButton="true" />
 
+    <!-- Search Component -->
+    {!! view()->make('components.common.search-filter', ['roles' => $roles ?? []]) !!}
+
     <x-common.content-container title="جدول الاستبانات">
         <div class="relative overflow-hidden rounded-xl shadow-lg bg-white">
             <div class="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
@@ -29,17 +32,16 @@
                                     <!-- Link to the detailed page -->
                                     <a href="{{ route('youth-surveys.show', $form->id) }}"
                                         class="text-blue-600 hover:text-blue-800 hover:underline">
-                                        {{ $form->name }}
+                                        {{ $form->user_name }}
                                     </a>
                                 </td>
-                                <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $form->city }}</td>
-                                <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $form->address }}
-                                </td>
+                                <!-- Fetch city, address, and birth date from user profile -->
+                                <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $form->city ?? 'N/A' }}</td>
+                                <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $form->address ?? 'N/A' }}</td>
                                 <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
                                     {{ $form->birth_date ? \Carbon\Carbon::parse($form->birth_date)->format('Y-m-d') : 'N/A' }}
                                 </td>
-                                <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $form->phone }}
-                                </td>
+                                <td class="px-4 sm:px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ $form->phone_number ?? 'N/A' }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -48,6 +50,7 @@
         </div>
 
         <x-common.pagination :items="$youthForms" />
+        
         <!-- Empty State -->
         @if($youthForms->isEmpty())
             <div class="text-center py-12">

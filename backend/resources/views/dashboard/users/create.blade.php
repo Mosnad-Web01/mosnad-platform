@@ -26,16 +26,8 @@
                     </div>
                 </div>
 
-                <!-- Row: Phone Number & Role -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div class="space-y-2">
-                        <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
-                        <input type="text" name="phone_number" id="phone_number" placeholder="Enter Phone Number" class="sm:text-sm w-full border-gray-300 bg-gray-50 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-3 px-4" value="{{ old('phone_number') }}" required>
-                        @error('phone_number')
-                            <div class="text-sm text-red-600 mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-
+              
+                    
                     <!-- Role Select -->
                     <div class="space-y-2">
                         <label for="role_id" class="block text-sm font-medium text-gray-700">Role <span class="text-red-500">*</span></label>
@@ -50,7 +42,7 @@
                             <div class="text-sm text-red-600 mt-1">{{ $message }}</div>
                         @enderror
                     </div>
-                </div>
+                
 
                 <!-- Status -->
                 <div class="space-y-2">

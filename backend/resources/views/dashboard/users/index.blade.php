@@ -15,7 +15,6 @@
                             <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">الرقم</th>
                             <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">الاسم</th>
                             <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">البريد الإلكتروني</th>
-                            <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">رقم الهاتف</th>
                             <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">الدور</th>
                             <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">الحالة</th>
                             <th class="px-4 sm:px-6 py-4 text-start text-sm font-bold text-white">التاريخ</th>
@@ -30,7 +29,6 @@
                             <td class="px-4 sm:px-6 py-4 text-sm">
                                 <a href="mailto:{{ $user->email }}" class="text-blue-600 hover:text-blue-800 hover:underline">{{ Str::limit($user->email, 20) }}</a>
                             </td>
-                            <td class="px-4 sm:px-6 py-4 text-sm text-gray-700">{{ Str::limit($user->phone_number, 20) }}</td>
                             <td class="px-4 sm:px-6 py-4 text-sm text-gray-700">{{ $user->role->name }}</td>
                             <td class="px-4 sm:px-6 py-4 text-sm">
                                 <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium {{ $user->status == 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">

@@ -13,19 +13,27 @@ return new class extends Migration
     {
         Schema::create('company_forms', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->nullable();
+            $table->text('about')->nullable();            
             $table->string('industry')->nullable();
             $table->string('employees')->nullable();
+            $table->string('environment')->nullable();
+            $table->string('company_website')->nullable();
+            $table->string('social_media_link')->nullable();
             $table->string('stage')->nullable();
             $table->text('skills')->nullable(); // Store as JSON if multiple selections
             $table->string('home_workers')->nullable();
             $table->string('training')->nullable();
+            $table->string('training_type')->nullable();
             $table->string('hiring')->nullable();
+            $table->json('hiring_skills')->nullable();
             $table->json('remote_hiring_preferences')->nullable(); // Remote hiring preferences
+            $table->string('yemeni_workers')->nullable();
+            $table->string('hiring_fears')->nullable();
+            $table->string('precondition')->nullable();
             $table->text('additional_notes')->nullable();
             $table->timestamps();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+              
         });
     }
 

@@ -7,6 +7,7 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Services\SearchService;
 
 class UserController extends Controller
 {
@@ -17,19 +18,11 @@ class UserController extends Controller
         $activeUsersQuery = User::query()->whereIn('status', ['active', 'inactive']);
         $suspendedUsersQuery = User::query()->where('status', 'suspended');
     
-        // Apply search filter
+        // Apply search filter using the SearchService
         if ($search = $request->input('search')) {
-            $activeUsersQuery->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('phone_number', 'like', "%{$search}%");
-            });
-    
-            $suspendedUsersQuery->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('phone_number', 'like', "%{$search}%");
-            });
+            $searchFields = ['name', 'email'];
+            $activeUsersQuery = SearchService::apply($activeUsersQuery, $searchFields, $search);
+            $suspendedUsersQuery = SearchService::apply($suspendedUsersQuery, $searchFields, $search);
         }
     
         // Filter by role
@@ -56,13 +49,11 @@ class UserController extends Controller
         return view('dashboard.users.create', compact('roles'));
     }
 
-    // Other methods remain unchanged
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'phone_number' => 'nullable|string|max:20',
             'role_id' => 'required|exists:roles,id',
             'status' => 'required|in:active,inactive,suspended',
             'password' => 'required|string|min:8|confirmed',
@@ -71,7 +62,6 @@ class UserController extends Controller
         User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'phone_number' => $validated['phone_number'],
             'role_id' => $validated['role_id'],
             'status' => $validated['status'],
             'password' => Hash::make($validated['password']),

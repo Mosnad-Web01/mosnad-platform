@@ -25,7 +25,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'phone_number',
         'role_id',
         'status'
     ];
@@ -96,4 +95,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(YouthForm::class);
     }
+
+     // Profile relationship
+     public function profile()
+     {
+         return $this->hasOne(UserProfile::class);
+     }
+
+
 }

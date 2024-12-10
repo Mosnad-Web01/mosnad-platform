@@ -80,7 +80,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Bootcamp::class);
     }
-    
+
 
     public function jobOpportunities(): BelongsToMany
     {
@@ -95,5 +95,18 @@ class User extends Authenticatable
     public function youthForm()
     {
         return $this->hasOne(YouthForm::class);
+    }
+
+    public function adminTypes(): BelongsToMany
+    {
+        return $this->belongsToMany(AdminType::class, 'user_admin_types');
+    }
+
+    public function hasPermission(string $permission): bool
+    {
+        return $this->adminTypes()
+            ->whereHas('permissions', fn($query) =>
+                $query->where('slug', $permission)
+            )->exists();
     }
 }

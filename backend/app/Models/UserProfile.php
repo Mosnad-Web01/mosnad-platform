@@ -16,7 +16,6 @@ class UserProfile extends Model
         'city',
         'address',
         'birth_date',
-        'user_type',
     ];
 
     protected $casts = [

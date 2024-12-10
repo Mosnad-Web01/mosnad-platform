@@ -26,9 +26,42 @@ const Step1 = ({ formData, updateFormData, errors }) => {
         />
 
         <FieldContainer
+          label="النوع"
+          className="grid grid-cols-2 gap-2"
+          error={errors.gender}
+        >
+          {[
+            { label: "ذكر", value: "male" },
+            { label: "أنثى", value: "female" },
+          ].map((option) => (
+            <RadioButton
+              key={option.value}
+              name="gender"
+              label={option.label}
+              value={option.value}
+              checked={formData.gender === option.value}
+              onChange={(value) => handleRadioChange("gender", value)}
+            />
+          ))}
+        </FieldContainer>
+
+        <FieldContainer
+          label="البلد"
+          error={errors.country}
+        >
+          <Input
+            name="country"
+            type="text"
+            placeholder="أدخل اسم البلد"
+            value={formData.country || ""}
+            onChange={handleInputChange("country")}
+          />
+        </FieldContainer>
+
+        <FieldContainer
           label="أختر المدينة"
           className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-5"
-          error={errors.city} // Display error message if present
+          error={errors.city}
         >
           {["صنعاء", "الحديدة", "عدن", "المكلا"].map((city) => (
             <RadioButton
@@ -41,11 +74,11 @@ const Step1 = ({ formData, updateFormData, errors }) => {
             />
           ))}
           <Input
-            name="city"
+            name="city_input"
             type="text"
             placeholder="أخرى أذكرها هنا"
-            value={formData.city || ""}
-            onChange={handleInputChange("city")}
+            value={formData.city_input || ""}
+            onChange={handleInputChange("city_input")}
           />
         </FieldContainer>
 
@@ -70,11 +103,11 @@ const Step1 = ({ formData, updateFormData, errors }) => {
 
         <Input
           label="رقم الجوال"
-          name="phone"
+          name="phone_number"
           placeholder="رقم الجوال"
           value={formData.phone || ""}
-          onChange={handleInputChange("phone")}
-          errorMessage={errors.phone}
+          onChange={handleInputChange("phone_number")}
+          errorMessage={errors.phone_number}
         />
 
         <FieldContainer
@@ -96,7 +129,6 @@ const Step1 = ({ formData, updateFormData, errors }) => {
             />
           ))}
         </FieldContainer>
-       
       </form>
     </div>
   );

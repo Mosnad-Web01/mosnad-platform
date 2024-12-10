@@ -27,7 +27,7 @@ class YouthFormController extends Controller
             'has_coding_experience' => 'nullable|boolean',
             'coding_clarify' => 'nullable|string',
             'knows_other_languages' => 'nullable|boolean',
-            'languages' => 'nullable|array',
+            'languages' => 'nullable|string',
             'creative_problem_solving' => 'nullable|string',
             'website_vs_webapp' => 'nullable|string',
             'usability_steps' => 'nullable|string',
@@ -39,7 +39,6 @@ class YouthFormController extends Controller
             'city' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
             'birth_date' => 'nullable|date',
-            'user_type' => 'required|in:youth,company',
         ]);
 
         // Store document if present
@@ -47,8 +46,33 @@ class YouthFormController extends Controller
             $validated['document'] = $request->file('document')->store('documents', 'public');
         }
 
-        // Create the youth form data
-        $youthForm = YouthForm::create($validated);
+        
+         // Create the youth form data
+    $youthForm = YouthForm::create([
+        'gender' => $validated['gender'],
+        'is_it_graduate' => $validated['is_it_graduate'],
+        'job_interest' => $validated['job_interest'],
+        'motivation' => $validated['motivation'],
+        'career_goals' => $validated['career_goals'],
+        'project_ideas' => $validated['project_ideas'],
+        'has_workshops' => $validated['has_workshops'],
+        'workshop_clarify' => $validated['workshop_clarify'],
+        'has_coding_experience' => $validated['has_coding_experience'],
+        'coding_clarify' => $validated['coding_clarify'],
+        'knows_other_languages' => $validated['knows_other_languages'],
+        'languages' => json_encode($validated['languages']), // Encode to JSON()
+        'creative_problem_solving' => $validated['creative_problem_solving'],
+        'website_vs_webapp' => $validated['website_vs_webapp'],
+        'usability_steps' => $validated['usability_steps'],
+        'additional_info' => $validated['additional_info'],
+        'document' => $validated['document'],
+        'user_id' => $validated['user_id'],
+        'phone_number' => $validated['phone_number'],
+        'country' => $validated['country'],
+        'city' => $validated['city'],
+        'address' => $validated['address'],
+        'birth_date' => $validated['birth_date'],
+    ]);
 
         // Create the user profile data
         UserProfile::create([
@@ -58,7 +82,7 @@ class YouthFormController extends Controller
             'city' => $validated['city'],
             'address' => $validated['address'],
             'birth_date' => $validated['birth_date'],
-            'user_type' => $validated['user_type'],
+          
         ]);
 
         // Fetch the user and update status if necessary

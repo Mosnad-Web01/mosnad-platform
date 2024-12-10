@@ -16,6 +16,7 @@ class UserProfileResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'email' => $this->user->email,
             'user_id' => $this->user_id,
             'username' => $this->user->name, // Include the related user's name
             'phone_number' => $this->phone_number,
@@ -23,7 +24,7 @@ class UserProfileResource extends JsonResource
             'city' => $this->city,
             'address' => $this->address,
             'birth_date' => $this->birth_date,
-            'user_type' => $this->user_type,
+            // 'user_type' => $this->user->role->name,
         ];
     }
 }

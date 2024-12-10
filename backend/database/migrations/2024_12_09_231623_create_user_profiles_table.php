@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('address')->nullable();
             $table->date('birth_date')->nullable();
-            $table->enum('user_type', ['youth', 'company']);
+            // $table->enum('user_type', ['youth', 'company','admin']);
             $table->timestamps();
         });
     }

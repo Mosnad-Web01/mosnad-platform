@@ -14,8 +14,9 @@ class AdminType extends Model
         return $this->belongsToMany(Permission::class, 'admin_type_permission');
     }
 
-    public function users(): BelongsToMany
+    // AdminType.php
+    public function users()
     {
-        return $this->belongsToMany(User::class, 'user_admin_types');
+        return $this->belongsToMany(User::class, 'user_admin_types', 'admin_type_id', 'user_id');
     }
 }

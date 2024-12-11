@@ -7,9 +7,15 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Models\AdminType;
+use App\Services\AdminTypeService;
 
 class UserController extends Controller
 {
+    public function __construct(
+        private readonly AdminTypeService $adminTypeService
+    ) {
+    }
     // Show the list of users with search, filter, and suspended users
     public function index(Request $request)
     {
@@ -47,13 +53,12 @@ class UserController extends Controller
         return view('dashboard.users.index', compact('users', 'suspendedUsers', 'roles'));
     }
 
+
     public function create()
     {
-        // Fetching roles from the database to populate a dropdown in the form
-        $roles = Role::all();
-
-        // Returning the 'create' view and passing the roles data to it
-        return view('dashboard.users.create', compact('roles'));
+        // Fetch admin types instead of roles
+        $adminTypes = AdminType::with('permissions')->get();
+        return view('dashboard.users.create', compact('adminTypes'));
     }
 
     // Other methods remain unchanged
@@ -63,21 +68,26 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'phone_number' => 'nullable|string|max:20',
-            'role_id' => 'required|exists:roles,id',
+            'admin_types' => 'required|array',
+            'admin_types.*' => 'exists:admin_types,id',
             'status' => 'required|in:active,inactive,suspended',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone_number' => $validated['phone_number'],
-            'role_id' => $validated['role_id'],
+            'role_id' => 1,
             'status' => $validated['status'],
             'password' => Hash::make($validated['password']),
         ]);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+           // Assign selected admin types to the user
+           $user->adminTypes()->attach($validated['admin_types']);
+
+           return redirect()->route('users.index')
+           ->with('success', 'User created successfully.');
     }
 
     public function updateStatus(User $user)

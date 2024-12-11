@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardSessionController;
 use App\Http\Controllers\Dashboard\JobOpportunityController;
 use App\Http\Controllers\Dashboard\YouthFormController;
+use App\Http\Middleware\CheckPermission;
+use App\Http\Controllers\Dashboard\AdminTypeController;
+use App\Http\Controllers\Dashboard\PermissionController;
 
 // Public login routes
 Route::middleware('guest')->group(function () {
@@ -32,13 +35,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact-us.index');
     Route::get('/contact-us/{id}', [ContactUsController::class, 'show'])->name('dashboard.contact-us.show');
     Route::post('/contact-us/{id}/reply', [ContactUsController::class, 'reply'])->name('contact-us.reply');
-   
+
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::put('/users/{user}/update-status', [UserController::class, 'updateStatus'])->name('users.update-status');
-   
+
 
 
 
@@ -64,6 +67,28 @@ Route::middleware('auth')->group(function () {
 
 });
 
-
+Route::middleware(['auth', CheckPermission::class . ':manage-bootcamps'])->group(function () {
+    Route::post('/admin-types', [AdminTypeController::class, 'store']);
+    Route::post('/admin-types/{adminType}/users/{user}', [AdminTypeController::class, 'assignToUser']);
+});
 // Fallback route for '/' (redirect to login if not authenticated)
 // Route::redirect('/', '/login');
+
+
+
+Route::prefix('dashboard')->middleware(['auth'])->group(function () {
+    Route::get('admin-types', [AdminTypeController::class, 'index'])->name('admin-types.index');
+    Route::get('admin-types/create', [AdminTypeController::class, 'create'])->name('admin-types.create');
+    Route::post('admin-types', [AdminTypeController::class, 'store'])->name('admin-types.store');
+    Route::post('admin-types/{adminType}/assign/{user}', [AdminTypeController::class, 'assignToUser'])
+        ->name('admin-types.assign-user');
+});
+
+
+
+Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
+Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
+Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
+Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
+Route::put('/permissions/{permission}', [PermissionController::class, 'update'])->name('permissions.update');
+Route::delete('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');

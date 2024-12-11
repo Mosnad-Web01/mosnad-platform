@@ -88,3 +88,11 @@ Route::get('/bootcamps/{id}', [BootcampController::class, 'show']); // Endpoint:
 
 //JobOpportunity API Routes
 Route::get('/job-opportunities', [JobOpportunityController::class, 'index']);
+
+// for Dashboard search modal
+Route::get('/users/search', function (Request $request) {
+    return User::where('name', 'like', "%{$request->q}%")
+        ->orWhere('email', 'like', "%{$request->q}%")
+        ->limit(10)
+        ->get(['id', 'name', 'email']);
+})->withoutMiddleware('auth:sanctum');

@@ -43,5 +43,10 @@ class UserSeeder extends Seeder
         foreach ($users as $user) {
             User::factory()->create($user);
         }
+        User::factory(10)->create(
+            [
+                'role_id' => 1
+            ]
+        );
     }
 }

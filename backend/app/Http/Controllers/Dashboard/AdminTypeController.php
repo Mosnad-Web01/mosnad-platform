@@ -15,22 +15,23 @@ class AdminTypeController extends Controller
 {
     public function __construct(
         private readonly AdminTypeService $adminTypeService
-    ) {}
+    ) {
+    }
 
     public function index()
     {
-        $adminTypes = AdminType::with(['permissions'])->get();
-        return view('dashboard.admin-types.index', compact('adminTypes'));
+        $adminRoles = AdminType::with(['permissions'])->get();
+        return view('dashboard.admin-roles.index', compact('adminRoles'));
     }
 
     public function create()
     {
         $permissions = Permission::all();
-        return view('dashboard.admin-types.create', compact('permissions'));
+        return view('dashboard.admin-roles.create', compact('permissions'));
     }
 
 
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -46,40 +47,56 @@ class AdminTypeController extends Controller
 
         $this->adminTypeService->assignPermissions($adminType, $validated['permissions']);
 
-        return response()->json([
-            'message' => 'Admin type created successfully',
-            'data' => $adminType
-        ]);
+        return redirect()->route('admin-roles.index')->with('success', 'Admin type created successfully.');
+
     }
+    public function edit(AdminType $adminType)
+{
+    $permissions = Permission::all();
+    $adminTypePermissions = $adminType->permissions->pluck('id')->toArray();
+    return view('dashboard.admin-roles.edit', compact('adminType', 'permissions', 'adminTypePermissions'));
+}
+
+public function update(Request $request, AdminType $adminType)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'permissions' => 'required|array',
+        'permissions.*' => 'exists:permissions,id'
+    ]);
+
+    $adminType->update([
+        'name' => $validated['name'],
+        'description' => $validated['description']
+    ]);
+
+    $this->adminTypeService->syncPermissions($adminType, $validated['permissions']);
+
+    return redirect()->route('admin-roles.index')->with('success', 'Admin type updated successfully.');
+}
+
+public function destroy(AdminType $adminType)
+{
+    try {
+        $adminType->delete();
+        return redirect()->route('admin-roles.index')->with('success', 'Admin type deleted successfully.');
+    } catch (\Exception $e) {
+        return redirect()->route('admin-roles.index')->with('error', 'Error deleting admin type.');
+    }
+}
+
 
     public function assignToUser(Request $request, AdminType $adminType, User $user): JsonResponse
     {
-        \Log::info('Assigning admin type to user started', [
-            'user_id' => $user->id ?? null,
-            'admin_type_id' => $adminType->id ?? null,
-        ]);
-
         if (!$user || !$adminType) {
-            \Log::warning('User or admin type not found', [
-                'user_id' => $user->id ?? null,
-                'admin_type_id' => $adminType->id ?? null,
-            ]);
-            return response()->json(['message' => 'User or admin type not found'], 404);
+            return response()->json(['message' => 'User or admin role not found'], 404);
         }
 
         try {
             $this->adminTypeService->assignToUser($user, $adminType);
-            \Log::info('Admin type assigned successfully', [
-                'user_id' => $user->id,
-                'admin_type_id' => $adminType->id,
-            ]);
-            return response()->json(['message' => 'Admin type assigned successfully']);
+            return response()->json(['message' => 'Admin role assigned successfully']);
         } catch (\Exception $e) {
-            \Log::error('Error assigning admin type', [
-                'exception' => $e->getMessage(),
-                'user_id' => $user->id ?? null,
-                'admin_type_id' => $adminType->id ?? null,
-            ]);
             return response()->json(['message' => 'Error assigning admin type'], 500);
         }
     }

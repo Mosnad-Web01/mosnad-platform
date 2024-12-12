@@ -91,8 +91,11 @@ Route::get('/job-opportunities', [JobOpportunityController::class, 'index']);
 
 // for Dashboard search modal
 Route::get('/users/search', function (Request $request) {
-    return User::where('name', 'like', "%{$request->q}%")
-        ->orWhere('email', 'like', "%{$request->q}%")
+    return User::where('role_id', 1) // Filter by role_id
+        ->where(function($query) use ($request) {
+            $query->where('name', 'like', "%{$request->q}%")
+                  ->orWhere('email', 'like', "%{$request->q}%");
+        })
         ->limit(10)
         ->get(['id', 'name', 'email']);
 })->withoutMiddleware('auth:sanctum');

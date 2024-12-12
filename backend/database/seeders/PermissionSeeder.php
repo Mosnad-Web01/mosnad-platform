@@ -2,27 +2,22 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
-// database/seeders/PermissionSeeder.php
-
 use App\Models\Permission;
-
 
 class PermissionSeeder extends Seeder
 {
     public function run(): void
     {
         $permissions = [
-            ['name' => 'View Dashboard', 'slug' => 'view-dashboard', 'description' => 'Permission to view the dashboard', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Manage Users', 'slug' => 'manage-users', 'description' => 'Permission to manage users', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Manage Job Opportunities', 'slug' => 'manage-job-opportunities', 'description' => 'Permission to manage job opportunities', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Manage Courses', 'slug' => 'manage-courses', 'description' => 'Permission to manage courses', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Manage Bootcamps', 'slug' => 'manage-bootcamps', 'description' => 'Permission to manage bootcamps', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Manage Youth Surveys', 'slug' => 'manage-youth-surveys', 'description' => 'Permission to manage youth forms', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Manage Company surveys', 'slug' => 'manage-company-survays', 'description' => 'Permission to manage company surveys', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Manage Comments', 'slug' => 'manage-comments', 'description' => 'Permission to manage comments and messages of users ', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'عرض لوحة التحكم', 'slug' => 'view-dashboard', 'description' => 'إذن لعرض لوحة التحكم', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'إدارة المستخدمين', 'slug' => 'manage-users', 'description' => 'إذن لإدارة المستخدمين', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'إدارة فرص العمل', 'slug' => 'manage-job-opportunities', 'description' => 'إذن لإدارة فرص العمل', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'إدارة الدورات', 'slug' => 'manage-courses', 'description' => 'إذن لإدارة الدورات', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'إدارة معسكرات التدريب', 'slug' => 'manage-bootcamps', 'description' => 'إذن لإدارة معسكرات التدريب', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'إدارة استبيانات الشباب', 'slug' => 'manage-youth-surveys', 'description' => 'إذن لإدارة استبيانات الشباب', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'إدارة استبيانات الشركات', 'slug' => 'manage-company-survays', 'description' => 'إذن لإدارة استبيانات الشركات', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'إدارة التعليقات', 'slug' => 'manage-comments', 'description' => 'إذن لإدارة التعليقات ورسائل المستخدمين', 'created_at' => now(), 'updated_at' => now()],
         ];
 
         foreach ($permissions as $permission) {
@@ -30,5 +25,3 @@ class PermissionSeeder extends Seeder
         }
     }
 }
-
-

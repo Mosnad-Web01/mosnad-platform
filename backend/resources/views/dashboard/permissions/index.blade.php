@@ -6,7 +6,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="relative  rounded-xl shadow-lg bg-white">
                 <div class="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 mx-auto">
-                    <table class="w-full " dir="ltr">
+                    <table class="w-full " >
                         <thead>
 
                             <th class="px-4 sm:px-6 py-4 text-center text-md font-bold text-gray-950 whitespace-nowrap">ID

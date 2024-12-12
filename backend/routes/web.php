@@ -76,12 +76,18 @@ Route::middleware(['auth', CheckPermission::class . ':manage-bootcamps'])->group
 
 
 
-Route::prefix('dashboard')->middleware(['auth'])->group(function () {
-    Route::get('admin-types', [AdminTypeController::class, 'index'])->name('admin-types.index');
-    Route::get('admin-types/create', [AdminTypeController::class, 'create'])->name('admin-types.create');
-    Route::post('admin-types', [AdminTypeController::class, 'store'])->name('admin-types.store');
-    Route::post('admin-types/{adminType}/assign/{user}', [AdminTypeController::class, 'assignToUser'])
-        ->name('admin-types.assign-user');
+Route::middleware(['auth'])->group(function () {
+    Route::get('admin-roles', [AdminTypeController::class, 'index'])->name('admin-roles.index');
+    Route::get('admin-roles/create', [AdminTypeController::class, 'create'])->name('admin-roles.create');
+    Route::post('admin-roles', [AdminTypeController::class, 'store'])->name('admin-roles.store');
+    Route::get('admin-roles/{adminType}/edit', [AdminTypeController::class, 'edit'])->name('admin-roles.edit');
+    Route::put('admin-roles/{adminType}', [AdminTypeController::class, 'update'])->name('admin-roles.update');
+    Route::delete('admin-roles/{adminType}', [AdminTypeController::class, 'destroy'])->name('admin-roles.destroy');
+
+
+    // Assign admin-type (role) to a user
+    Route::post('admin-roles/{adminType}/assign/{user}', [AdminTypeController::class, 'assignToUser'])
+        ->name('admin-roles.assign-user');
 });
 
 
@@ -92,3 +98,12 @@ Route::post('/permissions', [PermissionController::class, 'store'])->name('permi
 Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
 Route::put('/permissions/{permission}', [PermissionController::class, 'update'])->name('permissions.update');
 Route::delete('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
+
+
+// Route::middleware(['auth', CheckPermission::class . ':manage-permissions'])->group(function () {
+//    Route::get('/test-page', function () {
+//        return "Hello Admin";
+//    });
+//    //resours route
+//    Route::resource('permissions', PermissionController::class);
+// });

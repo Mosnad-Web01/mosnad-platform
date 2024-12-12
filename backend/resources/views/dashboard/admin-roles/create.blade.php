@@ -1,14 +1,13 @@
-<x-layout title="Create Admin Type">
-    <x-common.header title="Create Admin Type" :showBackButton="true" />
+<x-layout title="Create New Role">
+    <x-common.header title="Create New Role" :showBackButton="true" />
 
     <x-common.content-container>
         <div class="max-w-3xl mx-auto">
-            <form id="createForm" class="space-y-6 bg-white p-6 rounded-lg shadow">
+            <form action="{{ route('admin-roles.store') }}" method="POST" class="space-y-6 bg-white p-6 rounded-lg shadow">
                 @csrf
-
                 <div class="space-y-2">
                     <label for="name" class="block text-sm font-medium text-gray-700">
-                        Name <span class="text-red-500">*</span>
+                        <span class="text-red-500">*</span> الاسم
                     </label>
                     <input type="text" id="name" name="name" required
                            class="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500">
@@ -16,10 +15,10 @@
 
                 <div class="space-y-2">
                     <label for="description" class="block text-sm font-medium text-gray-700">
-                        Description
+                        الوصف
                     </label>
                     <textarea id="description" name="description" rows="3"
-                            class="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
+                              class="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
                 </div>
 
                 <div class="space-y-2">
@@ -51,41 +50,4 @@
             </form>
         </div>
     </x-common.content-container>
-    @push('scripts')
-<script>
-document.getElementById('createForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.target);
-    const permissions = Array.from(formData.getAll('permissions[]')).map(Number);
-
-    try {
-        const response = await fetch('{{ route("admin-types.store") }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            },
-            body: JSON.stringify({
-                name: formData.get('name'),
-                description: formData.get('description'),
-                permissions: permissions
-            })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            window.location.href = '{{ route("admin-types.index") }}';
-        } else {
-            alert(data.message || 'Error creating admin type');
-        }
-    } catch (error) {
-        alert('Error creating admin type');
-    }
-});
-</script>
-@endpush
 </x-layout>
-
-

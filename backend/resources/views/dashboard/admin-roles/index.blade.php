@@ -1,22 +1,19 @@
-<x-layout title="Admin Types">
-    <!-- Enhanced Header with Gradient Background -->
-    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
-        <x-common.header title="Admin Types Management" class="container mx-auto px-4 py-6">
-            <div class="flex items-center space-x-4">
-                <a href="{{ route('admin-types.create') }}"
-                   class="inline-flex items-center px-6 py-2.5 bg-white text-blue-800 rounded-full hover:bg-blue-50 transition-all duration-300 shadow-md transform hover:scale-105">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                    </svg>
-                    Create Admin Type
-                </a>
-            </div>
-        </x-common.header>
-    </div>
+<x-layout title="Manage Roles">
+    <x-common.header title="Admin Roles" :showBackButton="true" />
 
     <x-common.content-container class="container mx-auto px-4 py-8">
         <div class="bg-white rounded-xl shadow-xl overflow-hidden" dir="ltr">
+
             <div class="p-6">
+            <div class="flex items-center mb-6" dir="rtl">
+                <a href="{{ route('admin-roles.create') }}"
+                   class="inline-flex items-center px-6 py-2.5 bg-blue-800 text-white rounded-full hover:bg-blue-700 transition-all duration-300 shadow-md transform hover:scale-105">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Create New Role
+                </a>
+            </div>
                 <!-- Enhanced Search Bar -->
                 <div class="mb-6">
                     <div class="relative">
@@ -37,21 +34,24 @@
                                 <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Name</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Description</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Permissions</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Assign User</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
+                                    Action
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
-                            @foreach($adminTypes as $adminType)
+                            @foreach($adminRoles as $adminRole)
                                 <tr class="hover:bg-gray-50 transition-colors duration-200">
                                     <td class="px-6 py-4">
-                                        <div class="font-medium text-gray-900">{{ $adminType->name }}</div>
+                                        <div class="font-medium text-gray-900">{{ $adminRole->name }}</div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="text-gray-600">{{ $adminType->description }}</div>
+                                        <div class="text-gray-600">{{ $adminRole->description }}</div>
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex flex-wrap gap-2">
-                                            @foreach($adminType->permissions as $permission)
+                                            @foreach($adminRole->permissions as $permission)
                                                 <span class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
                                                     {{ $permission->name }}
                                                 </span>
@@ -60,7 +60,7 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex space-x-3">
-                                            <button onclick="openAssignModal('{{ $adminType->id }}')"
+                                            <button onclick="openAssignModal('{{ $adminRole->id }}')"
                                                     class="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200">
                                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -69,6 +69,29 @@
                                             </button>
                                         </div>
                                     </td>
+
+                                    <td class="px-2 sm:px-4 py-2 sm:py-4 text-center">
+                                    <div class="flex justify-center gap-2 items-center">
+                                        <!-- Delete Icon -->
+                                        <form action="{{ route('admin-roles.destroy', $adminRole->id) }}"
+                                            method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذه؟');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="text-red-600 hover:text-red-700 hover:scale-110 transition duration-300 text-xs sm:text-sm">
+                                                <i class="material-icons">delete</i>
+                                            </button>
+                                        </form>
+
+                                        <!-- Edit Icon -->
+                                        <a href="{{ route('admin-roles.edit', $adminRole->id) }}"
+                                            class="text-green-600 hover:text-green-800 hover:scale-110 transition duration-300 text-xs sm:text-sm">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                    </div>
+                                </td>
+
+
                                 </tr>
                             @endforeach
                         </tbody>

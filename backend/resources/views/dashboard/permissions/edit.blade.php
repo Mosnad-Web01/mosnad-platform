@@ -14,11 +14,7 @@
                         اسم الصلاحية <span class="text-red-500">*</span>
                     </label>
                     <input type="text" id="name" name="name" value="{{ old('name', $permission->name) }}"
-                           class="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500" required>
-                <!--error messages -->
-                @error('name')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
+                           class="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500" disabled>
                 </div>
 
                 <div class="space-y-2">
@@ -26,12 +22,7 @@
                         الرابط
                     </label>
                     <input  type="text" name="slug" id="slug" value="{{ old('slug', $permission->slug) }}"
-                           class="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500" required>
-                    <!--error messages -->
-                    @error('slug')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-
+                           class="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500" disabled>
                 </div>
 
                 <div class="space-y-2">

@@ -26,4 +26,10 @@ class AdminTypeService
     {
         $user->adminTypes()->detach($adminType->id);
     }
+
+    public function syncPermissions(AdminType $adminType, array $permissions)
+{
+    $adminType->permissions()->sync($permissions);
+}
+
 }

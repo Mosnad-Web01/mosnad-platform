@@ -52,12 +52,10 @@ class PermissionController extends Controller
     public function update(Request $request, Permission $permission)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:permissions,slug,' . $permission->id,
             'description' => 'nullable|string',
         ]);
 
-        $permission->update($request->all());
+        $permission->update($request->only('description'));
 
         return redirect()->route('permissions.index')->with('success', 'Permission updated successfully!');
     }
@@ -68,7 +66,6 @@ class PermissionController extends Controller
     public function destroy(Permission $permission)
     {
         $permission->delete();
-
         return redirect()->route('permissions.index')->with('success', 'Permission deleted successfully!');
     }
 }

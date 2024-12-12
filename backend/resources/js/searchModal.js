@@ -86,7 +86,7 @@ export function initializeSearchModal() {
 
         try {
             const csrfToken = csrfTokenElement.content;
-            const response = await fetch(`/dashboard/admin-types/${currentAdminTypeId}/assign/${userId}`, {
+            const response = await fetch(`/admin-roles/${currentAdminTypeId}/assign/${userId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

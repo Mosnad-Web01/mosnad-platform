@@ -1,39 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600&display=swap');
-
-
+@import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 body {
-    font-family: 'Readex Pro', sans-serif;
+    font-family: "Readex Pro", sans-serif;
 }
 
-.initial-layout {
-    display: flex;
-    min-height: 100vh;
+.no-js #main-content {
+    opacity: 0;
 }
-
+.js #main-content {
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+}
 #sidebar {
-    width: 4rem;
-    transition: width 300ms ease-in-out;
+    width: 4rem; /* Default collapsed state */
 }
-
 @media (min-width: 768px) {
     #sidebar {
-        width: 16rem;
+        width: 16rem; /* Expanded state for larger screens */
     }
 }
-
 #main-content {
-    margin-right: 4rem;
-    transition: margin-right 300ms ease-in-out;
+    margin-right: 4rem; /* Default margin for collapsed state */
 }
-
 @media (min-width: 768px) {
     #main-content {
-        margin-right: 16rem;
+        margin-right: 16rem; /* Margin for expanded state on larger screens */
     }
 }

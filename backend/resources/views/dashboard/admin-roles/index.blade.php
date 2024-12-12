@@ -101,7 +101,7 @@
         </div>
     </x-common.content-container>
 
-    <!-- Enhanced Modal -->
+    <!-- Assign Role Modal -->
     <div id="assignModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center" dir="ltr">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all duration-300">
             <div class="p-6">

@@ -47,16 +47,6 @@
                                     </td>
                                     <td class="px-2 sm:px-4 py-2 sm:py-4 text-center">
                                         <div class="flex justify-center gap-2 items-center">
-                                            <!-- Delete Icon -->
-                                            <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST"
-                                                onsubmit="return confirm('هل أنت متأكد من حذف هذه الصلاحية ؟');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="text-red-600 hover:text-red-700 hover:scale-110 transition duration-300 text-xs sm:text-sm">
-                                                    <i class="material-icons">delete</i>
-                                                </button>
-                                            </form>
 
                                             <!-- Edit Icon -->
                                             <a href="{{ route('permissions.edit', $permission->id) }}"

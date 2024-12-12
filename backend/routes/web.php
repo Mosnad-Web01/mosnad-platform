@@ -25,7 +25,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('home');
     Route::post('/logout', [DashboardSessionController::class, 'logout'])->name('logout');
     Route::get('/roles', fn() => 'roles.index')->name('roles.index');
-    Route::get('/permissions', fn() => 'permissions.index')->name('permissions.index');
     Route::get('/bootcamps', fn() => 'bootcamps.index')->name('bootcamps.index');
     Route::get('/jobs', fn() => 'jobs.index')->name('jobs.index');
     Route::get('/youth-surveys', [YouthFormController::class, 'index'])->name('youth-surveys.index');
@@ -92,18 +91,22 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
-Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
-Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
-Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
-Route::put('/permissions/{permission}', [PermissionController::class, 'update'])->name('permissions.update');
-Route::delete('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
+// Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
+// Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
+// Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
+// Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
+// Route::put('/permissions/{permission}', [PermissionController::class, 'update'])->name('permissions.update');
+// Route::delete('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
 
 
-// Route::middleware(['auth', CheckPermission::class . ':manage-permissions'])->group(function () {
-//    Route::get('/test-page', function () {
-//        return "Hello Admin";
-//    });
-//    //resours route
-//    Route::resource('permissions', PermissionController::class);
-// });
+Route::middleware(['auth', CheckPermission::class . ':manage-permissions'])->group(function () {
+
+    // allow access to only the index, edit, and update routes
+    Route::resource('permissions', PermissionController::class)->only(['index', 'edit', 'update']);
+
+    //return not found in case of of create , store and destroy
+    Route::get('/permissions/create', fn() => abort(404));
+    Route::post('/permissions', fn() => abort(404));
+    Route::delete('/permissions/{permission}', fn() => abort(404));
+
+});

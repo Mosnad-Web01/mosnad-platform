@@ -18,7 +18,13 @@ class PermissionSeeder extends Seeder
             ['name' => 'إدارة استبيانات الشباب', 'slug' => 'manage-youth-surveys', 'description' => 'إذن لإدارة استبيانات الشباب', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'إدارة استبيانات الشركات', 'slug' => 'manage-company-survays', 'description' => 'إذن لإدارة استبيانات الشركات', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'إدارة التعليقات', 'slug' => 'manage-comments', 'description' => 'إذن لإدارة التعليقات ورسائل المستخدمين', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'إدارة الأذونات', 'slug' => 'manage-permissions', 'description' => 'إذن لإدارة الأذونات', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'إدارة الأدوار', 'slug' => 'manage-roles', 'description' => 'إذن لإدارة الأدوار', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'إدارة المنشورات', 'slug' => 'manage-posts', 'description' => 'إذن لإدارة المنشورات', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'إدارة الأنشطة', 'slug' => 'manage-activities', 'description' => 'إذن لإدارة الأنشطة', 'created_at' => now(), 'updated_at' => now()],
         ];
+
+
 
         foreach ($permissions as $permission) {
             Permission::create($permission);

@@ -25,45 +25,63 @@
 
     <!-- Navigation Links -->
     <nav class="flex-1 space-y-1 overflow-y-auto px-2">
+
         <!-- Single Links -->
         <x-layouts.sidebar-link :route="route('home')" :label="'لوحة التحكم '" :icon="'dashboard'"
             :active="request()->routeIs('home')" />
 
+
         <!-- Collapsible Groups -->
-        <x-layouts.sidebar-link :label="'إدارة فرص التوظيف'" :icon="'work'" :children="[
-        ['route' => route('job-opportunities.create'), 'label' => 'إضافة فرصة جديدة', 'icon' => 'add'],
-        ['route' => route('job-opportunities.index'), 'label' => 'عرض فرص التوظيف', 'icon' => 'list_alt'],
+        @can('manage-job-opportunities')
+            <x-layouts.sidebar-link :label="'إدارة فرص التوظيف'" :icon="'work'" :children="[
+                ['route' => route('job-opportunities.create'), 'label' => 'إضافة فرصة جديدة', 'icon' => 'add'],
+                ['route' => route('job-opportunities.index'), 'label' => 'عرض فرص التوظيف', 'icon' => 'list_alt'],
 
-    ]" />
+            ]" />
+        @endcan
 
-        <x-layouts.sidebar-link :label="'إدارة المستخدمين'" :icon="'people'" :children="[
-        ['route' => route('users.create'), 'label' => 'إضافة مستخدم جديد', 'icon' => 'add'],
-        ['route' => route('users.index'), 'label' => 'عرض المستخدمين', 'icon' => 'list_alt'],
-    ]" />
+        @can('manage-users')
+            <x-layouts.sidebar-link :label="'إدارة المستخدمين'" :icon="'people'" :children="[
+                ['route' => route('users.create'), 'label' => 'إضافة مستخدم جديد', 'icon' => 'add'],
+                ['route' => route('users.index'), 'label' => 'عرض المستخدمين', 'icon' => 'list_alt'],
+            ]" />
+        @endcan
 
 
 
-        <x-layouts.sidebar-link :label="'إدارة المخيمات'" :icon="'school'" :children="[
-        ['route' => route('bootcamps.create'), 'label' => 'إضافة مخيم جديد', 'icon' => 'add'],
-        ['route' => route('bootcamps.index'), 'label' => 'عرض المخيمات', 'icon' => 'list_alt'],
-    ]" />
+        @can('manage-bootcamps')
+            <x-layouts.sidebar-link :label="'إدارة المخيمات'" :icon="'school'" :children="[
+                ['route' => route('bootcamps.create'), 'label' => 'إضافة مخيم جديد', 'icon' => 'add'],
+                ['route' => route('bootcamps.index'), 'label' => 'عرض المخيمات', 'icon' => 'list_alt'],
+            ]" />
+        @endcan
 
-        <x-layouts.sidebar-link :label="'إدارة الاستبيانات'" :icon="'poll'" :children="[
-        ['route' => route('youth-surveys.index'), 'label' => 'إستبانات الشباب', 'icon' => 'list_alt'],
-        ['route' => route('company-surveys.index'), 'label' => 'إستبانات الشركات', 'icon' => 'list_alt'],
-    ]" />
 
-        <x-layouts.sidebar-link :label="'رسائل المستخدمين'" :icon="'contact_support'" :children="[
-        ['route' => route('contact-us.index'), 'label' => 'رسائل المستخدمين', 'icon' => 'list_alt'],
-    ]" />
+        @can('manage-surveys')
+            <x-layouts.sidebar-link :label="'إدارة الاستبيانات'" :icon="'poll'" :children="[
+                ['route' => route('youth-surveys.index'), 'label' => 'إستبانات الشباب', 'icon' => 'list_alt'],
+                ['route' => route('company-surveys.index'), 'label' => 'إستبانات الشركات', 'icon' => 'list_alt'],
+            ]" />
+        @endcan
 
-    <x-layouts.sidebar-link :label="'إدارة الأدوار'" :icon="'verified_user'" :children="[
-        ['route' => route('admin-roles.create'), 'label' => 'إضافة دور جديد', 'icon' => 'add'],
-        ['route' => route('admin-roles.index'), 'label' => 'عرض الأدوار', 'icon' => 'list_alt'],
-    ]" />
 
-        <x-layouts.sidebar-link :route="route('permissions.index')" :label="'إدارة الصلاحيات'" :icon="'security'"
-            :active="request()->routeIs('permissions.index')" />
+        @can('manage-comments')
+            <x-layouts.sidebar-link :label="'رسائل المستخدمين'" :icon="'contact_support'" :children="[
+                ['route' => route('contact-us.index'), 'label' => 'رسائل المستخدمين', 'icon' => 'list_alt'],
+            ]" />
+        @endcan
+
+        @can('manage-roles')
+            <x-layouts.sidebar-link :label="'إدارة الأدوار'" :icon="'verified_user'" :children="[
+                ['route' => route('admin-roles.create'), 'label' => 'إضافة دور جديد', 'icon' => 'add'],
+                ['route' => route('admin-roles.index'), 'label' => 'عرض الأدوار', 'icon' => 'list_alt'],
+            ]" />
+        @endcan
+
+        @can('manage-permissions')
+            <x-layouts.sidebar-link :route="route('permissions.index')" :label="'إدارة الصلاحيات'" :icon="'security'"
+                :active="request()->routeIs('permissions.index')" />
+        @endcan
     </nav>
 
     <!-- Logout Section -->

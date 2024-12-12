@@ -12,6 +12,14 @@ export function initializeSidebar() {
 
     // set initial state based on screen size
     let isCollapsed = window.innerWidth < 768;
+    if (isCollapsed) {
+        sidebar.style.width = "4rem";
+        mainContent.style.marginRight = "4rem";
+        sidebarTextElements.forEach((el) => el.classList.add("hidden"));
+    } else {
+        sidebar.style.width = "16rem";
+        mainContent.style.marginRight = "16rem";
+    }
 
     function updateLogo() {
         if (window.innerWidth < 768) {
@@ -56,8 +64,8 @@ export function initializeSidebar() {
         sidebarTextElements.forEach((el) => {
             // el.style.opacity = "0";
             // el.style.width = "0";
-            el.classList.remove('block');
-            el.classList.add('hidden');
+            el.classList.remove("block");
+            el.classList.add("hidden");
         });
 
         // adjust alignment for collapsed state
@@ -94,8 +102,8 @@ export function initializeSidebar() {
         sidebarTextElements.forEach((el) => {
             // el.style.opacity = "1";
             // el.style.width = "auto";
-            el.classList.remove('hidden');
-            el.classList.add('block');
+            el.classList.remove("hidden");
+            el.classList.add("block");
         });
 
         // reset alignment for expanded state
@@ -125,6 +133,10 @@ export function initializeSidebar() {
         }
     }
 
+      // Initialize immediately
+      updateLogo();
+      handleResponsiveLayout();
+
     // initialize event listeners
     window.addEventListener("resize", handleResponsiveLayout);
     collapseBtn.addEventListener("click", () => {
@@ -132,8 +144,4 @@ export function initializeSidebar() {
         updateSidebarState();
     });
 
-    // initial calls
-    updateSidebarState();
-    updateLogo();
-    handleResponsiveLayout();
 }

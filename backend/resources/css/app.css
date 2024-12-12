@@ -10,3 +10,30 @@
 body {
     font-family: 'Readex Pro', sans-serif;
 }
+
+.initial-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+#sidebar {
+    width: 4rem;
+    transition: width 300ms ease-in-out;
+}
+
+@media (min-width: 768px) {
+    #sidebar {
+        width: 16rem;
+    }
+}
+
+#main-content {
+    margin-right: 4rem;
+    transition: margin-right 300ms ease-in-out;
+}
+
+@media (min-width: 768px) {
+    #main-content {
+        margin-right: 16rem;
+    }
+}

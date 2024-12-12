@@ -22,16 +22,16 @@
 <body class="{{$title != 'Login' ? 'bg-gray-100' : ''}}">
 
     @if ($title != 'Login')
-        <div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
+        <div class=" initial-layout flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
             {{-- Sidebar --}}
             <x-layouts.sidebar />
 
             {{--------- Start Main Content ------------------}}
             <div id="main-content"
-                class="flex-1 gap-2 flex flex-col items-center transition-all duration-300 ease-in-out w-full">
+                class=" flex-1 gap-2 flex flex-col items-center transition-all duration-300 ease-in-out w-full">
                 {{--------- NavBar ------------------}}
                 <x-layouts.navbar />
-                <main class="px-2 pb-6 w-full space-y-2 overflow-y-auto overflow-x-hidden">
+                <main class=" px-2 pb-6 w-full space-y-2 overflow-y-auto overflow-x-hidden">
                 @if (Session::has('success'))
                         <div
                             class="flex items-center justify-start gap-1 py-1 px-4 w-fit bg-white text-gray-800 border-2 border-green-600 rounded-lg shadow-lg transition-transform transform hover:scale-105 mx-auto">

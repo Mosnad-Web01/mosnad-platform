@@ -1,5 +1,5 @@
-<div id="sidebar" class="bg-gradient-to-b from-indigo-900 via-indigo-800 to-indigo-900 text-white min-h-screen fixed top-0 right-0 shadow-xl z-50 transition-all duration-300 ease-in-out
-           md:translate-x-0 transform w-16 lg:w-64 space-y-4 py-2">
+<div id="sidebar" class="bg-gradient-to-b from-indigo-900 via-indigo-800 to-indigo-900 text-white min-h-screen fixed top-0 right-0 shadow-xl z-50
+            w-16 lg:w-64 space-y-4 py-2">
 
     <!-- Collapse Button -->
     <button id="collapse-btn" class="absolute -left-3 top-6 w-7 h-7 bg-indigo-600 rounded-full text-white shadow-lg transition-all duration-200 hover:bg-indigo-700 focus:outline-none

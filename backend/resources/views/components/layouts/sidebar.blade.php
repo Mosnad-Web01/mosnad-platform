@@ -64,7 +64,6 @@
 
         <x-layouts.sidebar-link :route="route('permissions.index')" :label="'إدارة الصلاحيات'" :icon="'security'"
             :active="request()->routeIs('permissions.index')" />
-
     </nav>
 
     <!-- Logout Section -->

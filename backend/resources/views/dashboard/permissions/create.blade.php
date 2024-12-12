@@ -1,3 +1,4 @@
+<!-- not accessable for any user -->
 <x-layout title="Create New Permission">
     <x-common.header title="Create New Permission" :showBackButton="true" />
 

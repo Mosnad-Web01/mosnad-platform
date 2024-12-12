@@ -8,7 +8,6 @@
                 <div class="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 mx-auto">
                     <table class="w-full " >
                         <thead>
-
                             <th class="px-4 sm:px-6 py-4 text-center text-md font-bold text-gray-950 whitespace-nowrap">ID
                             </th>
                             <th class="px-4 sm:px-6 py-4 text-center text-md font-bold text-gray-950 whitespace-nowrap">

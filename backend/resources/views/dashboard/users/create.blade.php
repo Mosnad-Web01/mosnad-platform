@@ -56,7 +56,7 @@
                             @foreach ($adminTypes as $adminType)
                                 <option value="{{ $adminType->id }}" {{ in_array($adminType->id, old('admin_types', [])) ? 'selected' : '' }}>
                                     {{ $adminType->name }}
-                                    (Permissions: {{ $adminType->permissions->pluck('name')->join(', ') }})
+                                    ( الصلاحيات : {{ $adminType->permissions->pluck('name')->join(', ') }})
                                 </option>
                             @endforeach
                         </select>

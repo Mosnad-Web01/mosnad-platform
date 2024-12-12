@@ -36,7 +36,7 @@
                                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                        {{ in_array($permission->id, $adminTypePermissions) ? 'checked' : '' }}>
                                 <label for="permission_{{ $permission->id }}"
-                                       class="ml-2 block text-sm text-gray-900">
+                                       class="mr-2 block text-sm text-gray-900">
                                     {{ $permission->name }}
                                 </label>
                             </div>

@@ -8,6 +8,4 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeSidebar();
     initializeDeleteModal();
     initializeSearchModal();
-
-
 });

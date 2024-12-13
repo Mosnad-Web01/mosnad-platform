@@ -2,9 +2,9 @@
            md:translate-x-0 transform w-16 lg:w-64 space-y-4 py-2">
 
     <!-- Collapse Button -->
-    <button id="collapse-btn" class="absolute -left-3 top-6 w-7 h-7 bg-indigo-600 rounded-full text-white shadow-lg transition-all duration-200 hover:bg-indigo-700 focus:outline-none
+    <button id="collapse-btn" class="absolute -left-3 top-6 w-7 h-7 bg-indigo-600 rounded-full text-white shadow-lg transition-all duration-300 hover:bg-indigo-700 focus:outline-none
                items-center justify-center z-50 lg:flex hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform duration-200"
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform duration-300"
             id="collapse-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
         </svg>

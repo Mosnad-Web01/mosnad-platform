@@ -27,12 +27,11 @@
             <x-layouts.sidebar />
 
             {{--------- Start Main Content ------------------}}
-            <div id="main-content"
-                class="flex-1 gap-2 flex flex-col items-center transition-all duration-300 ease-in-out w-full">
+            <div id="main-content" class="flex-1 gap-2 flex flex-col items-center w-full">
                 {{--------- NavBar ------------------}}
                 <x-layouts.navbar />
                 <main class="px-2 pb-6 w-full space-y-2 overflow-y-auto overflow-x-hidden">
-                @if (Session::has('success'))
+                    @if (Session::has('success'))
                         <div
                             class="flex items-center justify-start gap-1 py-1 px-4 w-fit bg-white text-gray-800 border-2 border-green-600 rounded-lg shadow-lg transition-transform transform hover:scale-105 mx-auto">
                             <span class="material-icons text-3xl text-green-700 text-bold ">check</span>
@@ -57,12 +56,11 @@
         {{-- Login Page --}}
         {{ $slot }}
     @endif
-    <!-- Add this before closing </body> tag -->
+    <!-- Tom Select -->
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
 
     <script>
-
         new TomSelect('#admin_types', {
             plugins: ['remove_button'],
             maxItems: null,
@@ -72,9 +70,6 @@
             create: false
         });
     </script>
-
-
-
 </body>
 
 </html>

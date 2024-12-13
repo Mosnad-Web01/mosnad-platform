@@ -6,7 +6,7 @@
         <x-table
         :headers="['ID', 'اسم الفرصة', 'حالة الفرصة', 'تاريخ الانتهاء', 'المتقدمين']"
         :items="$jobOpportunities"
-         :hasActions="true"
+        :hasActions="true"
          >
             @foreach ($jobOpportunities as $jobOpportunity)
                 <tr class="transition-colors hover:bg-gray-50">
@@ -51,7 +51,8 @@
                         <x-table.action-buttons
                             :editUrl="route('job-opportunities.edit', $jobOpportunity->id)"
                             :deleteUrl="route('job-opportunities.destroy', $jobOpportunity->id)"
-                            deleteConfirmMessage="هل أنت متأكد من حذف هذه الفرصة؟" :hasDeleteButton="true"
+                            deleteConfirmMessage="هل أنت متأكد من حذف هذه الفرصة؟"
+                            :hasDeleteButton="true"
                             />
                     </x-table.cell>
                 </tr>

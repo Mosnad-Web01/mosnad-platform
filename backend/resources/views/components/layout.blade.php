@@ -28,6 +28,10 @@
 
             {{--------- Start Main Content ------------------}}
             <div id="main-content" class="flex-1 gap-2 flex flex-col items-center w-full">
+
+               <!-- Delete Modal -->
+               <x-common.delete-modal />
+               
                 {{--------- NavBar ------------------}}
                 <x-layouts.navbar />
                 <main class="px-2 pb-6 w-full space-y-2 overflow-y-auto overflow-x-hidden">

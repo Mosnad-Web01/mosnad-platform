@@ -1,65 +1,38 @@
+
 <x-layout title="Permissions">
-    <x-common.header title="Permissions" :showBackButton="true" />
+    <x-common.header title="الصلاحيات" :showBackButton="true" />
 
     <!-- Permissions Content -->
-    <div class="min-h-screen bg-gray-100 py-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="relative  rounded-xl shadow-lg bg-white">
-                <div class="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 mx-auto">
-                    <table class="w-full " >
-                        <thead>
-                            <th class="px-4 sm:px-6 py-4 text-center text-md font-bold text-gray-950 whitespace-nowrap">ID
-                            </th>
-                            <th class="px-4 sm:px-6 py-4 text-center text-md font-bold text-gray-950 whitespace-nowrap">
-                                Name
-                            </th>
+    <x-common.content-container title="جدول الصلاحيات">
+       
+        <!-- Table Component -->
+        <x-table
+        :headers="['#', 'الاسم', 'الوصف', 'تاريخ الإنشاء' ]"
+        :items="$permissions"
+        :hasActions="true"
+        :withPagination="false"
+            >
+            @foreach ($permissions as $permission)
+                <tr class="transition-colors hover:bg-gray-50">
+                    <!-- ID -->
+                    <x-table.cell>{{ $permission->id }}</x-table.cell>
 
-                            <th class="px-4 sm:px-6 py-4 text-center text-md font-bold text-gray-950 whitespace-nowrap">
-                                Description
-                            </th>
+                    <!-- Name -->
+                    <x-table.cell>{{ $permission->name }}</x-table.cell>
 
-                            <th class="px-4 sm:px-6 py-4 text-center text-md font-bold text-gray-950 whitespace-nowrap">
-                                Created At
-                            </th>
-                            <th class="px-4 sm:px-6 py-4 text-center text-md font-bold text-gray-950 whitespace-nowrap">
-                                Action
-                            </th>
-                        </thead>
+                    <!-- Description -->
+                    <x-table.cell>{{ $permission->description }}</x-table.cell>
 
-                        <tbody class="divide-y divide-gray-200">
-                            @foreach ($permissions as $permission)
-                                <tr class="transition-colors hover:bg-gray-50">
-                                    <td class="px-2 sm:px-4 py-2 sm:py-4 text-center text-xs sm:text-sm text-gray-700">
-                                        {{ $permission->id }}
-                                    </td>
-                                    <td
-                                        class="px-2 sm:px-4 py-2 sm:py-4 text-center text-xs sm:text-base font-light sm:font-medium text-gray-900">
-                                        {{ $permission->name }}
-                                    </td>
-                                    <td
-                                        class="px-2 sm:px-4 py-2 sm:py-4 text-center text-xs sm:text-base font-light sm:font-medium text-gray-900">
-                                        {{ $permission->description }}
-                                    </td>
-                                    <td
-                                        class="px-2 sm:px-4 py-2 sm:py-4 text-center text-xs sm:text-base font-light sm:font-medium text-gray-900">
-                                        {{ $permission->created_at }}
-                                    </td>
-                                    <td class="px-2 sm:px-4 py-2 sm:py-4 text-center">
-                                        <div class="flex justify-center gap-2 items-center">
+                    <!-- Created At -->
+                    <x-table.cell>{{ $permission->created_at }}</x-table.cell>
 
-                                            <!-- Edit Icon -->
-                                            <a href="{{ route('permissions.edit', $permission->id) }}"
-                                                class="text-green-600 hover:text-green-800 hover:scale-110 transition duration-300 text-xs sm:text-sm">
-                                                <i class="material-icons">edit</i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+                    <!-- Actions -->
+                    <x-table.cell>
+                        <x-table.action-buttons :editUrl="route('permissions.edit', $permission->id)"
+                            :hasDeleteButton="false" />
+                    </x-table.cell>
+                </tr>
+            @endforeach
+        </x-table>
+    </x-common.content-container>
 </x-layout>

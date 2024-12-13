@@ -29,27 +29,34 @@
             {{--------- Start Main Content ------------------}}
             <div id="main-content" class="flex-1 gap-2 flex flex-col items-center w-full">
 
-               <!-- Delete Modal -->
-               <x-common.delete-modal />
-               
+                <!-- Delete Modal -->
+                <x-common.delete-modal />
+
                 {{--------- NavBar ------------------}}
                 <x-layouts.navbar />
                 <main class="px-2 pb-6 w-full space-y-2 overflow-y-auto overflow-x-hidden">
-                    @if (Session::has('success'))
-                        <div
-                            class="flex items-center justify-start gap-1 py-1 px-4 w-fit bg-white text-gray-800 border-2 border-green-600 rounded-lg shadow-lg transition-transform transform hover:scale-105 mx-auto">
-                            <span class="material-icons text-3xl text-green-700 text-bold ">check</span>
-                            <span class="font-semibold text-sm">{{ Session::get('success') }} </span>
-                        </div>
+
+
+                    <!-- Add this where you want the toasts to appear -->
+                    <div id="toastContainer" class="toast-container" dir="ltr"></div>
+
+                    <!-- Replace your existing notification code with this -->
+                    @if(Session::has('success'))
+                        <script>
+                            document.addEventListener('DOMContentLoaded', () => {
+                                showToast('{{ Session::get('success') }}', 'success');
+                            });
+                        </script>
                     @endif
 
-                    @if (Session::has('error'))
-                        <div
-                            class="flex items-center justify-start gap-1 py-1 px-4 w-fit bg-white text-gray-800 border-2 border-red-600 rounded-lg shadow-lg transition-transform transform hover:scale-105 mx-auto">
-                            <span class="material-icons text-3xl text-red-700 text-bold ">close</span>
-                            <span class="font-semibold text-sm">{{ Session::get('error') }} </span>
-                        </div>
+                    @if(Session::has('error'))
+                        <script>
+                            document.addEventListener('DOMContentLoaded', () => {
+                                showToast('{{ Session::get('error') }}', 'error');
+                            });
+                        </script>
                     @endif
+
                     {{ $slot }}
                 </main>
             </div>
@@ -60,6 +67,69 @@
         {{-- Login Page --}}
         {{ $slot }}
     @endif
+    <!-- Toast Container -->
+    <script>
+        function showToast(message, type = 'success', duration = 5000) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            const icons = {
+                success: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`,
+                error: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>`
+            };
+
+            toast.innerHTML = `
+        <div class="toast-content">
+            <div class="toast-icon">
+                ${icons[type]}
+            </div>
+            <div class="toast-message">${message}</div>
+            <div class="toast-close" onclick="closeToast(this.parentElement.parentElement)">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </div>
+        </div>
+        <div class="toast-progress">
+            <div class="toast-progress-bar" style="width: 100%"></div>
+        </div>
+    `;
+
+            container.appendChild(toast);
+
+            // Start progress bar animation
+            const progressBar = toast.querySelector('.toast-progress-bar');
+            progressBar.style.transition = `width ${duration}ms linear`;
+
+            // Use setTimeout to ensure the transition is applied
+            setTimeout(() => {
+                progressBar.style.width = '0%';
+            }, 10);
+
+            // Remove toast after duration
+            const timeout = setTimeout(() => {
+                closeToast(toast);
+            }, duration);
+
+            // Store timeout in toast element
+            toast.dataset.timeout = timeout;
+        }
+
+        function closeToast(toast) {
+            // Clear the timeout
+            clearTimeout(parseInt(toast.dataset.timeout));
+
+            // Add sliding out animation
+            toast.style.animation = 'slideOut 0.5s ease forwards';
+
+            // Remove toast after animation
+            setTimeout(() => {
+                toast.remove();
+            }, 500);
+        }
+
+    </script>
     <!-- Tom Select -->
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">

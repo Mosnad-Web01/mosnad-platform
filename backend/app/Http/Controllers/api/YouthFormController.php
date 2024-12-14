@@ -8,6 +8,7 @@ use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Arr;
 
 class YouthFormController extends Controller
 {
@@ -49,31 +50,7 @@ class YouthFormController extends Controller
 
         
          // Create the youth form data
-    $youthForm = YouthForm::create([
-        'gender' => $validated['gender'],
-        'is_it_graduate' => $validated['is_it_graduate'],
-        'job_interest' => $validated['job_interest'],
-        'motivation' => $validated['motivation'],
-        'career_goals' => $validated['career_goals'],
-        'project_ideas' => $validated['project_ideas'],
-        'has_workshops' => $validated['has_workshops'],
-        'workshop_clarify' => $validated['workshop_clarify'],
-        'has_coding_experience' => $validated['has_coding_experience'],
-        'coding_clarify' => $validated['coding_clarify'],
-        'knows_other_languages' => $validated['knows_other_languages'],
-        'languages' =>  $validated['languages'],
-        'creative_problem_solving' => $validated['creative_problem_solving'],
-        'website_vs_webapp' => $validated['website_vs_webapp'],
-        'usability_steps' => $validated['usability_steps'],
-        'additional_info' => $validated['additional_info'],
-        'document' => $validated['document'],
-        'user_id' => $validated['user_id'],
-        'phone_number' => $validated['phone_number'],
-        'country' => $validated['country'],
-        'city' => $validated['city'],
-        'address' => $validated['address'],
-        'birth_date' => $validated['birth_date'],
-    ]);
+    $youthForm = YouthForm::create($validated);
 
         // Create the user profile data
         UserProfile::create([
@@ -116,6 +93,9 @@ class YouthFormController extends Controller
      /**
  * Update an existing youth form submission.
  */
+/**
+ * Update an existing youth form submission.
+ */
 public function update(Request $request, $id)
 {
     // Find the youth form by its ID
@@ -145,49 +125,32 @@ public function update(Request $request, $id)
         'city' => 'nullable|string|max:255',
         'address' => 'nullable|string|max:255',
         'birth_date' => 'nullable|date',
-        'name' => 'nullable|string|max:255', // Add the name validation
+        'name' => 'nullable|string|max:255',
     ]);
 
     // Store document if present and update the field
     if ($request->hasFile('document')) {
+        // If a new document is uploaded, update the field
         $validated['document'] = $request->file('document')->store('documents', 'public');
+    } else {
+        // Retain the previous document if no new document is uploaded
+        $validated['document'] = $youthForm->document;
     }
 
+
+    
     // Update the youth form data
-    $youthForm->update([
-        'gender' => $validated['gender'],
-        'is_it_graduate' => $validated['is_it_graduate'],
-        'job_interest' => $validated['job_interest'],
-        'motivation' => $validated['motivation'],
-        'career_goals' => $validated['career_goals'],
-        'project_ideas' => $validated['project_ideas'],
-        'has_workshops' => $validated['has_workshops'],
-        'workshop_clarify' => $validated['workshop_clarify'],
-        'has_coding_experience' => $validated['has_coding_experience'],
-        'coding_clarify' => $validated['coding_clarify'],
-        'knows_other_languages' => $validated['knows_other_languages'],
-        'languages' => $validated['languages'],
-        'creative_problem_solving' => $validated['creative_problem_solving'],
-        'website_vs_webapp' => $validated['website_vs_webapp'],
-        'usability_steps' => $validated['usability_steps'],
-        'additional_info' => $validated['additional_info'],
-        'document' => $validated['document'] ?? $youthForm->document, // If no new document, keep the existing one
-        'phone_number' => $validated['phone_number'],
-        'country' => $validated['country'],
-        'city' => $validated['city'],
-        'address' => $validated['address'],
-        'birth_date' => $validated['birth_date'],
-    ]);
+    $youthForm->update($validated);
 
     // Update the user profile data
     $profile = UserProfile::where('user_id', $youthForm->user_id)->first();
     if ($profile) {
         $profile->update([
-            'phone_number' => $validated['phone_number'],
-            'country' => $validated['country'],
-            'city' => $validated['city'],
-            'address' => $validated['address'],
-            'birth_date' => $validated['birth_date'],
+            'phone_number' => $validated['phone_number'] ?? $profile->phone_number,
+            'country' => $validated['country'] ?? $profile->country,
+            'city' => $validated['city'] ?? $profile->city,
+            'address' => $validated['address'] ?? $profile->address,
+            'birth_date' => $validated['birth_date'] ?? $profile->birth_date,
         ]);
     }
 
@@ -206,6 +169,4 @@ public function update(Request $request, $id)
         'data' => new YouthFormResource($youthForm),
     ]);
 }
-
-
 }

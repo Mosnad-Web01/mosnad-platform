@@ -1,10 +1,9 @@
-import React, { useState, useCallback, use } from "react";
+import React, { useState, useCallback } from "react";
 import { put } from "@/lib/axios";
 import Input from "@/components/common/Input";
 import RadioButton from "@/components/common/Radio";
 import FieldContainer from "@/components/common/FieldContainer";
 import TextArea from "../common/TextArea";
-import FileUpload from "../common/FileUpload";
 
 const EditAccountDetails = ({ userData }) => {
   const [formData, setFormData] = useState({
@@ -18,7 +17,6 @@ const EditAccountDetails = ({ userData }) => {
     address: userData.user_profile.address,
     city: userData.user_profile.city,
     country: userData.user_profile.country,
-
     is_it_graduate: userData.is_it_graduate,
     job_interest: userData.job_interest,
     motivation: userData.motivation,
@@ -34,18 +32,14 @@ const EditAccountDetails = ({ userData }) => {
     website_vs_webapp: userData.website_vs_webapp,
     usability_steps: userData.usability_steps,
     additional_info: userData.additional_info,
-    document: userData.document,
-    documentPreview: userData.document,
   });
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [errorMessages, setErrorMessages] = useState({});
-  const [successMessage, setSuccessMessage] = useState("");
+  const [submissionStatus, setSubmissionStatus] = useState(null);
 
   const validateForm = () => {
     let tempErrors = {};
-
     if (!formData.name) tempErrors.name = "اسم المستخدم مطلوب";
 
     if (!formData.gender) tempErrors.gender = "الرجاء تحديد النوع";
@@ -64,7 +58,7 @@ const EditAccountDetails = ({ userData }) => {
     if (formData.is_it_graduate === null)
       tempErrors.is_it_graduate =
         "الرجاء تحديد إذا كنت خريج تكنولوجيا المعلومات";
-
+    // Step 2 validations
     if (!formData.job_interest)
       tempErrors.job_interest = "الرجاء اختيار المسار الوظيفي";
     if (!formData.motivation)
@@ -73,7 +67,7 @@ const EditAccountDetails = ({ userData }) => {
       tempErrors.career_goals = "الرجاء كتابة أهدافك المهنية";
     if (!formData.project_ideas)
       tempErrors.project_ideas = "الرجاء كتابة أفكار مشاريعك";
-
+    // Step 3 validations (Radio button responses)
     if (formData.has_workshops === undefined) {
       tempErrors.has_workshops = "الرجاء الإجابة على السؤال";
     } else if (formData.has_workshops === 1 && !formData.workshop_clarify) {
@@ -100,6 +94,7 @@ const EditAccountDetails = ({ userData }) => {
       tempErrors.languages =
         "يرجى اختيار لغة واحدة على الأقل إذا كنت تعرف لغات برمجية أخرى";
     }
+    // Step 4 validations (Text area responses)
     if (!formData.creative_problem_solving) {
       tempErrors.creative_problem_solving =
         "الرجاء وصف موقف حل المشكلة الإبداعية";
@@ -111,38 +106,14 @@ const EditAccountDetails = ({ userData }) => {
     if (!formData.usability_steps) {
       tempErrors.usability_steps = "الرجاء شرح خطوات تأكدك من سهولة الاستخدام";
     }
+    // Step 5 validations (Text area and File upload)
     if (!formData.additional_info) {
       tempErrors.additional_info =
         "الرجاء كتابة معلومات إضافية عن نفسك أو سبب كونك مناسبًا.";
     }
 
-    if (!formData.document) {
-      tempErrors.document =
-        "الرجاء إرفاق سيرتك الذاتية أو أي شهادات تعليمية ذات صلة.";
-    } else {
-      const validTypes = [
-        "application/pdf",
-        "application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      ];
-      const maxSize = 2 * 1024 * 1024;
-
-      if (!validTypes.includes(formData.document.type)) {
-        tempErrors.document = "الرجاء إرفاق ملف بصيغة PDF أو DOC أو DOCX.";
-      }
-
-      if (formData.document.size > maxSize) {
-        tempErrors.document = "حجم الملف يجب أن لا يتجاوز 2 ميجابايت.";
-      }
-    }
-
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
-  };
-
-  const handleFileChange = (e) => {
-    // Ensure the file is passed correctly to the parent component
-    updateFormData("document", e.target.files[0]);
   };
 
   const updateFormData = useCallback((key, value) => {
@@ -163,39 +134,44 @@ const EditAccountDetails = ({ userData }) => {
     [updateFormData]
   );
 
-  // Submit the form to update the youth form
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
-      console.error("Validation failed.");
       return;
     }
 
-    const url = `/youth-forms/${userData.id}`; // Endpoint relative to baseURL
+    const url = `/youth-forms/${userData.id}`;
     const formDataToSubmit = new FormData();
 
-    // Append all form data fields
     Object.keys(formData).forEach((key) => {
       if (formData[key] !== null && formData[key] !== undefined) {
         formDataToSubmit.append(key, formData[key]);
       }
     });
 
-    // Debug FormData
+    // Debugging: Log the form data before submission
     for (let [key, value] of formDataToSubmit.entries()) {
-      console.log(`${key}: ${value}`);
+      console.log(`${key}:`, value instanceof File ? value.name : value);
     }
 
     try {
-      console.log("Submitting form data...");
+      setLoading(true);
+      setSubmissionStatus(null); // Reset status before submission
       const response = await put(url, formDataToSubmit, {
-        "Content-Type": "multipart/form-data", // Override headers for FormData
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setSubmissionStatus({
+        success: true,
+        message: "Form submitted successfully!",
       });
       console.log("Form submitted successfully:", response);
     } catch (error) {
-      console.log("Form data:", formData);
-      console.log("URL" + "/youth-forms/" + userData.id);
+      setSubmissionStatus({ success: false, message: error.message });
       console.error("Form submission failed:", error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -204,7 +180,6 @@ const EditAccountDetails = ({ userData }) => {
       <form onSubmit={handleSubmit}>
         <FieldContainer
           label={"البيانات الشخصية"}
-          error={errors.name}
           className="p-2 grid grid-cols-1 md:grid-cols-2 gap-4"
         >
           <Input
@@ -266,10 +241,7 @@ const EditAccountDetails = ({ userData }) => {
           ))}
         </FieldContainer>
 
-        <FieldContainer
-          error={errors.address}
-          className="p-2 grid mt-6 grid-cols-1 md:grid-cols-2 gap-4"
-        >
+        <FieldContainer className="p-2 grid mt-6 grid-cols-1 md:grid-cols-2 gap-4">
           <Input
             label="العنوان"
             name="address"
@@ -290,10 +262,7 @@ const EditAccountDetails = ({ userData }) => {
           />
         </FieldContainer>
 
-        <FieldContainer
-          error={errors.country}
-          className="px-2 grid grid-cols-1"
-        >
+        <FieldContainer className="px-2 grid grid-cols-1">
           <Input
             label="الدولة"
             name="country"
@@ -328,10 +297,7 @@ const EditAccountDetails = ({ userData }) => {
           ))}
         </FieldContainer>
 
-        <FieldContainer
-          error={errors.job_interest}
-          className="px-2 grid grid-cols-1"
-        >
+        <FieldContainer className="px-2 grid grid-cols-1">
           <Input
             label="ماهو المسار الوظيفي الذي تهتم به؟"
             name="job_interest"
@@ -352,31 +318,25 @@ const EditAccountDetails = ({ userData }) => {
             name="motivation"
             placeholder="لماذا انت مهتم بتعلم هذه المسار؟"
             value={formData.motivation || ""}
-            onChange={handleInputChange("motivation")}
+            onChange={(value) => updateFormData("motivation", value)} // Directly call updateFormData
             errorMessage={errors.motivation}
             rows={3}
           />
         </FieldContainer>
 
-        <FieldContainer
-          error={errors.career_goals}
-          className="px-2 grid grid-cols-1"
-        >
+        <FieldContainer className="px-2 grid grid-cols-1">
           <TextArea
             label={" ما هي اهدافك المهنية في المجال الذي اخترته؟"}
             name="career_goals"
             placeholder="ما هي اهدافك المهنية في المجال الذي اخترته؟"
             value={formData.career_goals || ""}
-            onChange={handleInputChange("career_goals")}
+            onChange={(value) => updateFormData("career_goals", value)}
             errorMessage={errors.career_goals}
             rows={3}
           />
         </FieldContainer>
 
-        <FieldContainer
-          error={errors.project_ideas}
-          className="px-2 grid grid-cols-1"
-        >
+        <FieldContainer className="px-2 grid grid-cols-1">
           <TextArea
             label={
               "هل لديك أي مشاريع أو أفكار محددة ترغب في بنائها باستخدام مهاراتك المكتسبة حديثًا؟"
@@ -384,7 +344,7 @@ const EditAccountDetails = ({ userData }) => {
             name="project_ideas"
             placeholder="هل لديك أي مشاريع أو أفكار محددة ترغب في بنائها باستخدام مهاراتك المكتسبة حديثًا؟"
             value={formData.project_ideas || ""}
-            onChange={handleInputChange("project_ideas")}
+            onChange={(value) => updateFormData("project_ideas", value)}
             errorMessage={errors.project_ideas}
             rows={3}
           />
@@ -410,32 +370,26 @@ const EditAccountDetails = ({ userData }) => {
           ))}
         </FieldContainer>
         {formData.has_workshops === 1 ? (
-          <FieldContainer
-            error={errors.workshop_clarify}
-            className="px-2 grid grid-cols-1"
-          >
+          <FieldContainer className="px-2 grid grid-cols-1">
             <TextArea
               label={"تفاصيل الورش"}
               name="workshop_clarify"
               placeholder="تفاصيل الورش"
               value={formData.workshop_clarify || ""}
-              onChange={handleInputChange("workshop_clarify")}
+              onChange={(value) => updateFormData("workshop_clarify", value)}
               errorMessage={errors.workshop_clarify}
               rows={3}
             />
           </FieldContainer>
         ) : (
           // When has_workshops is 0, reset the value and hide the TextArea
-          <FieldContainer
-            error={errors.workshop_clarify}
-            className="px-2 grid grid-cols-1 hidden"
-          >
+          <FieldContainer className="px-2 grid grid-cols-1 hidden">
             <TextArea
               label={"تفاصيل الورش"}
               name="workshop_clarify"
               placeholder="تفاصيل الورش"
               value={""} // Explicitly set the value to an empty string
-              onChange={handleInputChange("workshop_clarify")}
+              onChange={(value) => updateFormData("workshop_clarify", value)}
               errorMessage={errors.workshop_clarify}
               rows={3}
             />
@@ -466,31 +420,25 @@ const EditAccountDetails = ({ userData }) => {
         </FieldContainer>
 
         {formData.has_coding_experience === 1 ? (
-          <FieldContainer
-            error={errors.coding_clarify}
-            className="px-2 grid grid-cols-1"
-          >
+          <FieldContainer className="px-2 grid grid-cols-1">
             <TextArea
               label={"تفاصيل الخبرة البرمجية"}
               name="coding_clarify"
               placeholder="تفاصيل الخبرة البرمجية"
               value={formData.coding_clarify || ""}
-              onChange={handleInputChange("coding_clarify")}
+              onChange={(value) => updateFormData("coding_clarify", value)}
               errorMessage={errors.coding_clarify}
               rows={3}
             />
           </FieldContainer>
         ) : (
-          <FieldContainer
-            error={errors.coding_clarify}
-            className="px-2 grid grid-cols-1 hidden"
-          >
+          <FieldContainer className="px-2 grid grid-cols-1 hidden">
             <TextArea
               label={"تفاصيل الخبرة البرمجية"}
               name="coding_clarify"
               placeholder="تفاصيل الخبرة البرمجية"
               value={""} // Clear the value when hidden
-              onChange={handleInputChange("coding_clarify")}
+              onChange={(value) => updateFormData("coding_clarify", value)}
               errorMessage={errors.coding_clarify}
               rows={3}
             />
@@ -499,7 +447,6 @@ const EditAccountDetails = ({ userData }) => {
 
         {/* Handle knows_other_languages */}
         <FieldContainer
-          error={errors.knows_other_languages}
           className="px-2 grid grid-cols-2 gap-4"
           header={"هل تعرف لغات أخرى؟"}
         >
@@ -522,31 +469,25 @@ const EditAccountDetails = ({ userData }) => {
         </FieldContainer>
 
         {formData.knows_other_languages === 1 ? (
-          <FieldContainer
-            error={errors.languages}
-            className="px-2 grid grid-cols-1"
-          >
+          <FieldContainer className="px-2 grid grid-cols-1">
             <TextArea
               label={"اللغات الأخرى"}
               name="languages"
               placeholder="اللغات الأخرى"
               value={formData.languages || ""}
-              onChange={handleInputChange("languages")}
+              onChange={(value) => updateFormData("languages", value)}
               errorMessage={errors.languages}
               rows={3}
             />
           </FieldContainer>
         ) : (
-          <FieldContainer
-            error={errors.languages}
-            className="px-2 grid grid-cols-1 hidden"
-          >
+          <FieldContainer className="px-2 grid-cols-1 hidden">
             <TextArea
               label={"اللغات الأخرى"}
               name="languages"
               placeholder="اللغات الأخرى"
               value={""} // Clear the value when hidden
-              onChange={handleInputChange("languages")}
+              onChange={(value) => updateFormData("languages", value)}
               errorMessage={errors.languages}
               rows={3}
             />
@@ -559,7 +500,7 @@ const EditAccountDetails = ({ userData }) => {
             name="creative_problem_solving"
             placeholder="حل المشكلات الإبداعي"
             value={formData.creative_problem_solving || ""}
-            onChange={handleInputChange("creative_problem_solving")}
+            onChange={(value) => updateFormData("creative_problem_solving", value)}
             errorMessage={errors.creative_problem_solving}
             rows={3}
           />
@@ -569,7 +510,7 @@ const EditAccountDetails = ({ userData }) => {
             name="website_vs_webapp"
             placeholder="مقارنة الموقع والتطبيق"
             value={formData.website_vs_webapp || ""}
-            onChange={handleInputChange("website_vs_webapp")}
+            onChange={(value) => updateFormData("website_vs_webapp", value)}
             errorMessage={errors.website_vs_webapp}
             rows={3}
           />
@@ -579,7 +520,7 @@ const EditAccountDetails = ({ userData }) => {
             name="usability_steps"
             placeholder="خطوات السهولة"
             value={formData.usability_steps || ""}
-            onChange={handleInputChange("usability_steps")}
+            onChange={(value) => updateFormData("usability_steps", value)}
             errorMessage={errors.usability_steps}
             rows={3}
           />
@@ -589,27 +530,30 @@ const EditAccountDetails = ({ userData }) => {
             name="additional_info"
             placeholder="معلومات اضافية"
             value={formData.additional_info || ""}
-            onChange={handleInputChange("additional_info")}
+            onChange={(value) => updateFormData("additional_info", value)}
             errorMessage={errors.additional_info}
             rows={3}
           />
         </FieldContainer>
 
-        <FieldContainer className="px-2 grid grid-cols-1">
-          <FileUpload
-            label="السيرة الذاتية"
-            additionalClasses="mb-6"
-            errorMessage={errors.document}
-            onChange={handleFileChange}
-          />
-        </FieldContainer>
-
-        <button type="submit" disabled={loading}>
-          {loading ? "Updating..." : "Update Form"}
+        <button
+          type="submit"
+          className="bg-gradient mt-4 text-white py-2 px-4 rounded"
+        >
+          {loading ? "  ارسال ... " : "تحديث"}
         </button>
 
-        {successMessage && <p>{successMessage}</p>}
-        {errorMessages.general && <p>{errorMessages.general}</p>}
+        {submissionStatus && (
+          <div
+            className={`mt-4 p-2 rounded ${
+              submissionStatus.success
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
+            }`}
+          >
+            {submissionStatus.message}
+          </div>
+        )}
       </form>
     </div>
   );

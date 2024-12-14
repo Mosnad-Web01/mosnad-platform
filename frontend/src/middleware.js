@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export function middleware(request) {
     const token = request.cookies.get('token')?.value;
     const role = request.cookies.get('role')?.value;
-    const status = request.cookies.get('status')?.value;    
+    const status = request.cookies.get('status')?.value; 
 
     // Handle unauthenticated users
     if (!token) {

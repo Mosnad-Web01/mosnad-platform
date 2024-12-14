@@ -22,8 +22,9 @@ const YouthMultiStepForm = () => {
 		city: '',
 		address: '',
 		birth_date: '',
-		phone: '',
+		phone_number: '',
 		is_it_graduate: null,
+		languages: [], 
 	});
 
 	const [errors, setErrors] = useState({}); // Store error messages
@@ -44,6 +45,13 @@ const YouthMultiStepForm = () => {
 		if (step === 1) {
 			if (!formData.name) tempErrors.name = 'اسم المستخدم مطلوب';
 
+			if(!formData.gender) tempErrors.gender = 'الرجاء تحديد النوع';
+
+			if (!formData.country) {
+				tempErrors.country = 'الرجاء تحديد البلد';
+			}
+	
+			
 			if (!formData.city && !formData.city_input) {
 				tempErrors.city = 'أختر المدينة مطلوب';
 			}
@@ -51,7 +59,7 @@ const YouthMultiStepForm = () => {
 			if (!formData.address) tempErrors.address = 'العنوان مطلوب';
 			if (!formData.birth_date)
 				tempErrors.birth_date = 'تاريخ الميلاد مطلوب';
-			if (!formData.phone) tempErrors.phone = 'رقم الجوال مطلوب';
+			if (!formData.phone_number) tempErrors.phone_number = 'رقم الجوال مطلوب';
 			if (formData.is_it_graduate === null)
 				tempErrors.is_it_graduate =
 					'الرجاء تحديد إذا كنت خريج تكنولوجيا المعلومات';
@@ -69,12 +77,23 @@ const YouthMultiStepForm = () => {
 			// Step 3 validations (Radio button responses)
 			if (formData.has_workshops === undefined) {
 				tempErrors.has_workshops = 'الرجاء الإجابة على السؤال';
+			} else if (formData.has_workshops === 1 && !formData.workshop_clarify) {
+				tempErrors.workshop_clarify = 'الرجاء توضيح التفاصيل إذا كنت قد حصلت على ورش عمل';
 			}
+		
 			if (formData.has_coding_experience === undefined) {
 				tempErrors.has_coding_experience = 'الرجاء الإجابة على السؤال';
+			} else if (formData.has_coding_experience === 1 && !formData.coding_clarify) {
+				tempErrors.coding_clarify = 'الرجاء توضيح التفاصيل إذا كانت لديك خبرة برمجية';
 			}
+		
 			if (formData.knows_other_languages === undefined) {
 				tempErrors.knows_other_languages = 'الرجاء الإجابة على السؤال';
+			} else if (
+				formData.knows_other_languages === 1 &&
+				(!formData.languages || formData.languages.length === 0)
+			) {
+				tempErrors.languages = 'يرجى اختيار لغة واحدة على الأقل إذا كنت تعرف لغات برمجية أخرى';
 			}
 		} else if (step === 4) {
 			// Step 4 validations (Text area responses)
@@ -126,6 +145,7 @@ const YouthMultiStepForm = () => {
 
 	const handleNext = () => {
 		if (validateStep(currentStep)) {
+			setErrors({});
 			setCurrentStep((prev) => prev + 1);
 		}
 	};
@@ -135,6 +155,8 @@ const YouthMultiStepForm = () => {
 		if (!validateStep(5)) {
 			return; // Don't submit if validation fails
 		}
+
+
 
 		const url = '/youth-forms'; // Endpoint relative to baseURL
 		const formDataToSubmit = new FormData();

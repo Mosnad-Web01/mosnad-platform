@@ -1,22 +1,34 @@
 import React from "react";
 import RadioButton from "@/components/common/Radio";
+import Input from "@/components/common/Input";
 import FieldContainer from "@/components/common/FieldContainer";
+import Checkbox from "@/components/common/Checkbox";
 
 const Step3 = ({ formData, updateFormData, errors }) => {
-  // Handle radio button changes
   const handleRadioChange = (name, value) => {
-    updateFormData(name, value); // Update formData with the selected value
+    updateFormData(name, value);
+  };
+
+  const handleInputChange = (name) => (event) => {
+    updateFormData(name, event.target.value);
+  };
+
+  const handleCheckboxChange = (language, isChecked) => {
+    const updatedLanguages = isChecked
+      ? [...(formData.languages || []), language]
+      : (formData.languages || []).filter((lang) => lang !== language);
+    updateFormData("languages", updatedLanguages);
   };
 
   return (
     <div className="rtl container mx-auto px-4">
       <form>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-2">
           {/* First Question */}
           <FieldContainer
             label="هل حصلت على أي دورات أو ورش عمل سابقة تتعلق بالمجال الذي اخترته أو تكنولوجيا المعلومات بشكل عام؟"
             className="grid gap-4 grid-cols-2"
-            error={errors.has_workshops} // Pass the error for this question
+            error={errors.has_workshops}
           >
             <RadioButton
               name="has_workshops"
@@ -34,11 +46,22 @@ const Step3 = ({ formData, updateFormData, errors }) => {
             />
           </FieldContainer>
 
+          {formData.has_workshops === 1 && (
+            <Input
+              label="يرجى التوضيح"
+              name="workshop_clarify"
+              placeholder="أذكر تفاصيل الدورات أو ورش العمل"
+              value={formData.workshop_clarify || ""}
+              onChange={handleInputChange("workshop_clarify")}
+              errorMessage={errors.workshop_clarify}
+            />
+          )}
+
           {/* Second Question */}
           <FieldContainer
             label="هل لديك أي خبرة في العمل مع التعليمات البرمجية، حتى خارج الإطار الرسمي؟"
             className="grid gap-4 grid-cols-2"
-            error={errors.has_coding_experience} // Pass the error for this question
+            error={errors.has_coding_experience}
           >
             <RadioButton
               name="has_coding_experience"
@@ -56,11 +79,22 @@ const Step3 = ({ formData, updateFormData, errors }) => {
             />
           </FieldContainer>
 
+          {formData.has_coding_experience === 1 && (
+            <Input
+              label="يرجى التوضيح"
+              name="coding_clarify"
+              placeholder="أذكر تفاصيل الخبرة البرمجية"
+              value={formData.coding_clarify || ""}
+              onChange={handleInputChange("coding_clarify")}
+              errorMessage={errors.coding_clarify}
+            />
+          )}
+
           {/* Third Question */}
           <FieldContainer
             label="هل أنت على دراية بأي لغة برمجة أخرى غير HTML وCSS؟"
             className="grid gap-4 grid-cols-2"
-            error={errors.knows_other_languages} // Pass the error for this question
+            error={errors.knows_other_languages}
           >
             <RadioButton
               name="knows_other_languages"
@@ -77,6 +111,24 @@ const Step3 = ({ formData, updateFormData, errors }) => {
               onChange={(value) => handleRadioChange("knows_other_languages", value)}
             />
           </FieldContainer>
+
+          {formData.knows_other_languages === 1 && (
+            <FieldContainer
+              label="يرجى اختيار لغات البرمجة التي تعرفها"
+              className="grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+              error={errors.languages}
+            >
+              {["JavaScript", "Python", "Java", "C++", "Ruby"].map((language) => (
+                <Checkbox
+                  key={language}
+                  name="languages"
+                  label={language}
+                  checked={(formData.languages || []).includes(language)}
+                  onChange={(isChecked) => handleCheckboxChange(language, isChecked)}
+                />
+              ))}
+            </FieldContainer>
+          )}
         </div>
       </form>
     </div>

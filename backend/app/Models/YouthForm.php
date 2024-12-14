@@ -15,19 +15,18 @@ class YouthForm extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'city',
-        'address',
-        'birth_date',
-        'phone',
+        'gender',
         'is_it_graduate',
         'job_interest',
         'motivation',
         'career_goals',
         'project_ideas',
         'has_workshops',
+        'workshop_clarify',
         'has_coding_experience',
+        'coding_clarify',
         'knows_other_languages',
+        'languages',
         'creative_problem_solving',
         'website_vs_webapp',
         'usability_steps',
@@ -35,6 +34,11 @@ class YouthForm extends Model
         'document',
         'user_id',
     ];
+
+    protected $casts = [
+        'languages' => 'array',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

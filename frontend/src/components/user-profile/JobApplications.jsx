@@ -1,4 +1,4 @@
-import StatusBadge from "@/components/common/StatusBadge";
+import StatusBadge from "../common/StatusBadge";
 
 const JobApplications = () => {
   // Sample data object

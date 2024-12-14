@@ -1,6 +1,9 @@
 <x-layout title="Youth Surveys">
     <x-common.header title="استبانات الشباب" :showBackButton="true" />
 
+    <!-- Search Component -->
+    {!! view()->make('components.common.search-filter', ['roles' => $roles ?? []]) !!}
+
     <x-common.content-container title="جدول الاستبانات">
         <!-- Table Component -->
         <x-table

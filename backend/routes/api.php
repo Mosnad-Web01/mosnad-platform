@@ -9,7 +9,7 @@ use App\Http\Controllers\api\CompanyFormController;
 use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\api\YouthFormController;
 use App\Http\Controllers\api\JobOpportunityController;
-
+use App\Http\Controllers\api\UserController;
 
 // public routes --- Endpoint: /api/test
 Route::get('/test', function () {
@@ -28,6 +28,10 @@ Route::prefix('auth')->group(function () {
 
 // protected Routes (Require Authentication)
 Route::middleware('auth:sanctum')->group(function () {
+
+    Route::put('/change-password', [UserController::class, 'changePassword']);
+    Route::put('/update-email', [UserController::class, 'updateEmail']);
+    
 
     // Endpoint: /api/logout
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -99,3 +103,6 @@ Route::get('/users/search', function (Request $request) {
         ->limit(10)
         ->get(['id', 'name', 'email']);
 })->withoutMiddleware('auth:sanctum');
+
+
+Route::put('/youth-forms/{id}', [YouthFormController::class, 'update'])->withoutMiddleware('auth:sanctum');

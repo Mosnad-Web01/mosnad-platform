@@ -2,22 +2,22 @@
 import { useState } from 'react';
 import Sidebar from '@/components/profile/Sidebar';
 import Header from '@/components/profile/Header';
-import CompleteAccountDetails from './CompleteAccountDetails';
 import MyFiles from './MyFiles';
 import Notifications from './Notifications';
 import JobApplications from './JobApplications';
-import Resume from './Resume';
+import FormData from './FormData';
 import ManageAccount from './account/ManageAccount';
+import EditAccountDetails from './EditAccountDetails';
 
-const UserProfilePage = () => {
+const UserProfilePage = ({ userData }) => {
 	const [activeTab, setActiveTab] = useState('manage-acount');
 	const profile = {
 		image: '/userImage.jpg',
-		name: 'ريم محمد محبوب',
+		name: userData.user_profile.username,
 		flagIcon: '/flag.svg',
-		memberSince: 'عضو منذ سنة',
+		memberSince: userData.user_profile.created_at,
 		statusIcon: '/success.svg',
-		status: 'حساب نشط',
+		status: userData.user_profile.status,
 	};
   const tabData = [
 		{
@@ -26,13 +26,13 @@ const UserProfilePage = () => {
 			icon: '/manage-account-icon.svg',
 		},
 		{
-			label: 'السيرة الذاتية',
-			name: 'resume',
+			label: 'بيانات الاستبيان ',
+			name: 'form-data',
 			icon: '/request.svg',
 		},
 		{
-			label: 'إكمال الحساب',
-			name: 'complete-account',
+			label: 'تعديل البيانات',
+			name: 'edit-account-details',
 			icon: '/verify-icon.svg',
 		},
 		{
@@ -58,26 +58,26 @@ const UserProfilePage = () => {
 							<Header title="إدارة الحساب" />
 							<main className="mt-4">
 								<div className="text-red-800">
-									<ManageAccount />
+									<ManageAccount userData={userData} />
 								</div>
 							</main>
 						</>
 					)}
 
-					{activeTab === 'resume' && (
+					{activeTab === 'form-data' && (
 						<>
-							<Header title="السيرة الذاتية" />
+							<Header title="بيانات الاستبيان " />
 							<main className="mt-4">
-								<Resume />
+								<FormData userData={userData} />
 							</main>
 						</>
 					)}
 
-					{activeTab === 'complete-account' && (
+					{activeTab === 'edit-account-details' && (
 						<>
-							<Header title="إكمال الحساب" />
+							<Header title="تعديل البيانات" />
 							<main className="mt-4">
-								<CompleteAccountDetails />
+								<EditAccountDetails userData={userData} />
 							</main>
 						</>
 					)}

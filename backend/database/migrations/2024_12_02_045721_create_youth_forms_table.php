@@ -24,7 +24,7 @@ return new class extends Migration
             $table->boolean('has_coding_experience')->nullable(); // Coding experience
             $table->text('coding_clarify')->nullable(); // Coding experience clarifications
             $table->boolean('knows_other_languages')->nullable(); // Knows other programming languages
-            $table->json('languages')->nullable(); // Programming languages
+            $table->string('languages')->nullable(); // Programming languages
             $table->text('creative_problem_solving')->nullable(); // Creative problem solving
             $table->text('website_vs_webapp')->nullable(); // Website vs WebApp explanation
             $table->text('usability_steps')->nullable(); // Steps to ensure usability

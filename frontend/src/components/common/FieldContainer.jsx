@@ -1,13 +1,20 @@
 import React from "react";
 
-const FieldContainer = ({ label, children, className = "", error }) => {
+const FieldContainer = ({ label,header, children, className = "", error }) => {
   return (
-    <div className="mt-4">
+    <div className="mt-3">
       {label && (
-        <label className="text-sm text-[#21255C] font-medium mb-2 block">
+        <label className="text-md font-bold text-[#21255C]  mb-2 block">
           {label}
         </label>
       )}
+
+      {header && (
+        <label className="mb-2 mr-3 text-sm text-[#21255C] font-medium">
+          {header}
+        </label>
+      )}  
+
       <div className={`${className}`}>
         {children}
       </div>

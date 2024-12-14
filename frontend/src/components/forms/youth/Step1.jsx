@@ -74,11 +74,11 @@ const Step1 = ({ formData, updateFormData, errors }) => {
             />
           ))}
           <Input
-            name="city_input"
+            name="city"
             type="text"
             placeholder="أخرى أذكرها هنا"
-            value={formData.city_input || ""}
-            onChange={handleInputChange("city_input")}
+            value={formData.city || ""}
+            onChange={handleInputChange("city")}
           />
         </FieldContainer>
 
@@ -105,7 +105,7 @@ const Step1 = ({ formData, updateFormData, errors }) => {
           label="رقم الجوال"
           name="phone_number"
           placeholder="رقم الجوال"
-          value={formData.phone || ""}
+          value={formData.phone_number || ""}
           onChange={handleInputChange("phone_number")}
           errorMessage={errors.phone_number}
         />

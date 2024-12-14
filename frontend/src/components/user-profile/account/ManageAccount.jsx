@@ -3,7 +3,7 @@ import AccountInfo from './AccountInfo';
 import ManagePassword from './ManagePassword';
 import ManageEmail from './ManageEmail';
 
-const ManageAccount = () => {
+const ManageAccount = ({userData}) => {
     const [activeTab, setActiveTab] = useState('AccountInfo');
 	const tabData = [
 		{
@@ -46,9 +46,9 @@ const ManageAccount = () => {
 			</nav>
 
 			<main>
-                {activeTab === 'AccountInfo' && <AccountInfo />}
+                {activeTab === 'AccountInfo' && <AccountInfo userData={userData} />}
                 {activeTab === 'Password' && <ManagePassword />}
-                {activeTab === 'Email' && <ManageEmail />}
+                {activeTab === 'Email' && <ManageEmail userData={userData.user_profile.email} />}
             
             </main>
 		</>

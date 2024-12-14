@@ -24,6 +24,8 @@ class UserProfileResource extends JsonResource
             'city' => $this->city,
             'address' => $this->address,
             'birth_date' => $this->birth_date,
+            'status' => $this->user->status,
+            'created_at' => $this->created_at,
             // 'user_type' => $this->user->role->name,
         ];
     }

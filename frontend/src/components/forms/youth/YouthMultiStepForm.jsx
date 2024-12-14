@@ -25,7 +25,6 @@ const YouthMultiStepForm = () => {
 		phone_number: '',
 		is_it_graduate: null,
 		languages: [], 
-
 	});
 
 	const [errors, setErrors] = useState({}); // Store error messages
@@ -157,11 +156,7 @@ const YouthMultiStepForm = () => {
 			return; // Don't submit if validation fails
 		}
 
-		console.log(formData); // Ensure `languages` is an array
-		if (!Array.isArray(requestData.languages)) {
-			console.log('languages is not an array');
-			
-		  }
+
 
 		const url = '/youth-forms'; // Endpoint relative to baseURL
 		const formDataToSubmit = new FormData();

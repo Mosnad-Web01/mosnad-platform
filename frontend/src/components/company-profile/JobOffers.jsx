@@ -1,5 +1,5 @@
 import React from "react";
-import StatusBadge from "@/components/common/StatusBadge";
+import StatusBadge from "../common/StatusBadge";
 
 const JobOffers = () => {
   const data = [

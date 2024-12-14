@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('/change-password', [UserController::class, 'changePassword']);
     Route::put('/update-email', [UserController::class, 'updateEmail']);
-    
+    Route::put('/youth-forms/{id}', [YouthFormController::class, 'update']);
 
     // Endpoint: /api/logout
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -105,4 +105,4 @@ Route::get('/users/search', function (Request $request) {
 })->withoutMiddleware('auth:sanctum');
 
 
-Route::put('/youth-forms/{id}', [YouthFormController::class, 'update'])->withoutMiddleware('auth:sanctum');
+

@@ -34,7 +34,7 @@ const TextArea = ({
           className={`w-full mt-1 px-4 py-4 rounded-lg bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
             Icon ? "pl-10" : ""
           } resize-none`}
-          onChange={onChange} // Pass onChange directly without wrapper
+          onChange={(e) => onChange(e.target.value)} // Ensure this is correctly implemented
           {...props}
         />
       </div>

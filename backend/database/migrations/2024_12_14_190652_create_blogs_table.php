@@ -21,7 +21,6 @@ return new class extends Migration {
             $table->json('categories')->nullable(); // stores multiple categories
             $table->json('images')->nullable(); // stores multiple image URLs
             $table->timestamps();
-
         });
     }
 

@@ -64,7 +64,12 @@
             ]" />
         @endcan
 
-
+        @can('manage-blogs')
+            <x-layouts.sidebar-link :label="'إدارة المدونات'" :icon="'article'" :children="[
+                ['route' => route('blogs.create'), 'label' => 'إضافة مدونة جديدة', 'icon' => 'add'],
+                ['route' => route('blogs.index'), 'label' => 'عرض المدونات', 'icon' => 'list_alt'],
+            ]" />
+        @endcan
         @can('manage-comments')
             <x-layouts.sidebar-link :label="'رسائل المستخدمين'" :icon="'contact_support'" :children="[
                 ['route' => route('contact-us.index'), 'label' => 'رسائل المستخدمين', 'icon' => 'list_alt'],

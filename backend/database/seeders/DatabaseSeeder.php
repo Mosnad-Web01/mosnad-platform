@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             AdminTypesSeeder::class, // creates 3 admin types
             AdminTypePermissionSeeder::class, // assign permissions to admin types
             UserAdminTypesSeeder::class, // assign admin-roles to users
+            BlogSeeder::class, // creates 10 blog posts
         ]);
     }
 }

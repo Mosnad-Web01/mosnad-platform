@@ -93,5 +93,12 @@ Route::middleware('auth')->group(function () {
         Route::delete('/permissions/{permission}', fn() => abort(404));
     });
 
+    Route::middleware(CheckPermission::class . ':manage-blogs')->group(function () {
+
+        // allow access to only the index, edit, and update routes
+        Route::resource('blogs', PermissionController::class);
+
+    });
+
 
 });

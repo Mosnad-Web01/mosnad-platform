@@ -79,12 +79,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Bootcamp::class);
     }
-    
+
 
     public function jobOpportunities(): BelongsToMany
     {
         return $this->belongsToMany(JobOpportunity::class, 'job_opportunity_applies')
-                    ->withTimestamps(); // Tracks the applied time
+            ->withTimestamps(); // Tracks the applied time
     }
     public function companyForm()
     {
@@ -103,4 +103,23 @@ class User extends Authenticatable
      }
 
 
+
+
+    // User.php
+    public function adminTypes()
+    {
+        return $this->belongsToMany(AdminType::class, 'user_admin_types', 'user_id', 'admin_type_id');
+    }
+
+
+
+    public function hasPermission(string $permission): bool
+    {
+        return $this->adminTypes()
+            ->whereHas(
+                'permissions',
+                fn($query) =>
+                $query->where('slug', $permission)
+            )->exists();
+    }
 }

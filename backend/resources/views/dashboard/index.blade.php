@@ -154,8 +154,7 @@
         </div>
     </div>
 
-    <!-- Add Font Awesome CDN in your layout file -->
-    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+
     <!-- Add required CDNs -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>

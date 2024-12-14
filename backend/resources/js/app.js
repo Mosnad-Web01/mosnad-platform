@@ -1,7 +1,11 @@
 import './bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
 import { initializeSidebar } from "./sidebar";
-// Initialize when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
+import {initializeSearchModal} from './searchModal';
+import { initializeDeleteModal } from './deleteModal';
+
+document.addEventListener('DOMContentLoaded', () => {
     initializeSidebar();
+    initializeDeleteModal();
+    initializeSearchModal();
 });

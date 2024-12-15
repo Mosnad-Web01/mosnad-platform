@@ -1,5 +1,7 @@
 <?php
 // backend/routes/api.php
+
+use App\Http\Controllers\API\ActivitiesController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -77,6 +79,20 @@ Route::get('/company-forms', [CompanyFormController::class, 'index']);
 Route::post('/company-forms', [CompanyFormController::class, 'store']);
 Route::get('/company-name/{user_id}', [CompanyFormController::class, 'getCompanyByUserId']);
 Route::put('/company-forms/{id}', [CompanyFormController::class, 'update']);
+
+
+
+
+Route::prefix('activities')->group(function () {
+    // Get all activities (paginated)
+    Route::get('/', [ActivitiesController::class, 'index']);
+    
+    // Get a single activity by ID
+    Route::get('/{id}', [ActivitiesController::class, 'show']);
+});
+
+
+
 
 
 

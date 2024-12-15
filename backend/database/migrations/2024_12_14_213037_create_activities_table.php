@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('activity_date'); // The date of the activity
             $table->string('location')->nullable(); // Location of the activity
             $table->json('images')->nullable(); // Store image paths in JSON format
+            $table->enum('status', ['published', 'draft'])->default('draft'); // Status of the activity
             $table->timestamps(); // Created at and updated at timestamps
         });
     }

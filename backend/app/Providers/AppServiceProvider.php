@@ -30,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
                     return $user->hasPermission('manage-users');
                 });
 
+                Gate::define('manage-activities', function ($user) {
+                    return $user->hasPermission('manage-activities');
+                });
+
                 Gate::define('manage-bootcamps', function ($user) {
                     return $user->hasPermission('manage-bootcamps');
                 });

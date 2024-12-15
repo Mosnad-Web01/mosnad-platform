@@ -27,6 +27,7 @@ class Activity extends Model
         'activity_date',
         'location',
         'images',
+        'status', // Add status to fillable array
     ];
 
     /**

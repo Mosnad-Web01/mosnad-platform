@@ -1,3 +1,4 @@
+<!-- backend/resources/views/dashboard/blogs/create.blade.php -->
 <x-layout title="Add Blog">
     <div class="max-w-6xl mx-auto px-4 py-8">
         <!--Header -->

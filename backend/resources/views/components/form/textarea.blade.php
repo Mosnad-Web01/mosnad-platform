@@ -35,7 +35,9 @@
         class="w-full {{ $inputClass }} bg-gray-50  border-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="{{ $placeholder }}"
         {{ $required ? 'required' : '' }}
-    >{{ old($name, $value) }}</textarea>
+    >{{ old($name, $value)  }}
+
+</textarea>
     </div>
     <!-- Error Message -->
     @error($name)

@@ -56,6 +56,13 @@
             ]" />
         @endcan
 
+        @can('manage-activities')
+            <x-layouts.sidebar-link :label="'إدارة الأنشطة'" :icon="'event'" :children="[
+                ['route' => route('activities.create'), 'label' => 'إضافة نشاط جديد', 'icon' => 'add'],
+                ['route' => route('activities.index'), 'label' => 'عرض الأنشطة', 'icon' => 'list_alt'],
+            ]" />
+        @endcan
+
 
         @can('manage-surveys')
             <x-layouts.sidebar-link :label="'إدارة الاستبيانات'" :icon="'poll'" :children="[

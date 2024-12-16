@@ -1,5 +1,7 @@
 <?php
 // backend/routes/api.php
+
+use App\Http\Controllers\API\ActivitiesController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('/change-password', [UserController::class, 'changePassword']);
     Route::put('/update-email', [UserController::class, 'updateEmail']);
-    
+    Route::put('/youth-forms/{id}', [YouthFormController::class, 'update']);
 
     // Endpoint: /api/logout
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -80,6 +82,20 @@ Route::put('/company-forms/{id}', [CompanyFormController::class, 'update']);
 
 
 
+
+Route::prefix('activities')->group(function () {
+    // Get all activities (paginated)
+    Route::get('/', [ActivitiesController::class, 'index']);
+    
+    // Get a single activity by ID
+    Route::get('/{id}', [ActivitiesController::class, 'show']);
+});
+
+
+
+
+
+
 Route::get('/youth-forms', [YouthFormController::class, 'index']); // Fetch all forms
 Route::get('/youth-forms/{id}', [YouthFormController::class, 'show']); // Fetch a single form
 Route::post('/youth-forms', [YouthFormController::class, 'store']); // Submit a form
@@ -105,4 +121,4 @@ Route::get('/users/search', function (Request $request) {
 })->withoutMiddleware('auth:sanctum');
 
 
-Route::put('/youth-forms/{id}', [YouthFormController::class, 'update'])->withoutMiddleware('auth:sanctum');
+

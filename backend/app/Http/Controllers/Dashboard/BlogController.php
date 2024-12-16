@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class BlogController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::with('user')->get();
+        $blogs = Blog::latest()->with('user')->paginate(6);
         return view('dashboard.blogs.index', compact('blogs'));
     }
 
@@ -53,21 +54,20 @@ class BlogController extends Controller
 
     public function show(Blog $blog)
     {
+        $blog = Blog::with('user')->findOrFail($blog->id);
         return view('dashboard.blogs.show', compact('blog'));
     }
 
     public function edit(Blog $blog)
     {
-        // TODO:Ensure the authenticated user owns the blog
-        //$this->authorize('update', $blog);
         return view('dashboard.blogs.edit', compact('blog'));
     }
 
 
     public function update(Request $request, Blog $blog)
     {
-         // TODO: Ensure the authenticated user owns the blog
-        // $this->authorize('update', $blog);
+         // ensure the authenticated user owns the blog
+          Gate::authorize('update-blog',$blog);
 
         $request->validate([
             'title' => 'sometimes|string|max:255',
@@ -98,9 +98,8 @@ class BlogController extends Controller
 
     public function destroy(Blog $blog)
     {
-        // TODO:Ensure the authenticated user owns the blog
-        // $this->authorize('delete', $blog);
-
+        // ensure the authenticated user owns the blog
+        Gate::authorize('delete-blog',$blog);
         $blog->delete();
         return redirect()->route('blogs.index')->with('success', 'Blog deleted successfully!');
     }

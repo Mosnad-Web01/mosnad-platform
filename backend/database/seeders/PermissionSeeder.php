@@ -22,8 +22,6 @@ class PermissionSeeder extends Seeder
             ['name' => 'إدارة الأذونات', 'slug' => 'manage-permissions', 'description' => 'إذن لإدارة الأذونات', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'إدارة الأدوار', 'slug' => 'manage-roles', 'description' => 'إذن لإدارة الأدوار', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'إدارة المدونات', 'slug' => 'manage-blogs', 'description' => 'إذن لإدارة المدونات', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'إدارة الأنشطة', 'slug' => 'manage-activities', 'description' => 'إذن لإدارة الأنشطة', 'created_at' => now(), 'updated_at' => now()],
-
         ];
 
 

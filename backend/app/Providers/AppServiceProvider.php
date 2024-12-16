@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use App\Models\Blog;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
                 // Define gates for each permission
                 Gate::define('manage-job-opportunities', function ($user) {
                     return $user->hasPermission('manage-job-opportunities');
@@ -61,8 +63,15 @@ class AppServiceProvider extends ServiceProvider
                     return $user->hasPermission('manage-blogs');
                 });
 
-                Gate::define('manage-activities', function ($user) {
-                    return $user->hasPermission('manage-activities');
+
+
+                // Blog Authorization Gates -----
+                Gate::define('update-blog', function (User $user, Blog $blog) {
+                    return $user->id === $blog->user_id;
+                });
+
+                Gate::define('delete-blog', function (User $user, Blog $blog) {
+                    return $user->id === $blog->user_id;
                 });
 
     }

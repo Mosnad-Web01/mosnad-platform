@@ -8,6 +8,8 @@ use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+
 
 class BlogController extends Controller
 {
@@ -24,33 +26,53 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+
+        // Validate the request data
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'status' => 'required|in:draft,published',
+            'status' => 'required|string|in:draft,published',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
-            'meta_keywords' => 'nullable|array',
-            'tags' => 'nullable|array',
-            'categories' => 'nullable|array',
-            'images' => 'nullable|array',
+            'meta_keywords' => 'nullable|string',
+            'tags' => 'nullable|string',
+            'categories' => 'nullable|string',
+            'images.*' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:10240',
         ]);
 
-        Blog::create([
-            'title' => $request->title,
-            'content' => $request->content,
-            'user_id' => Auth::id(), // Get the authenticated user's ID
-            'status' => $request->status,
-            'meta_title' => $request->meta_title,
-            'meta_description' => $request->meta_description,
-            'meta_keywords' => json_encode($request->meta_keywords),
-            'tags' => json_encode($request->tags),
-            'categories' => json_encode($request->categories),
-            'images' => json_encode($request->images),
+        // Process meta_keywords, tags, and categories into JSON
+        $validated['meta_keywords'] = $validated['meta_keywords'] ? explode(',', $validated['meta_keywords']) : [];
+        $validated['tags'] = $validated['tags'] ? explode(',', $validated['tags']) : [];
+        $validated['categories'] = $validated['categories'] ? explode(',', $validated['categories']) : [];
+
+        // Process image uploads
+        $imagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('blogs/images', 'public');
+                $imagePaths[] = $path;
+            }
+        }
+   
+
+       // Save the blog to the database
+        $blog = Blog::create([
+            'title' => $validated['title'],
+            'content' => $validated['content'],
+            'status' => $validated['status'],
+            'user_id' => auth()->id(), // Set the currently authenticated user's ID
+            'meta_title' => $validated['meta_title'],
+            'meta_description' => $validated['meta_description'],
+            'meta_keywords' => json_encode($validated['meta_keywords']),
+            'tags' => json_encode($validated['tags']),
+            'categories' => json_encode($validated['categories']),
+            'images' => json_encode($imagePaths),
         ]);
 
+       // Redirect to the blogs index or show page with a success message
         return redirect()->route('blogs.index')->with('success', 'Blog created successfully!');
     }
+
 
     public function show(Blog $blog)
     {

@@ -3,8 +3,8 @@
         <!-- Glassmorphism Container -->
         <div class="p-1 rounded-2xl bg-gradient-to-br from-indigo-600/30 via-purple-600/30 to-pink-600/30 ">
             <div class="bg-white/90 rounded-2xl shadow-2xl overflow-hidden">
-
                 <div class="relative ">
+
                     <div class="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-purple-600/10"></div>
                     <div class="px-8 py-6 flex flex-col md:flex-row justify-between items-center relative z-10">
 
@@ -99,7 +99,7 @@
                         <!-- Tags -->
                         <div class="bg-white p-6 rounded-xl shadow-lg  border border-gray-100 ">
                             <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
-                                <i class="fas fa-tags ml-2 text-indigo-600"></i>
+                                <i class="fas fa-hashtag ml-2 text-indigo-600"></i>
                                 التاغات
                             </h3>
                             <div class="flex flex-wrap gap-2">
@@ -115,24 +115,36 @@
 
                     <!-- Enhanced Image Carousel -->
                     @if($blog->images)
-                        <div class="relative overflow-hidden rounded-xl bg-white p-6 shadow-lg">
-                            <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
-                                <i class="fas fa-images ml-2 text-indigo-600"></i>
-                                الصور
-                            </h3>
-                            <div class="flex gap-4 overflow-x-auto pb-4 ">
-                                @foreach(json_decode($blog->images) as $image)
-                                    <div class="flex-none w-full md:w-1/2 lg:w-1/3 relative ">
-                                        <div class="relative overflow-hidden rounded-lg">
+                                    <div class="relative overflow-hidden rounded-xl bg-white p-6 shadow-lg">
+                                        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                                            <i class="fas fa-images ml-2 text-indigo-600"></i>
+                                            الصور
+                                        </h3>
+                                        <div class="flex gap-4 overflow-x-auto pb-4 ">
+                                            @foreach(json_decode($blog->images) as $image)
+                                                                    <div class="flex-none w-full md:w-1/2 lg:w-1/3 relative ">
+                                                                        <div class="relative overflow-hidden rounded-lg">
 
-                                            <img src="{{ $image }}" alt="Blog image"
-                                             loading="lazy"
-                                                class="w-full h-64 object-cover rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+                                                                            @php
+                                                                                $images = json_decode($blog->images);
+                                                                                $imagePath = $images[0];
+                                                                            @endphp
+
+                                                                            @if(filter_var($imagePath, FILTER_VALIDATE_URL))
+                                                                                <!-- If the image path is an external URL -->
+
+                                                                                <img src="{{ $image }}" alt="Blog image" loading="lazy"
+                                                                                    class="w-full h-64 object-cover rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+                                                                            @else
+                                                                                <!-- If the image path is a local file path -->
+                                                                                <img src="{{ asset('storage/' . $image) }}" alt="Blog image" loading="lazy"
+                                                                                    class="w-full h-64 object-cover rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                            @endforeach
                                         </div>
                                     </div>
-                                @endforeach
-                            </div>
-                        </div>
                     @endif
 
                     <!-- Enhanced Meta Information -->
@@ -170,6 +182,14 @@
                                 @endforeach
                             </div>
                         </div>
+                    </div>
+                    <div class="flex justify-start">
+                        @can('update-blog', $blog)
+                            <x-table.action-buttons :editUrl="route('blogs.edit', $blog->id)"
+                                :deleteUrl="route('blogs.destroy', $blog->id)"
+                                deleteConfirmMessage="هل أنت متأكد من حذف هذه المدونة ؟" :hasDeleteButton="true"
+                                isBigButton="true" />
+                        @endcan
                     </div>
                 </div>
             </div>

@@ -12,7 +12,7 @@ class ActivitiesController extends Controller
 {
     public function index()
     {
-        $activities = Activity::paginate(10);
+        $activities = Activity::orderBy('created_at', 'desc')->paginate(10);
         return view('dashboard.activities.index', compact('activities'));
     }
 
@@ -37,33 +37,33 @@ class ActivitiesController extends Controller
             'location' => 'nullable|string|max:255',
             'images' => 'nullable|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,webp,svg|max:5048',
-            'status' => 'required|in:published,draft', // Add validation for status
+            'status' => 'required|in:published,draft',
         ]);
     
         try {
             // Handle image uploads
-            $imagesPaths = [];
             if ($request->hasFile('images')) {
-                $imagesPaths = array_map(function ($image) {
+                $validatedData['images'] = array_map(function ($image) {
                     return $image->store('activity_images', 'public');
                 }, $request->file('images'));
             }
     
-            // Add images paths to the data
-            $validatedData['images'] = json_encode($imagesPaths);
-    
-            // Save the activity with the status included
+            // Save the activity
             $activity = Activity::create($validatedData);
     
-            // Flash success message
-            Session::flash('success', 'Activity created successfully!');
-            return redirect()->route('activities.index');
+            if ($activity) {
+                Session::flash('success', 'Activity created successfully!');
+                return redirect()->route('activities.index');
+            } else {
+                Session::flash('error', 'An error occurred while creating the activity.');
+                return back()->withInput();
+            }
         } catch (\Exception $e) {
-            // Log the exception or handle errors
             Session::flash('error', 'An unexpected error occurred: ' . $e->getMessage());
             return back()->withInput();
         }
     }
+
     /**
      * Display the specified activity.
      */
@@ -84,49 +84,40 @@ class ActivitiesController extends Controller
      * Update the specified activity in storage.
      */
     public function update(Request $request, Activity $activity)
-{
-    // Validate the input
-    $validatedData = $request->validate([
-        'title' => 'required|string|max:255',
-        'description' => 'required|string',
-        'activity_date' => 'required|date',
-        'location' => 'nullable|string|max:255',
-        'images' => 'nullable|array',
-        'images.*' => 'image|mimes:jpeg,png,jpg,webp,svg|max:5048',
-        'status' => 'required|in:published,draft', // Ensure status is validated
-    ]);
-
-    try {
-        // Handle image uploads
-        $imagesPaths = json_decode($activity->images, true) ?? [];
-        if ($request->hasFile('images')) {
-            // Delete old images
-            foreach ($imagesPaths as $oldImage) {
-                Storage::disk('public')->delete($oldImage);
+    {
+        // Validate the input
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'activity_date' => 'required|date',
+            'location' => 'nullable|string|max:255',
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,webp,svg|max:50048',
+            'status' => 'required|in:published,draft',
+        ]);
+    
+        try {
+            // Handle image uploads
+            if ($request->hasFile('images')) {
+                $validatedData['images'] = array_map(function ($image) {
+                    return $image->store('activity_images', 'public');
+                }, $request->file('images'));
+            } else {
+                // Keep existing images if not updated
+                $validatedData['images'] = $activity->images;
             }
-
-            // Store new images
-            $imagesPaths = array_map(function ($image) {
-                return $image->store('activity_images', 'public');
-            }, $request->file('images'));
+    
+            // Update the activity
+            $activity->update($validatedData);
+    
+            Session::flash('success', 'Activity updated successfully!');
+            return redirect()->route('activities.index');
+        } catch (\Exception $e) {
+            Session::flash('error', 'An unexpected error occurred: ' . $e->getMessage());
+            return back()->withInput();
         }
-
-        // Add images paths to the data
-        $validatedData['images'] = json_encode($imagesPaths);
-
-        // Update the activity
-        $activity->update($validatedData);
-
-        // Flash success message
-        Session::flash('success', 'Activity updated successfully!');
-        return redirect()->route('activities.index');
-    } catch (\Exception $e) {
-        // Log the exception or handle errors
-        Session::flash('error', 'An unexpected error occurred: ' . $e->getMessage());
-        return back()->withInput();
     }
-}
-
+    
 
     /**
      * Remove the specified activity from storage.
@@ -135,8 +126,10 @@ class ActivitiesController extends Controller
     {
         try {
             // Delete images
-            $imagesPaths = json_decode($activity->images, true) ?? [];
+            $imagesPaths = $activity->images ?? [];
             foreach ($imagesPaths as $imagePath) {
+                // Get the relative path of the image to delete it
+                $imagePath = str_replace(Storage::url(''), '', $imagePath);
                 Storage::disk('public')->delete($imagePath);
             }
 

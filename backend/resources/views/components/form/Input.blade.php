@@ -28,7 +28,7 @@
             name="{{ $name }}" 
             id="{{ $name }}" 
             value="{{ old($name, $value) }}" 
-            class="w-full px-3 py-3 border border-gray-100 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 {{ $inputClass }}" 
+            class="w-full px-6 py-3 border border-gray-100 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 {{ $inputClass }}" 
             placeholder="{{ $placeholder }}" 
             {{ $attributes }} 
             @if($required) required @endif

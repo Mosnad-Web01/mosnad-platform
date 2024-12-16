@@ -15,7 +15,7 @@ const SuccessPage = ({type = 'student'}) => {
         العودة إلى البداية
       </button>
       <Link
-        href={type ==='student' ? '/student/user-profile/id' : '/company/company-profile/id'}
+        href={type ==='student' ? '/student/user-profile' : '/company/company-profile/id'}
         className="px-6 py-2 bg-gradient mt-12 text-white rounded-lg"
       >
 المتابعة  

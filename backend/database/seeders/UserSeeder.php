@@ -17,7 +17,6 @@ class UserSeeder extends Seeder
                 'role_id' => 1,
                 'password' => Hash::make('123456'),
                 'email_verified_at' => now(),
-                'phone_number' => '1234567890',
                 'status' => 'active',
             ],
             [
@@ -26,7 +25,6 @@ class UserSeeder extends Seeder
                 'role_id' => 2,
                 'password' => Hash::make('123456'),
                 'email_verified_at' => now(),
-                'phone_number' => '1234567890',
                 'status' => 'active',
             ],
             [
@@ -35,7 +33,6 @@ class UserSeeder extends Seeder
                 'role_id' => 3,
                 'password' => Hash::make('123456'),
                 'email_verified_at' => now(),
-                'phone_number' => '1234567890',
                 'status' => 'active',
             ],
         ];

@@ -3,6 +3,7 @@
 import React from "react";
 
 const TextArea = ({
+  name = "",
   label,
   placeholder,
   rows = 4,

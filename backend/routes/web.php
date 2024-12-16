@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\ActivitiesController;
 use App\Http\Controllers\Dashboard\BootcampController;
 use App\Http\Controllers\Dashboard\CompanyFormController;
 use App\Http\Controllers\Dashboard\ContactUsController;
@@ -39,6 +40,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/users', [UserController::class, 'store'])->name('users.store');
         Route::put('/users/{user}/update-status', [UserController::class, 'updateStatus'])->name('users.update-status');
 
+    });
+
+    //checks manage-activities
+    Route::middleware(CheckPermission::class . ':manage-activities')->group(function () {
+        Route::resource('activities', ActivitiesController::class);
     });
 
     //checks manage-bootcamps

@@ -28,13 +28,13 @@ class UserController extends Controller
             $activeUsersQuery->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('phone_number', 'like', "%{$search}%");
+                    ;
             });
 
             $suspendedUsersQuery->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('phone_number', 'like', "%{$search}%");
+                   ;
             });
         }
 
@@ -67,7 +67,7 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'phone_number' => 'nullable|string|max:20',
+         
             'admin_types' => 'required|array',
             'admin_types.*' => 'exists:admin_types,id',
             'status' => 'required|in:active,inactive,suspended',
@@ -77,7 +77,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'phone_number' => $validated['phone_number'],
+            
             'role_id' => 1,
             'status' => $validated['status'],
             'password' => Hash::make($validated['password']),

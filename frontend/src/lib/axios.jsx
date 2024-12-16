@@ -78,9 +78,17 @@ export const put = async (url, data, customHeaders = {}) => {
     const response = await instance.put(url, data, {
       headers: customHeaders,
     });
-    return response.data;
+    return response.data; // Return the response data on success
   } catch (error) {
-    handleError(error);
+    const message = error.response?.data?.message || "An unexpected error occurred";
+    const errors = error.response?.data?.errors || {}; // Capture detailed validation errors if present
+
+    // Re-throw the error in a structured format for further handling
+    throw {
+      message, // General error message
+      errors,  // Detailed validation errors
+      status: error.response?.status || 500, // Include status code for more context
+    };
   }
 };
 

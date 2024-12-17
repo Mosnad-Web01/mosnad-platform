@@ -28,7 +28,7 @@ class BlogController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $blogs,
+            'blogs' => $blogs,
         ], 200);
     }
 
@@ -59,7 +59,7 @@ class BlogController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $blog,
+            'blog' => $blog,
         ], 200);
     }
 
@@ -78,8 +78,8 @@ class BlogController extends Controller
                 // External URL
                 return $image;
             } else {
-                // Local storage
-                return url('storage/' . $image);
+                // Local storage with fixed IP address for Next.js
+                return 'http://127.0.0.1:8000/storage/' . $image;
             }
         }, $imageUrls);
     }

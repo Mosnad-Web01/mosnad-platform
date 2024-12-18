@@ -12,25 +12,32 @@ class BlogController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $blogs = Blog::latest()->get()->map(function ($blog) {
-            // Decode JSON fields
+        $perPage = 10; // Number of blogs per page
+        $page = $request->query('page', 1); // Get the 'page' query parameter
+
+        $blogs = Blog::latest()
+            ->paginate($perPage, ['*'], 'page', $page);
+
+        // Decode JSON fields and process images for each blog
+        $blogs->getCollection()->transform(function ($blog) {
             $blog->meta_keywords = $this->decodeJsonField($blog->meta_keywords);
             $blog->tags = $this->decodeJsonField($blog->tags);
             $blog->categories = $this->decodeJsonField($blog->categories);
-
-            // Process images
             $blog->images = $this->processImages($blog->images);
-
             return $blog;
         });
 
         return response()->json([
             'success' => true,
-            'blogs' => $blogs,
-        ], 200);
+            'blogs' => $blogs->items(),
+            'current_page' => $blogs->currentPage(),
+            'last_page' => $blogs->lastPage(),
+            'total' => $blogs->total(),
+        ]);
     }
+
 
     /**
      * Display the specified blog.

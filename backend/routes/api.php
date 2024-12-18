@@ -124,5 +124,6 @@ Route::get('/users/search', function (Request $request) {
 //blogs api routes
 Route::get('/blogs', [BlogController::class, 'index'])->withoutMiddleware('auth:sanctum');
 Route::get('/blogs/{id}', [BlogController::class, 'show'])->withoutMiddleware('auth:sanctum');
+Route::get('/search/blogs', [BlogController::class, 'search'])->withoutMiddleware('auth:sanctum');
 
 

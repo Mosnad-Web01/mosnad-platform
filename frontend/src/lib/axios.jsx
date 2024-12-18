@@ -48,6 +48,15 @@ export const get = async (url, params = {}) => {
     handleError(error);
   }
 };
+export const getSearch = async (url, params = {}) => {
+  try {
+    const response = await instance.get(url, { params });
+    return response;  // Return the full response
+  } catch (error) {
+    console.error('API Error:', error.response?.data?.message || error.message);
+    throw error.response?.data || error;
+  }
+};
 
 /**
  * Utility method for POST requests

@@ -11,6 +11,9 @@ import {
 	FaBookOpen,
 	FaEnvelope,
 	FaUserCircle,
+	FaNewspaper,
+	FaChalkboardTeacher,
+	FaInfoCircle,
 } from 'react-icons/fa';
 import Sidebar from './Sidebar';
 import NavLink from './NavLink';
@@ -25,11 +28,11 @@ const Navbar = () => {
 
   const navItems = [
     { label: "الرئيسية", href: "/", icon: <FaHome /> },
-    { label: "الشباب", href: "/student", icon: <FaUserPlus /> },
-    { label: "الشركات", href: "/company", icon: <FaBriefcase /> },
 	{ label: "الانشطة", href: "/activities", icon: <FaBookOpen /> },
-    { label: "المستخدم", href: "/student/user-profile", icon: <FaThList /> },
-	{label: "الشركات", href: "/company/company-profile", icon: <FaBriefcase />}
+	{ label: "المقالات", href: "/blogs", icon: <FaNewspaper  /> },
+	{label: "الوظائف" , href: "/job-opportunities", icon:<FaBriefcase />},
+	{label: "المخيمات", href: "/bootcamps", icon:<FaChalkboardTeacher  />},
+	{label: "عنّا" , href:"/about" , icon:<FaInfoCircle />},
   ];
 
 	return (

@@ -122,4 +122,10 @@ class User extends Authenticatable
                 $query->where('slug', $permission)
             )->exists();
     }
+
+    public function blog()
+    {
+        return $this->hasMany(Blog::class);
+    }
+    
 }

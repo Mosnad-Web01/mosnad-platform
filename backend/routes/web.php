@@ -13,6 +13,7 @@ use App\Http\Controllers\Dashboard\YouthFormController;
 use App\Http\Middleware\CheckPermission;
 use App\Http\Controllers\Dashboard\AdminTypeController;
 use App\Http\Controllers\Dashboard\PermissionController;
+use App\Http\Controllers\Dashboard\BlogController;
 
 // Public login routes
 Route::middleware('guest')->group(function () {
@@ -97,6 +98,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/permissions/create', fn() => abort(404));
         Route::post('/permissions', fn() => abort(404));
         Route::delete('/permissions/{permission}', fn() => abort(404));
+    });
+
+    Route::middleware(CheckPermission::class . ':manage-blogs')->group(function () {
+
+        // allow access to only the index, edit, and update routes
+        Route::resource('blogs', BlogController::class);
+
     });
 
 

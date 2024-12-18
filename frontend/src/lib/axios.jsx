@@ -1,3 +1,4 @@
+// src/lib/axios.js
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -45,6 +46,15 @@ export const get = async (url, params = {}) => {
     return response.data;
   } catch (error) {
     handleError(error);
+  }
+};
+export const getSearch = async (url, params = {}) => {
+  try {
+    const response = await instance.get(url, { params });
+    return response;  // Return the full response
+  } catch (error) {
+    console.error('API Error:', error.response?.data?.message || error.message);
+    throw error.response?.data || error;
   }
 };
 

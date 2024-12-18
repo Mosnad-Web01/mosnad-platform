@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { formatDate } from '@/utils/formatter'; // 
+import { formatEnglishDate } from '@/utils/formatter'; // 
 import Link from 'next/link';
 const JobCard = ({
 	title,
@@ -14,7 +14,7 @@ const JobCard = ({
 }) => {
 	
 	// Format the end date
-	  const formattedEndDate = formatDate(end_date);
+	  const formattedEndDate = formatEnglishDate(end_date);
 	return (
 		<div className="bg-pink-50 shadow-custom-all-sides rounded-[36px] p-4 w-full max-w-[504px] lg:w-[500px]">
 			{/* Company Logo */}

@@ -4,31 +4,123 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\JobOpportunity;
+use Illuminate\Http\Request;
 
 
 class JobOpportunityController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        //pass full url by modifying imageUrl in cases of local storage and external url
-        $opportunities = JobOpportunity::latest()->paginate(10)->map(function ($opportunity) {
-            if ($opportunity->imgurl) {
-                // check if the URL is an external URL
-                if (filter_var($opportunity->imgurl, FILTER_VALIDATE_URL)) {
-                    $opportunity->imgurl ?? $opportunity->imgurl;
-                } else {
-                    // generate the full URL for local storage
-                    $opportunity->imgurl = "http://127.0.0.1:8000/storage/" . $opportunity->imgurl;
-                }
-            } else {
-                $opportunity->imgurl = null;
-            }
+        $perPage = 6;
+        $page = $request->query('page', 1) || 1;
 
+        $opportunities = JobOpportunity::latest()
+            ->paginate($perPage, ['*'], 'page', $page);
+
+        //process images for each blog
+        $opportunities->getCollection()->transform(function ($opportunity) {
+            $opportunity->images = $this->processImages($opportunity->images);
             return $opportunity;
         });
 
         return response()->json([
-            'opportunities' => $opportunities,
+            'opportunities' => $opportunities->items(),
+            'success' => true,
+            'current_page' => $opportunities->currentPage(),
+            'last_page' => $opportunities->lastPage(),
+            'total' => $opportunities->total(),
+
         ], 200);
     }
+
+    // public function show($id)
+    // {
+    //     $oppotunity = JobOpportunity::find($id);
+
+    //     if (!$oppotunity) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'oppotunity not found.',
+    //         ], 404);
+    //     }
+
+    //     if ($oppotunity->imgurl) {
+    //         // check if the URL is an external URL
+    //         if (filter_var($oppotunity->imgurl, FILTER_VALIDATE_URL)) {
+    //             $oppotunity->imgurl ?? $oppotunity->imgurl;
+    //         } else {
+    //             // generate the full URL for local storage
+    //             $oppotunity->imgurl = "http://127.0.0.1:8000/storage/" . $oppotunity->imgurl;
+    //         }
+    //     } else {
+    //         $oppotunity->imgurl = null;
+    //     }
+
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'oppotunity' => $oppotunity,
+    //     ], 200);
+    // }
+
+
+    private function processImages($images)
+    {
+        $imageUrls = $images ? json_decode($images, true) : [];
+
+        return array_map(function ($image) {
+            if (filter_var($image, FILTER_VALIDATE_URL)) {
+                // External URL
+                return $image;
+            } else {
+                // Local storage with fixed IP address for Next.js
+                return 'http://127.0.0.1:8000/storage/' . $image;
+            }
+        }, $imageUrls);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
+
+        if (empty($query)) {
+            return response()->json([
+                'success' => true,
+                'opportunities' => [],
+                'message' => 'No search query provided',
+            ]);
+        }
+
+        try {
+            $opportunities = JobOpportunity::where(function ($q) use ($query) {
+                $q->where('title', 'LIKE', "%{$query}%")
+                    ->orWhere('required_skills', 'LIKE', "%{$query}%");
+            })
+                ->latest()
+                ->get();
+
+            // Transforming images
+            $opportunities = $opportunities->map(function ($opportunity) {
+                $opportunity->images = $this->processImages($opportunity->images);
+                return $opportunity;
+            });
+
+            return response()->json([
+                'success' => true,
+                'opportunities' => $opportunities,
+                'message' => $opportunities->count() > 0 ? 'Job Opportunities found' : 'No Job Opportunities found',
+            ]);
+
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            \Log::error('Search error: ', ['error' => $e->getMessage()]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error performing search',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
 }

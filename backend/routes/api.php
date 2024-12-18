@@ -109,6 +109,8 @@ Route::get('/bootcamps/{id}', [BootcampController::class, 'show']); // Endpoint:
 
 //JobOpportunity API Routes
 Route::get('/job-opportunities', [JobOpportunityController::class, 'index']);
+// Route::get('/job-opportunities/{id}', [JobOpportunityController::class, 'show'])->withoutMiddleware('auth:sanctum');
+Route::get('/search/job-opportunities', [JobOpportunityController::class, 'search'])->withoutMiddleware('auth:sanctum');
 
 // for Dashboard search modal
 Route::get('/users/search', function (Request $request) {

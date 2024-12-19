@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\JobOpportunity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 
 class JobOpportunityController extends Controller
@@ -14,12 +15,12 @@ class JobOpportunityController extends Controller
         $perPage = 6;
         $page = $request->query('page', 1) || 1;
 
-        $opportunities = JobOpportunity::latest()
+        $opportunities = JobOpportunity::where('is_approved', true)->latest()
             ->paginate($perPage, ['*'], 'page', $page);
 
-        //process images for each blog
+        //process image for each blog
         $opportunities->getCollection()->transform(function ($opportunity) {
-            $opportunity->images = $this->processImages($opportunity->images);
+            $opportunity->imgurl = $this->processImage($opportunity->imgurl);
             return $opportunity;
         });
 
@@ -64,19 +65,59 @@ class JobOpportunityController extends Controller
     // }
 
 
-    private function processImages($images)
+    private function processImage($image)
     {
-        $imageUrls = $images ? json_decode($images, true) : [];
 
-        return array_map(function ($image) {
-            if (filter_var($image, FILTER_VALIDATE_URL)) {
-                // External URL
-                return $image;
-            } else {
-                // Local storage with fixed IP address for Next.js
-                return 'http://127.0.0.1:8000/storage/' . $image;
-            }
-        }, $imageUrls);
+
+        if (filter_var($image, FILTER_VALIDATE_URL)) {
+            return $image;
+        } else {
+            return "http://127.0.0.1:8000/storage/" . $image;
+        }
+
+    }
+
+    public function store(Request $request)
+    {
+        $commonRules = [
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'required_skills' => 'required|string',
+            'experience' => 'required|string',
+            'position_level' => 'required|string',
+            'other_criteria' => 'nullable|string',
+            'imgurl' => 'required|image|mimes:png,jpg,jpeg,webp,svg|max:2048',
+            'end_date' => 'required|date|after:today',
+        ];
+
+        $validator = Validator::make($request->all(), $commonRules);
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->messages(),
+            ], 422);
+        }
+
+        $validatedData = $request->all();
+
+        $validatedData['is_approved'] = false;
+        $validatedData['user_id'] = auth()->id();
+
+        if ($request->hasFile('imgurl')) {
+            $imagePath = $request->file('imgurl')->store('job_opportunities', 'public');
+            $validatedData['imgurl'] = $imagePath;
+        }
+
+        $jobOpportunity = JobOpportunity::create($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Job opportunity created successfully.',
+            'data' => $jobOpportunity,
+        ], 201);
+
     }
 
     public function search(Request $request)
@@ -92,16 +133,17 @@ class JobOpportunityController extends Controller
         }
 
         try {
+
             $opportunities = JobOpportunity::where(function ($q) use ($query) {
                 $q->where('title', 'LIKE', "%{$query}%")
                     ->orWhere('required_skills', 'LIKE', "%{$query}%");
-            })
+            })->where('is_approved', true)
                 ->latest()
                 ->get();
 
             // Transforming images
             $opportunities = $opportunities->map(function ($opportunity) {
-                $opportunity->images = $this->processImages($opportunity->images);
+                $opportunity->imgurl = $this->processImage($opportunity->imgurl);
                 return $opportunity;
             });
 

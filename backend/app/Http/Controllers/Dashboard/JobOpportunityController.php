@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\JobOpportunity;
+
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class JobOpportunityController extends Controller
@@ -44,6 +45,12 @@ class JobOpportunityController extends Controller
             'end_date' => 'required|date|after:today',
         ]);
 
+
+        // add is_approved by admin
+        $validatedData['is_approved'] = true;
+
+        //add user_id
+        $validatedData['user_id'] = Auth::user()->id;
 
         // Handle the image upload if provided
         if ($request->hasFile('imgurl')) {

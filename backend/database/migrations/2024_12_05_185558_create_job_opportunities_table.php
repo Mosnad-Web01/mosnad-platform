@@ -21,6 +21,8 @@ return new class extends Migration
             $table->text('other_criteria')->nullable();
             $table->string('imgurl')->nullable();
             $table->date('end_date');
+            $table->boolean('is_approved')->default(false);
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

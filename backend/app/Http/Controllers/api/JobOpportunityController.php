@@ -14,7 +14,7 @@ class JobOpportunityController extends Controller
         $perPage = 6;
         $page = $request->query('page', 1) || 1;
 
-        $opportunities = JobOpportunity::latest()
+        $opportunities = JobOpportunity::where('is_approved', true)->latest()
             ->paginate($perPage, ['*'], 'page', $page);
 
         //process image for each blog
@@ -89,10 +89,11 @@ class JobOpportunityController extends Controller
         }
 
         try {
+
             $opportunities = JobOpportunity::where(function ($q) use ($query) {
                 $q->where('title', 'LIKE', "%{$query}%")
                     ->orWhere('required_skills', 'LIKE', "%{$query}%");
-            })
+            })->where('is_approved', true)
                 ->latest()
                 ->get();
 

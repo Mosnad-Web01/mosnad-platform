@@ -18,7 +18,8 @@ class JobOpportunity extends Model
         'position_level',
         'other_criteria',
         'imgurl',
-        'end_date'
+        'end_date',
+        'is_approved',
     ];
     public function applicants(): BelongsToMany
     {

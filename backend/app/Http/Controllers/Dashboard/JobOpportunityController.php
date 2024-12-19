@@ -45,6 +45,9 @@ class JobOpportunityController extends Controller
         ]);
 
 
+        // add is_approved by admin
+        $validatedData['is_approved'] = true;
+
         // Handle the image upload if provided
         if ($request->hasFile('imgurl')) {
             $imagePath = $request->file('imgurl')->store('job_opportunities', 'public');

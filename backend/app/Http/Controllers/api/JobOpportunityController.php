@@ -85,7 +85,7 @@ class JobOpportunityController extends Controller
             'required_skills' => 'required|string',
             'experience' => 'required|string',
             'position_level' => 'required|string',
-            'other_criteria' => 'required|string',
+            'other_criteria' => 'nullable|string',
             'imgurl' => 'required|image|mimes:png,jpg,jpeg,webp,svg|max:2048',
             'end_date' => 'required|date|after:today',
         ];

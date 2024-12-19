@@ -1,7 +1,20 @@
-import React from "react";
-import StatusBadge from "../common/StatusBadge";
+import React, { useState } from "react";
+import JobsTable from "./manage-jobs/JobsTable";
+import JobForm from "./manage-jobs/JobForm";
 
 const JobOffers = () => {
+   const [activeTab, setActiveTab] = useState('show-jobs');
+    const tabData = [
+      {
+        label: 'عرض الوظائف',
+        name: 'show-jobs',
+      },
+      {
+        label: 'انشاء الوظائف',
+        name: 'create-job',
+      },
+    ];
+
   const data = [
     {
       id: 1,
@@ -23,60 +36,38 @@ const JobOffers = () => {
     },
   ];
 
+  const getButtonStyle = (name) =>
+		`text-sm px-4 py-2 rounded-lg no-underline transition duration-300 ${
+			name === activeTab
+				? 'bg-[#21255C] text-white'
+				: 'text-gray-400 hover:text-purple-900 hover:scale-105 '
+		}`;
+
   return (
-    <article className="bg-white shadow rounded-2xl p-4 mt-4 max-h-screen w-full overflow-auto">
-      <h2 className="text-xs sm:text-sm text-[#21255C] font-bold mb-8">
-        جميع عمليات التوظيف
-      </h2>
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-right text-[10px] sm:text-xs">
-          <thead className="bg-blue-800 text-white">
-            <tr>
-              <th className="py-5 px-2 sm:px-5 first:rounded-tr-xl first:rounded-br-xl">
-                ID
-              </th>
-              <th className="py-5 px-2">المجال المطلوب</th>
-              <th className="py-5 px-2">عدد الموظفين المطلوب</th>
-              <th className="py-5 px-2">تاريخ الطلب</th>
-              <th className="py-5 px-2">نوع الدوام</th>
-              <th className="py-5 px-2">حالة الطلب</th>
-              <th className="py-5 px-2 last:rounded-tl-xl last:rounded-bl-xl">
-                تفاصيل المتقدم
-              </th>
-            </tr>
-          </thead>
-          <tbody className="text-[#21255C]">
-            {data.map((item, index) => (
-              <tr
-                key={index}
-                className="border-b hover:bg-gray-100 transition duration-150"
-              >
-                <td className="py-4 px-2 sm:px-6">{item.id}</td>
-                <td className="py-4 px-2">{item.field}</td>
-                <td className="py-4 px-2">{item.employeesRequired}</td>
-                <td className="py-4 px-2">{item.date}</td>
-                <td className="py-4 px-2">{item.employmentType}</td>
-                <td className="py-4 px-2">
-                  <StatusBadge
-                    text={item.applicationStatus.text}
-                    status={item.applicationStatus.status}
-                  />
-                </td>
-                <td className="py-4 px-2">
-                  {item.applicantDetailsAvailable ? (
-                    <button className="text-[#21255C] text-sm hover:underline">
-                      👁
-                    </button>
-                  ) : (
-                    <StatusBadge text="غير متاح حاليا" status="rejected" />
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </article>
+		<>
+			<nav className="bg-white shadow p-4 rounded-2xl my-4 flex justify-between items-center">
+				<div className="flex gap-4">
+					{tabData.map((tab) => {
+						return (
+							<button
+								key={tab.name}
+								className={getButtonStyle(tab.name)}
+								onClick={() => setActiveTab(tab.name)}>
+								{tab.label}
+							</button>
+						);
+					})}
+				</div>
+			</nav>
+
+			<main>
+                {activeTab === 'show-jobs' &&   <JobsTable data={data} /> }
+                {activeTab === 'create-job' && <JobForm />}
+         
+            
+            </main>
+		</>
+  
   );
 };
 

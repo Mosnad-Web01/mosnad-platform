@@ -31,9 +31,7 @@ const CompanyFormData = ({ userData }) => {
             <Image src="/manage-account-icon.svg" alt="User" width={16} height={16} />
             <h2 className="text-base font-semibold text-[#21255C]">معلومات الحساب</h2>
           </div>
-          <button onClick={() => setActiveTab("Edit")} className="px-4 py-2">
-            <Image src="/edit.svg" alt="Edit" width={20} height={20} />
-          </button>
+         
         </div>
 
         {/* Table */}

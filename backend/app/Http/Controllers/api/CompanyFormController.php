@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Http\Resources\CompanyFormResource;
 use Illuminate\Http\Request;
 use App\Models\CompanyForm;
 use App\Http\Controllers\Controller;
@@ -169,6 +170,17 @@ class CompanyFormController extends Controller
         return response()->json(['error' => 'Internal Server Error'], 500);
     }
 }
+
+
+public function show($userId)
+{
+    $companyForm = CompanyForm::with(['user.profile'])
+        ->where('user_id', $userId)
+        ->firstOrFail();
+
+    return new CompanyFormResource($companyForm);
+}
+
 
 
     /**

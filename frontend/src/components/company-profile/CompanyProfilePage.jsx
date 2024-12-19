@@ -6,15 +6,18 @@ import ManageAccount from './account/ManageAccount';
 import Notifications from './Notifications';
 import JobOffers from './JobOffers';
 import JobsApplicants from './JobsApplicants';
+import { icons } from 'lucide-react';
+import CompanyFormData from './CompanyFormData';
+import EditAccountData from './EditAccountData';
 
-const CompanyProfilePage = () => {
+const CompanyProfilePage = ({userData}) => {
 	const profile = {
 		image: '/userImage.svg',
-		name: 'مسند للتدريب والتوظيف',
+		name: userData.company_name,
 		flagIcon: '/flag.svg',
-		memberSince: 'عضو منذ سنة',
+		memberSince: userData.user_profile.created_at,
 		statusIcon: '/success.svg',
-		status: 'حساب نشط',
+		status: userData.user_profile.status,
 	};
 
 	const tabData = [
@@ -22,6 +25,18 @@ const CompanyProfilePage = () => {
 			label: 'إدارة الحساب',
 			name: 'manage-acount',
 			icon: '/manage-account-icon.svg',
+		},
+
+		{
+			label: 'جميع بيانات الاستبيان',
+			name: 'form-data',
+			icon: '/manage-account-icon.svg',
+		},
+
+		{
+			label: 'تعديل البيانات',
+			name: 'edit-data',
+			icon: '/verify-icon.svg',
 		},
 
 		{
@@ -58,7 +73,29 @@ const CompanyProfilePage = () => {
 							<Header title="إدارة الحساب" />
 							<main className="mt-4">
 								<div className="text-red-800">
-									<ManageAccount />
+									<ManageAccount userData={userData} />
+								</div>
+							</main>
+						</>
+					)}
+
+					{activeTab === 'form-data' && (
+						<>
+							<Header title="جميع بيانات الاستبيان" />
+							<main className="mt-4">
+								<div className="text-red-800">
+									<CompanyFormData userData={userData} />
+								</div>
+							</main>
+						</>
+					)}
+
+					{activeTab === 'edit-data' && (
+						<>
+							<Header title="تعديل البيانات" />
+							<main className="mt-4">
+								<div className="text-red-800">
+									<EditAccountData userData={userData} />
 								</div>
 							</main>
 						</>

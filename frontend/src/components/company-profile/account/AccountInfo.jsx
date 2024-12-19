@@ -20,17 +20,7 @@ const AccountInfo = ({ accountInfo, activetab, setActiveTab }) => {
 						</h2>
 					</div>
 					
-					<button
 						
-						onClick={() => setActiveTab('Edit')}
-						className="px-4 py-2">
-						<Image
-							src="/edit.svg"
-							alt="Edit"
-							width={20}
-							height={20}
-						/>
-					</button>
 				</div>
 
 				{/* Table */}

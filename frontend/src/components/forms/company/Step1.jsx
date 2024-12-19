@@ -89,9 +89,9 @@ const Step1 = ({ formData, updateFormData ,errors }) => {
         />
 
         <Input
-          label="تاريخ الميلاد"
+          label="تاريخ انشاء الشركة"
           name="birth_date"
-          placeholder="تاريخ الميلاد"
+          placeholder="تاريخ انشاء الشركة"
           value={formData.birth_date || ""}
           onChange={handleInputChange("birth_date")}
           type="date"

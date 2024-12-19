@@ -55,10 +55,10 @@ class AuthController extends Controller
 
         $companyForm = null;
         // create company record if role_id is 2 (Company role)
-        if ($roleId == 2) {
 
+        if ($roleId == 2) {
             $companyForm = $user->companyForm()->create([
-                'name' => $request->input('company_name'),
+                'company_name' => $request->input('company_name'), // Create record with company_name only
                 'user_id' => $user->id
             ]);
         }
@@ -72,6 +72,7 @@ class AuthController extends Controller
             'role' => $user->role->name,
             'status' => $user->status,
             'token' => $token,
+            'companyForm' => $companyForm, // Include companyForm in the response
         ], 200);
     }
 

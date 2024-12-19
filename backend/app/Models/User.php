@@ -96,6 +96,7 @@ class User extends Authenticatable
         return $this->hasOne(YouthForm::class);
     }
 
+   
      // Profile relationship
      public function profile()
      {

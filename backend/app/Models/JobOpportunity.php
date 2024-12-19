@@ -20,6 +20,7 @@ class JobOpportunity extends Model
         'imgurl',
         'end_date',
         'is_approved',
+        'user_id',
     ];
     public function applicants(): BelongsToMany
     {
@@ -27,8 +28,16 @@ class JobOpportunity extends Model
             ->withTimestamps(); // Tracks the applied time
     }
 
+    // get the user who created the job opportunity
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
 
     protected $casts = [
         'end_date' => 'date',
     ];
+
 }

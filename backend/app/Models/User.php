@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 class User extends Authenticatable
@@ -80,12 +81,20 @@ class User extends Authenticatable
         return $this->belongsTo(Bootcamp::class);
     }
 
+      // Relationship for job opportunities created by the user
+      public function jobOpportunities(): HasMany
+      {
+          return $this->hasMany(JobOpportunity::class);
+      }
 
-    public function jobOpportunities(): BelongsToMany
+    public function appliedJobOpportunities(): BelongsToMany
     {
         return $this->belongsToMany(JobOpportunity::class, 'job_opportunity_applies')
             ->withTimestamps(); // Tracks the applied time
     }
+
+
+
     public function companyForm()
     {
         return $this->hasOne(CompanyForm::class);
@@ -96,13 +105,12 @@ class User extends Authenticatable
         return $this->hasOne(YouthForm::class);
     }
 
-   
+
      // Profile relationship
      public function profile()
      {
          return $this->hasOne(UserProfile::class);
      }
-
 
 
 
@@ -128,5 +136,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Blog::class);
     }
-    
+
 }

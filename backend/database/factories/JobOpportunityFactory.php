@@ -60,6 +60,7 @@ class JobOpportunityFactory extends Factory
             'imgurl' => $this->faker->imageUrl(640, 480, 'jobs', true),
             'end_date' => $this->faker->dateTimeBetween('now', '+1 year')->format('Y-m-d'),
             'is_approved' => true,
+            'user_id' => 1,
         ];
     }
 

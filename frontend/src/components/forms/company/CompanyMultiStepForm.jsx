@@ -88,6 +88,12 @@ const CompanyMultiStepForm = () => {
         tempErrors.email =
           "البريد الإلكتروني غير صالح. يرجى إدخال بريد إلكتروني صحيح";
       }
+      if (!formData.city) tempErrors.city = "المدينة مطلوبة";
+      if (!formData.address) tempErrors.address = "العنوان مطلوب";
+      if (!formData.company_name) tempErrors.company_name = "اسم الشركة مطلوب";
+      if(!formData.country) tempErrors.country = "البلد مطلوب";
+      if (!formData.birth_date) tempErrors.birth_date = "تاريخ انشاء الشركة مطلوب";
+      if (!formData.phone_number) tempErrors.phone_number = "رقم الهاتف مطلوب";
       if (!formData.industry) tempErrors.industry = "الرجاء اختيار الصناعة";
       if (!formData.employees) tempErrors.employees = "عدد الموظفين مطلوب";
       if (!formData.stage) tempErrors.stage = "المرحلة يجب أن تكون محددة";

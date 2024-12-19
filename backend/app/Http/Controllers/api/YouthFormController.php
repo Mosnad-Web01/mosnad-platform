@@ -60,7 +60,6 @@ class YouthFormController extends Controller
             'city' => $validated['city'],
             'address' => $validated['address'],
             'birth_date' => $validated['birth_date'],
-          
         ]);
 
         // Fetch the user and update status if necessary

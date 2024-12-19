@@ -25,13 +25,86 @@ const Step1 = ({ formData, updateFormData ,errors }) => {
       <form>
         {/* Text Inputs */}
         <Input
-          label="ادخل اسم شركتك"
+          label="ادخل اسمك"
           name="name"
           type="text"
-          placeholder="أسم شركتك"
+          placeholder="ادخل اسمك"
           value={formData.name || ""}
           onChange={handleInputChange("name")}
           errorMessage={errors.name}
+        />
+        <Input
+          label="ادخل اسم شركتك"
+          name="company_name"
+          type="text"
+          placeholder="أسم شركتك"
+          value={formData.company_name || ""}
+          onChange={handleInputChange("company_name")}
+          errorMessage={errors.company_name}
+        />
+        <FieldContainer
+          label="البلد"
+          error={errors.country}
+        >
+          <Input
+            name="country"
+            type="text"
+            placeholder="أدخل اسم البلد"
+            value={formData.country || ""}
+            onChange={handleInputChange("country")}
+          />
+        </FieldContainer>
+
+        <FieldContainer
+          label="أختر المدينة"
+          className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-5"
+          error={errors.city}
+        >
+          {["صنعاء", "الحديدة", "عدن", "المكلا"].map((city) => (
+            <RadioButton
+              key={city}
+              name="city"
+              label={city}
+              value={city}
+              checked={formData.city === city}
+              onChange={(value) => handleRadioChange("city", value)}
+            />
+          ))}
+          <Input
+            name="city"
+            type="text"
+            placeholder="أخرى أذكرها هنا"
+            value={formData.city || ""}
+            onChange={handleInputChange("city")}
+          />
+        </FieldContainer>
+
+        <Input
+          label="العنوان"
+          name="address"
+          placeholder="أدخل عنوانك"
+          value={formData.address || ""}
+          onChange={handleInputChange("address")}
+          errorMessage={errors.address}
+        />
+
+        <Input
+          label="تاريخ الميلاد"
+          name="birth_date"
+          placeholder="تاريخ الميلاد"
+          value={formData.birth_date || ""}
+          onChange={handleInputChange("birth_date")}
+          type="date"
+          errorMessage={errors.birth_date}
+        />
+
+        <Input
+          label="رقم الجوال"
+          name="phone_number"
+          placeholder="رقم الجوال"
+          value={formData.phone_number || ""}
+          onChange={handleInputChange("phone_number")}
+          errorMessage={errors.phone_number}
         />
 
         <Input

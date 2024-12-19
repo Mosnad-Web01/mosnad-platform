@@ -76,9 +76,11 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
-Route::get('/company-forms', [CompanyFormController::class, 'index']);
+
+Route::get('/company-forms/{id}', [CompanyFormController::class, 'show']); //
 Route::post('/company-forms', [CompanyFormController::class, 'store']);
-Route::get('/company-name/{user_id}', [CompanyFormController::class, 'getCompanyByUserId']);
+Route::put('/company-forms', [CompanyFormController::class, 'update']);
+Route::get('/company-info/{user_id}', [CompanyFormController::class, 'getCompanyInfoByUserId']);
 Route::put('/company-forms/{id}', [CompanyFormController::class, 'update']);
 
 

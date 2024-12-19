@@ -16,14 +16,14 @@
                     <x-table.cell>
                         <a href="{{ route('company-surveys.show', $form->id) }}"
                             class="text-blue-600 hover:text-blue-800 hover:underline">
-                            {{ $form->name }}
+                            {{ $form->user->name }}
                         </a>
                     </x-table.cell>
 
                     <!-- Form Email -->
                     <x-table.cell>
-                        <a href="mailto:{{ $form->email }}" class="text-blue-600 hover:text-blue-800 hover:underline">
-                            {{ $form->email }}
+                        <a href="mailto:{{ $form->user->email }}" class="text-blue-600 hover:text-blue-800 hover:underline">
+                            {{ $form->user->email }}
                         </a>
                     </x-table.cell>
 

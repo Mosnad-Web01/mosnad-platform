@@ -17,9 +17,9 @@ class JobOpportunityController extends Controller
         $opportunities = JobOpportunity::latest()
             ->paginate($perPage, ['*'], 'page', $page);
 
-        //process images for each blog
+        //process image for each blog
         $opportunities->getCollection()->transform(function ($opportunity) {
-            $opportunity->images = $this->processImages($opportunity->images);
+            $opportunity->imgurl = $this->processImage($opportunity->imgurl);
             return $opportunity;
         });
 
@@ -64,19 +64,16 @@ class JobOpportunityController extends Controller
     // }
 
 
-    private function processImages($images)
+    private function processImage($image)
     {
-        $imageUrls = $images ? json_decode($images, true) : [];
 
-        return array_map(function ($image) {
-            if (filter_var($image, FILTER_VALIDATE_URL)) {
-                // External URL
-                return $image;
-            } else {
-                // Local storage with fixed IP address for Next.js
-                return 'http://127.0.0.1:8000/storage/' . $image;
-            }
-        }, $imageUrls);
+
+    if(filter_var($image, FILTER_VALIDATE_URL)){
+        return $image;
+    }else{
+        return "http://127.0.0.1:8000/storage/" . $image;
+    }
+
     }
 
     public function search(Request $request)
@@ -101,7 +98,7 @@ class JobOpportunityController extends Controller
 
             // Transforming images
             $opportunities = $opportunities->map(function ($opportunity) {
-                $opportunity->images = $this->processImages($opportunity->images);
+                $opportunity->imgurl = $this->processImage($opportunity->imgurl);
                 return $opportunity;
             });
 

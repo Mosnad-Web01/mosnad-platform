@@ -10,13 +10,16 @@ class CompanyFormController extends Controller
 {
     public function index()
     {
-        $companyForms = CompanyForm::orderBy('created_at', 'desc')->paginate(9);
+        $companyForms = CompanyForm::with('user') // Include the user relationship
+            ->orderBy('created_at', 'desc')
+            ->paginate(9);
+    
         return view('dashboard.company-surveys.index', compact('companyForms'));
     }
 
     public function show($id)
     {
-        $companyForm = CompanyForm::findOrFail($id); // Retrieve survey by ID or fail
+        $companyForm = CompanyForm::with('user')->findOrFail($id); // Include the user relationship
         return view('dashboard.company-surveys.show', compact('companyForm'));
     }
 

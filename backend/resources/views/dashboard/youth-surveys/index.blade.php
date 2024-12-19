@@ -21,7 +21,7 @@
                     <x-table.cell>
                         <a href="{{ route('youth-surveys.show', $form->id) }}"
                            class="text-blue-600 hover:text-blue-800 hover:underline">
-                            {{ $form->name }}
+                            {{ $form->user->name }}
                         </a>
                     </x-table.cell>
 
@@ -37,7 +37,7 @@
                     </x-table.cell>
 
                     <!-- Phone Number -->
-                    <x-table.cell>{{ $form->phone }}</x-table.cell>
+                    <x-table.cell>{{ $form->phone_number }}</x-table.cell>
                 </tr>
             @endforeach
         </x-table>

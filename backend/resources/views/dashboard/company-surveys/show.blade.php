@@ -10,8 +10,8 @@
             <div class="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition-all duration-300 border border-gray-100">
                 <h2 class="text-xl font-bold text-indigo-900 mb-4 pb-2">المعلومات العامة</h2>
                 <div class="space-y-4 text-sm">
-                    <p><span class="text-gray-600">الإسم:</span> <span class="font-medium text-gray-900">{{ $companyForm->name }}</span></p>
-                    <p><span class="text-gray-600">البريد الإلكتروني:</span> <span class="font-medium text-gray-900">{{ $companyForm->email }}</span></p>
+                    <p><span class="text-gray-600">الإسم:</span> <span class="font-medium text-gray-900">{{ $companyForm->user->name }}</span></p>
+                    <p><span class="text-gray-600">البريد الإلكتروني:</span> <span class="font-medium text-gray-900">{{ $companyForm->user->email }}</span></p>
                     <p><span class="text-gray-600">القطاع:</span> <span class="font-medium text-gray-900">{{ $companyForm->industry ?? 'غير متوفر' }}</span></p>
                     <p><span class="text-gray-600">عدد الموظفين:</span> <span class="font-medium text-gray-900">{{ $companyForm->employees ?? 'غير متوفر' }}</span></p>
                     <p><span class="text-gray-600">المرحلة:</span> <span class="font-medium text-gray-900">{{ $companyForm->stage ?? 'غير متوفر' }}</span></p>

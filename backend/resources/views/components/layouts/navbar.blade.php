@@ -47,9 +47,12 @@
         <!-- User Avatar -->
         <div class="flex items-center space-x-2 border-r pr-4  border-gray-200 gap-2">
             <div>
-                <button class="relative  focus:outline-none p-2 ">
-                        <span class="material-icons text-2xl text-red-500 hover:scale-110 transition-transform duration-300 ">logout</span>
-                </button>
+         
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf        
+                    <button class="material-icons text-2xl text-red-500 hover:scale-110 transition-transform duration-300 ">logout</button>
+                </form>
+              
             </div>
             <div class="flex flex-col items-end space-y-1 cursor-pointer">
                 <span class="text-gray-900 font-bold text-md ">

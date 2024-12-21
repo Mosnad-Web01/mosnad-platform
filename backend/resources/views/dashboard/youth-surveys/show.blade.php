@@ -50,18 +50,16 @@
                     <p><span class="text-gray-600">هل يعرف لغات برمجة أخرى؟:</span>
                         <span class="font-medium text-gray-900">{{ $youthForm->knows_other_languages ? 'نعم' : 'لا' }}</span>
                     </p>
-                    <p><span class="text-gray-600">لغات البرمجة:</span>
+                    <p>
+                        <span class="text-gray-600">لغات البرمجة:</span>
                         <span class="font-medium text-gray-900">
-
-                            @if ($youthForm->languages == null)
-                            غير متوفر
+                            @if ($youthForm->languages)
+                          
+                            {{ $youthForm->languages }},
+                          
                             @else
-                            @foreach(json_decode($youthForm->languages) as $language)
-                            {{ $language }},
-                            @endforeach
+                            غير متوفر
                             @endif
-
-
                         </span>
                     </p>
                 </div>

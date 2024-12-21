@@ -11,7 +11,7 @@ const TeamMembersSection = () => {
 			{/* Team Members */}
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center justify-center">
 				{/* Member 1 */}
-				<div className="flex flex-col items-center">
+				<div data-aos="fade-up" className="flex flex-col items-center">
 					<figure className="relative overflow-hidden  md:w-[372px] md:h-[368px]">
 						<Image
 							src="/team-member.svg"
@@ -23,7 +23,7 @@ const TeamMembersSection = () => {
 					</figure>
 				</div>
 
-				<div className="flex flex-col items-center">
+				<div data-aos="fade-up" className="flex flex-col items-center">
 					<figure className="relative overflow-hidden shadow-lg md:w-[372px] md:h-[368px]">
 						<Image
 							src="/eman-profile.svg" // Replace with the correct path to your image

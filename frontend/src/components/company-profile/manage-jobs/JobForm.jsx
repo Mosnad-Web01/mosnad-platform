@@ -47,7 +47,18 @@ const JobForm = () => {
     
     if (!formData.end_date) {
       newErrors.end_date = "يرجى اختيار تاريخ الانتهاء";
+      
     }
+
+    if(formData.end_date){
+      const today = new Date();
+      const endDate = new Date(formData.end_date);
+      if (endDate < today) {
+        newErrors.end_date = "تاريخ الانتهاء يجب ان يكون بعد التاريخ الحالي";
+      }
+    }
+
+
 
     if (!formData.imgurl) {
       newErrors.imgurl = "يرجى تحميل صورة";
@@ -129,11 +140,6 @@ const JobForm = () => {
   return (
     <section className="bg-white m-2 rounded-xl p-4">
       <ToastContainer />
-      {isSubmitting ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
-        </div>
-      ) : (
         <form onSubmit={handleSubmit} className="grid lg:grid-cols-2 gap-6">
           <div>
             <Input
@@ -245,7 +251,6 @@ const JobForm = () => {
             {isSubmitting ? "جاري الإرسال..." : "إرسال"}
           </button>
         </form>
-      )}
     </section>
   );
 };

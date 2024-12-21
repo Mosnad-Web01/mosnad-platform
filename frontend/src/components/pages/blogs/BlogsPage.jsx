@@ -1,14 +1,19 @@
 "use client";
-import { Pagination } from '@/components/common/Pagination';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { getSearch } from '@/lib/axios';
-import debounce from 'lodash/debounce';
-import SkeletonCard from './SkeletonCard';
+import { Pagination } from "@/components/common/Pagination";
+import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { getSearch } from "@/lib/axios";
+import debounce from "lodash/debounce";
+import SkeletonCard from "./SkeletonCard";
 
-export const BlogsPage = ({ blogs: initialBlogs, currentPage, lastPage, total }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+export const BlogsPage = ({
+  blogs: initialBlogs,
+  currentPage,
+  lastPage,
+  total,
+}) => {
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [error, setError] = useState(null);
@@ -24,14 +29,14 @@ export const BlogsPage = ({ blogs: initialBlogs, currentPage, lastPage, total })
     try {
       setIsSearching(true);
       setError(null);
-      const { data } = await getSearch('/search/blogs', { query });
+      const { data } = await getSearch("/search/blogs", { query });
       if (data?.success) {
         setSearchResults(data.blogs);
       }
     } catch (err) {
       setSearchResults([]);
-      setError(err?.message || 'Failed to fetch search results');
-      console.error('Search error:', err);
+      setError(err?.message || "Failed to fetch search results");
+      console.error("Search error:", err);
     } finally {
       setIsSearching(false);
     }
@@ -40,7 +45,7 @@ export const BlogsPage = ({ blogs: initialBlogs, currentPage, lastPage, total })
   useEffect(() => {
     debouncedSearch(searchQuery);
     return () => debouncedSearch.cancel();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   const displayedBlogs = searchQuery.trim() ? searchResults : initialBlogs;
@@ -98,7 +103,7 @@ export const BlogsPage = ({ blogs: initialBlogs, currentPage, lastPage, total })
               {displayedBlogs?.map((blog) => (
                 <div
                   key={blog.id}
-                  className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
+                  className="bg-white rounded-lg shadow-lg overflow-hidden  flex flex-col"
                 >
                   {/* Blog Image */}
                   {blog.images?.[0] && (
@@ -112,27 +117,29 @@ export const BlogsPage = ({ blogs: initialBlogs, currentPage, lastPage, total })
                   )}
 
                   {/* Blog Content */}
-                  <div className="p-6">
+                  <div className="p-6 flex flex-col flex-grow">
                     <h2 className="text-2xl font-semibold mb-2 text-gray-800 truncate">
                       {blog.title}
                     </h2>
                     <p className="text-sm text-gray-500 mb-2">
-                      <span className="font-medium">Categories:</span>{' '}
-                      {blog.categories?.join(' , ') || 'Uncategorized'}
+                      <span className="font-medium">Categories:</span>{" "}
+                      {blog.categories?.join(" , ") || "Uncategorized"}
                     </p>
                     <p className="text-sm text-gray-500 mb-4">
-                      <span className="font-medium">Tags:</span>{' '}
-                      {blog.tags?.join(' , ') || 'No Tags'}
+                      <span className="font-medium">Tags:</span>{" "}
+                      {blog.tags?.join(" , ") || "No Tags"}
                     </p>
-                    <p className="text-gray-600 mb-4 line-clamp-3">
-                      {blog.content || 'No content available.'}
+                    <p className="text-gray-600 mb-4 line-clamp-3 flex-grow">
+                      {blog.content || "No content available."}
                     </p>
-                    <Link
-                      href={`/blogs/${blog.id}`}
-                      className="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors duration-300"
-                    >
-                      Read More
-                    </Link>
+                    <div className="mt-auto">
+                      <Link
+                        href={`/blogs/${blog.id}`}
+                        className="inline-block bg-gradient text-white px-4 py-2 rounded-lg transition-colors duration-300"
+                      >
+                        قراءة المزيد
+                      </Link>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -142,7 +149,7 @@ export const BlogsPage = ({ blogs: initialBlogs, currentPage, lastPage, total })
           {/* No Results Message */}
           {displayedBlogs?.length === 0 && !isSearching && (
             <p className="text-center text-gray-500 text-lg">
-              {searchQuery ? 'No matching blogs found.' : 'No blogs available.'}
+              {searchQuery ? "No matching blogs found." : "No blogs available."}
             </p>
           )}
 

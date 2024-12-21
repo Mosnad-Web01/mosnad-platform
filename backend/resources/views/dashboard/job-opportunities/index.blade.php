@@ -1,10 +1,10 @@
 <!-- /resources/views/dashboard/job-opportunities/index.blade.php -->
-<x-layout title="Manage Job Opportunities">
-    <x-common.header title="إدارة الفرص" :showBackButton="true" />
+<x-layout title="إدارة الفرص">
+    <x-common.header title="إدارة الفرص" :showBackButton="true" />
 
     <x-common.content-container title="جدول الفرص">
         <x-table
-        :headers="['ID', 'اسم الفرصة', 'حالة الفرصة', 'تاريخ الانتهاء', 'المتقدمين']"
+        :headers="['ID', 'اسم الفرصة', 'حالة الفرصة', 'تاريخ الانتهاء', 'عدد المتقدمين', 'تأكيد النشر']"
         :items="$jobOpportunities"
         :hasActions="true"
          >
@@ -45,6 +45,20 @@
                             ({{ $jobOpportunity->applicants_count ?? "0" }})
                         </a>
                     </x-table.cell>
+
+                    <!-- Toggle Approval Button -->
+<x-table.cell>
+    <form action="{{ route('job-opportunities.toggle-approval', $jobOpportunity->id) }}" method="POST">
+        @csrf
+        @method('POST')
+        <button type="submit"
+            class="px-4 py-2 text-sm font-medium text-white 
+            {{ $jobOpportunity->is_approved ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700' }} 
+            rounded-full">
+            {{ $jobOpportunity->is_approved ? 'موافق' : 'غير موافق' }}
+        </button>
+    </form>
+</x-table.cell>
 
                     <!-- Action Buttons -->
                     <x-table.cell>

@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
     //checks manage-job-opportunities permission
     Route::middleware(CheckPermission::class . ':manage-job-opportunities')->group(function () {
         Route::resource('job-opportunities', JobOpportunityController::class);
+        Route::post('/job-opportunities/{jobOpportunity}/toggle-approval', [JobOpportunityController::class, 'toggleApproval'])
+        ->name('job-opportunities.toggle-approval');
     });
 
     // checks manage-users

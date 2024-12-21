@@ -73,6 +73,22 @@ class JobOpportunityController extends Controller
     {
         return view('dashboard.job-opportunities.edit', compact('jobOpportunity'));
     }
+
+
+    public function toggleApproval(JobOpportunity $jobOpportunity)
+{
+    // Toggle the 'is_approved' field
+    $jobOpportunity->is_approved = !$jobOpportunity->is_approved;
+    $jobOpportunity->save();
+
+    // Flash a success message
+    $status = $jobOpportunity->is_approved ? 'approved' : 'disapproved';
+    Session::flash('success', "The job opportunity has been $status successfully!");
+
+    return redirect()->route('job-opportunities.index');
+}
+
+
     public function update(Request $request, JobOpportunity $jobOpportunity)
     {
 

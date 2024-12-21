@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\JobOpportunity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Services\NotificationService;
 
 
 class JobOpportunityController extends Controller
@@ -111,12 +112,21 @@ class JobOpportunityController extends Controller
         }
 
         $jobOpportunity = JobOpportunity::create($validatedData);
+        // Send notification
+        NotificationService::send(
+            'job_opportunity',
+            'فرصة عمل جديدة تم إضافته بواسطة بإنتظار الموافقة ' . auth()->user()->name,
+            route('job-opportunities.index', $jobOpportunity->id),
+            'manage-job-opportunities',
+            ['job_id' => $jobOpportunity->id]
+        );
 
         return response()->json([
             'success' => true,
             'message' => 'Job opportunity created successfully.',
             'data' => $jobOpportunity,
         ], 201);
+
 
     }
 

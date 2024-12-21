@@ -137,4 +137,10 @@ class User extends Authenticatable
         return $this->hasMany(Blog::class);
     }
 
+    public function notifications(): BelongsToMany
+    {
+        return $this->belongsToMany(Notification::class, 'notification_user')
+            ->withTimestamps();
+    }
+
 }

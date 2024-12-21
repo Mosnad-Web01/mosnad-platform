@@ -50,7 +50,28 @@ class YouthFormController extends Controller
 
         
          // Create the youth form data
-    $youthForm = YouthForm::create($validated);
+    $youthForm = YouthForm::create(
+      [
+        'gender' => $validated['gender'],
+        'is_it_graduate' => $validated['is_it_graduate'],
+        'job_interest' => $validated['job_interest'],
+        'motivation' => $validated['motivation'],
+        'career_goals' => $validated['career_goals'],
+        'project_ideas' => $validated['project_ideas'],
+        'has_workshops' => $validated['has_workshops'],
+        'workshop_clarify' => $validated['workshop_clarify'] ?? null,
+        'has_coding_experience' => $validated['has_coding_experience'],
+        'coding_clarify' => $validated['coding_clarify'] ?? null,
+        'knows_other_languages' => $validated['knows_other_languages'],
+        'languages' => $validated['languages'] ?? null,
+        'creative_problem_solving' => $validated['creative_problem_solving'],
+        'website_vs_webapp' => $validated['website_vs_webapp'],
+        'usability_steps' => $validated['usability_steps'],
+        'additional_info' => $validated['additional_info'],
+        'document' => Arr::get($validated, 'document'),
+        'user_id' => $validated['user_id']
+      ]
+    );
 
         // Create the user profile data
         UserProfile::create([
@@ -139,7 +160,31 @@ public function update(Request $request, $id)
 
     
     // Update the youth form data
-    $youthForm->update($validated);
+    $youthForm->update(
+        [
+            'gender' => $validated['gender'] ?? $youthForm->gender,
+            'is_it_graduate' => $validated['is_it_graduate'] ?? $youthForm->is_it_graduate,
+            'job_interest' => $validated['job_interest'] ?? $youthForm->job_interest,
+            'motivation' => $validated['motivation'] ?? $youthForm->motivation,
+            'career_goals' => $validated['career_goals'] ?? $youthForm->career_goals,
+            'project_ideas' => $validated['project_ideas'] ?? $youthForm->project_ideas,
+            'has_workshops' => $validated['has_workshops'] ?? $youthForm->has_workshops,
+            'workshop_clarify' => $validated['workshop_clarify'] ?? $youthForm->workshop_clarify,
+            'has_coding_experience' => $validated['has_coding_experience'] ?? $youthForm->has_coding_experience,
+            'coding_clarify' => $validated['coding_clarify'] ?? $youthForm->coding_clarify,
+            'knows_other_languages' => $validated['knows_other_languages'] ?? $youthForm->knows_other_languages,
+            'languages' => $validated['languages'] ?? $youthForm->languages,
+            'creative_problem_solving' => $validated['creative_problem_solving'] ?? $youthForm->creative_problem_solving,
+            'website_vs_webapp' => $validated['website_vs_webapp'] ?? $youthForm->website_vs_webapp,
+            'usability_steps' => $validated['usability_steps'] ?? $youthForm->usability_steps,
+            'additional_info' => $validated['additional_info'] ?? $youthForm->additional_info,
+
+
+
+
+
+        ]
+    );
 
     // Update the user profile data
     $profile = UserProfile::where('user_id', $youthForm->user_id)->first();

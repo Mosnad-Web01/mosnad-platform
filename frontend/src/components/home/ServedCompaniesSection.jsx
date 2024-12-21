@@ -22,7 +22,7 @@ const ServedCompaniesSection = () => {
         <div className="max-w-screen-xl mx-auto px-8 py-8 md:py-2">
           {/* Grouped Mosnad Logo and Text */}
           <div className="flex flex-col justify-between items-center md:flex-row gap-14">
-            <div className="flex flex-col gap-6 items-center justify-center">
+            <div data-aos="fade-up" className="flex flex-col gap-6 items-center justify-center">
               {/* Mosnad Logo */}
               <figure className="max-w-[159px] max-h-[50px]">
                 <Image src="/nav-logo.png" alt="Mosnad" width={159} height={50} />
@@ -37,7 +37,7 @@ const ServedCompaniesSection = () => {
             </div>
 
             {/* Servied Companies Logos */}
-            <figure className="max-w-[150px] max-h-[60px] md:max-w-[200px] md:max-h-[100px]">
+            <figure data-aos="fade-up" className="max-w-[150px] max-h-[60px] md:max-w-[200px] md:max-h-[100px]">
               <Image
                 src="/jisr-logo.svg"
                 alt="Jisr-logo.svg"
@@ -46,7 +46,7 @@ const ServedCompaniesSection = () => {
               />
             </figure>
 
-            <figure className="max-w-[150px] max-h-[60px] md:max-w-[200px] md:max-h-[100px]">
+            <figure data-aos="fade-up" className="max-w-[150px] max-h-[60px] md:max-w-[200px] md:max-h-[100px]">
               <Image
                 src="/squadi-logo.svg"
                 alt="Squadi-logo.svg"

@@ -46,7 +46,7 @@ const Navbar = () => {
 				<div className="flex flex-row-reverse py-4 px-0 md:px-1 lg:px-2 xl:px-4 items-center justify-between md:flex-row">
 					{/* Logo */}
 					<div className="md:flex md:items-center md:gap-12">
-						<a href="#" className="block text-teal-600">
+						<a href="/" className="block text-teal-600">
 							<Image
 								src="/nav-logo.png"
 								alt="Mosnad Logo"

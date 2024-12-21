@@ -14,6 +14,7 @@ use App\Http\Middleware\CheckPermission;
 use App\Http\Controllers\Dashboard\AdminTypeController;
 use App\Http\Controllers\Dashboard\PermissionController;
 use App\Http\Controllers\Dashboard\BlogController;
+use App\Http\Controllers\Dashboard\NotificationController;
 
 // Public login routes
 Route::middleware('guest')->group(function () {
@@ -24,8 +25,12 @@ Route::middleware('guest')->group(function () {
 
 // Protected dashboard routes
 Route::middleware('auth')->group(function () {
+
     Route::get('/', [DashboardController::class, 'index'])->name('home');
     Route::post('/logout', [DashboardSessionController::class, 'logout'])->name('logout');
+
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 
 
     //checks manage-job-opportunities permission

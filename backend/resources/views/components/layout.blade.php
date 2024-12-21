@@ -67,6 +67,137 @@
         {{-- Login Page --}}
         {{ $slot }}
     @endif
+    <script src="https://js.pusher.com/8.0/pusher.min.js"></script>
+
+<script>
+    let notifications = [];
+    let isDropdownOpen = false;
+
+    // Initialize notifications
+    function initializeNotifications() {
+        fetchNotifications();
+        setupEventListeners();
+        setupPusher();
+    }
+
+    // Fetch notifications from server
+    async function fetchNotifications() {
+        try {
+            const response = await fetch('/notifications');
+            notifications = await response.json();
+            updateNotificationsList();
+            updateUnreadCount();
+        } catch (error) {
+            console.error('Error fetching notifications:', error);
+        }
+    }
+
+    // Update notifications list in DOM
+    function updateNotificationsList() {
+        const notificationList = document.getElementById('notificationList');
+
+        if (notifications.length === 0) {
+            notificationList.innerHTML = `
+            <div class="text-gray-500 text-center py-4">
+                No notifications
+            </div>
+        `;
+            return;
+        }
+
+        notificationList.innerHTML = notifications.map(notification => `
+        <div onclick="handleNotificationClick(${notification.id}, '${notification.link}')"
+            class="p-3 hover:bg-gray-50 cursor-pointer border-b last:border-b-0">
+            <div class="flex items-center">
+                <div class="${!notification.is_read ? 'font-bold' : ''}">
+                    ${notification.message}
+                </div>
+            </div>
+            <div class="text-xs text-gray-500 mt-1">
+                ${formatDate(notification.created_at)}
+            </div>
+        </div>
+    `).join('');
+    }
+
+    // Update unread count
+    function updateUnreadCount() {
+        const unreadCount = notifications.filter(n => !n.is_read).length;
+        const countElement = document.getElementById('notificationCount');
+
+        if (unreadCount > 0) {
+            countElement.textContent = unreadCount;
+            countElement.classList.remove('hidden');
+        } else {
+            countElement.classList.add('hidden');
+        }
+    }
+
+    // Toggle dropdown
+    function toggleNotifications() {
+        const dropdown = document.getElementById('notificationDropdown');
+        isDropdownOpen = !isDropdownOpen;
+        dropdown.classList.toggle('hidden');
+    }
+
+    // Handle notification click
+    async function handleNotificationClick(id, link) {
+        try {
+            const notification = notifications.find(n => n.id === id);
+            if (!notification.is_read) {
+                await fetch(`/notifications/${id}/mark-as-read`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                });
+                notification.is_read = true;
+                updateUnreadCount();
+                updateNotificationsList();
+            }
+            if (link) {
+                window.location.href = link;
+            }
+        } catch (error) {
+            console.error('Error marking notification as read:', error);
+        }
+    }
+
+    // Setup Pusher for real-time updates
+    function setupPusher() {
+        // Make sure you have included Pusher JS library
+        const pusher = new Pusher('your-pusher-key', {
+            cluster: 'your-cluster'
+        });
+
+        const channel = pusher.subscribe('notifications');
+        channel.bind('NewNotification', function (data) {
+            notifications.unshift(data.notification);
+            updateNotificationsList();
+            updateUnreadCount();
+        });
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (event) {
+            const component = document.getElementById('notificationComponent');
+            if (!component.contains(event.target) && isDropdownOpen) {
+                toggleNotifications();
+            }
+        });
+    }
+
+    // Format date
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString();
+    }
+
+    // Initialize when document is ready
+    document.addEventListener('DOMContentLoaded', initializeNotifications);
+</script>
     <!-- Toast Container -->
     <script>
         function showToast(message, type = 'success', duration = 5000) {

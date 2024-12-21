@@ -1,12 +1,10 @@
 <!-- backend/resources/views/dashboard/blogs/create.blade.php -->
 <x-layout title="Add Blog">
-    <div class="max-w-6xl mx-auto px-4 py-8">
-        <!--Header -->
-        <div class="bg-white rounded-xl shadow-lg mb-6 p-6 " dir="rtl">
-          <h1 class="text-3xl font-bold text-gray-800">اضافة مدونة جديدة</h1>
-        </div>
+    <x-common.header title="اضافة مدونة جديدة" :showBackButton="true" />
 
-        <div class="bg-white rounded-lg shadow-lg p-6">
+    <x-common.content-container >
+     
+        <div class="bg-white rounded-lg  p-6">
             <form action="{{ route('blogs.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
 
@@ -62,7 +60,7 @@
                             <div class="flex text-sm text-gray-600">
                                 <label for="images"
                                     class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                                    <span class="ml-1" >Upload images</span>
+                                    <span class="ml-1">Upload images</span>
                                     <input id="images" name="images[]" type="file" class="sr-only" multiple
                                         accept="image/*" onchange="handleImagePreview(this)">
                                 </label>
@@ -77,7 +75,7 @@
                     </div>
 
                     @error('images')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -116,52 +114,52 @@
             </form>
 
         </div>
-    </div>
+    </x-common.content-container>
 
     <script>
-function handleImagePreview(input) {
-    const previewContainer = document.getElementById('imagePreviewContainer');
-    previewContainer.innerHTML = ''; // Clear previous previews
+        function handleImagePreview(input) {
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            previewContainer.innerHTML = ''; // Clear previous previews
 
-    if (input.files && input.files.length > 0) {
-        const dataTransfer = new DataTransfer();
+            if (input.files && input.files.length > 0) {
+                const dataTransfer = new DataTransfer();
 
-        Array.from(input.files).forEach((file, index) => {
-            const reader = new FileReader();
+                Array.from(input.files).forEach((file, index) => {
+                    const reader = new FileReader();
 
-            reader.onload = function (e) {
-                const previewWrapper = document.createElement('div');
-                previewWrapper.className = 'relative group';
+                    reader.onload = function(e) {
+                        const previewWrapper = document.createElement('div');
+                        previewWrapper.className = 'relative group';
 
-                const preview = document.createElement('img');
-                preview.src = e.target.result;
-                preview.className = 'w-full h-40 object-contain rounded-lg';
+                        const preview = document.createElement('img');
+                        preview.src = e.target.result;
+                        preview.className = 'w-full h-40 object-contain rounded-lg';
 
-                const removeButton = document.createElement('button');
-                removeButton.className = 'absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity';
-                removeButton.innerHTML = '×';
-                removeButton.type = 'button';
-                removeButton.onclick = function () {
-                    previewWrapper.remove();
-                    // Remove file from DataTransfer object
-                    const newDataTransfer = new DataTransfer();
-                    Array.from(input.files)
-                        .filter((_, i) => i !== index)
-                        .forEach(file => newDataTransfer.items.add(file));
-                    input.files = newDataTransfer.files;
-                };
+                        const removeButton = document.createElement('button');
+                        removeButton.className = 'absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity';
+                        removeButton.innerHTML = '×';
+                        removeButton.type = 'button';
+                        removeButton.onclick = function() {
+                            previewWrapper.remove();
+                            // Remove file from DataTransfer object
+                            const newDataTransfer = new DataTransfer();
+                            Array.from(input.files)
+                                .filter((_, i) => i !== index)
+                                .forEach(file => newDataTransfer.items.add(file));
+                            input.files = newDataTransfer.files;
+                        };
 
-                previewWrapper.appendChild(preview);
-                previewWrapper.appendChild(removeButton);
-                previewContainer.appendChild(previewWrapper);
-            };
+                        previewWrapper.appendChild(preview);
+                        previewWrapper.appendChild(removeButton);
+                        previewContainer.appendChild(previewWrapper);
+                    };
 
-            reader.readAsDataURL(file);
-            dataTransfer.items.add(file);
-        });
+                    reader.readAsDataURL(file);
+                    dataTransfer.items.add(file);
+                });
 
-        input.files = dataTransfer.files;
-    }
-}
+                input.files = dataTransfer.files;
+            }
+        }
     </script>
 </x-layout>

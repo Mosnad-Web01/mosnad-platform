@@ -13,7 +13,7 @@ class JobOpportunityController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = 6;
+        $perPage = 12;
         $page = $request->query('page', 1) || 1;
 
         $opportunities = JobOpportunity::where('is_approved', true)->latest()
@@ -34,6 +34,46 @@ class JobOpportunityController extends Controller
 
         ], 200);
     }
+
+
+    //get job apportunities for a specific user
+  
+    public function getUserOpportunities(Request $request)
+    {
+        try {
+            $userId = auth()->id();
+            $perPage = 12;
+            $page = $request->query('page', 1);
+    
+            $opportunities = JobOpportunity::where('user_id', $userId)
+                ->latest()
+                ->paginate($perPage, ['*'], 'page', $page);
+    
+            // Process image for each opportunity
+            $opportunities->getCollection()->transform(function ($opportunity) {
+                $opportunity->imgurl = $this->processImage($opportunity->imgurl);
+                // Add a readable status
+                $opportunity->status = $opportunity->is_approved ? 'Approved' : 'Pending Approval';
+                return $opportunity;
+            });
+    
+            return response()->json([
+                'success' => true,
+                'opportunities' => $opportunities->items(),
+                'current_page' => $opportunities->currentPage(),
+                'last_page' => $opportunities->lastPage(),
+                'total' => $opportunities->total(),
+            ], 200);
+    
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error retrieving job opportunities',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
     // public function show($id)
     // {

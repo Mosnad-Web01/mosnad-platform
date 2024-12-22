@@ -60,7 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // list other company routes here :
         Route::post('/job-opportunities', [JobOpportunityController::class, 'store']);
-
+        Route::get('/opportunities', [JobOpportunityController::class, 'getUserOpportunities']);
 
     });
 

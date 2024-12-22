@@ -15,13 +15,11 @@ const JobsTable = ({data}) => {
               ID
             </th>
             <th className="py-5 px-2">المجال المطلوب</th>
-            <th className="py-5 px-2">عدد الموظفين المطلوب</th>
+            <th className="py-5 px-2">المتسوى المطلوب</th>
             <th className="py-5 px-2">تاريخ الطلب</th>
             <th className="py-5 px-2">نوع الدوام</th>
-            <th className="py-5 px-2">حالة الطلب</th>
-            <th className="py-5 px-2 last:rounded-tl-xl last:rounded-bl-xl">
-              تفاصيل المتقدم
-            </th>
+            <th className="py-5 px-2 last:rounded-tl-xl last:rounded-bl-xl">حالة الطلب</th>
+         
           </tr>
         </thead>
         <tbody className="text-[#21255C]">
@@ -41,15 +39,7 @@ const JobsTable = ({data}) => {
                   status={item.applicationStatus.status}
                 />
               </td>
-              <td className="py-4 px-2">
-                {item.applicantDetailsAvailable ? (
-                  <button className="text-[#21255C] text-sm hover:underline">
-                    👁
-                  </button>
-                ) : (
-                  <StatusBadge text="غير متاح حاليا" status="rejected" />
-                )}
-              </td>
+             
             </tr>
           ))}
         </tbody>
